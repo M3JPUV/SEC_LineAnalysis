@@ -1,0 +1,16 @@
+normal variables	ex.	NormalVariable
+
+global variables	ex.	GLOBAL_VARIABLE
+
+comments		ex.	// some comment on the code (<reference line if needed>) (<first initial>.)
+
+pushing to Github	report bugs and summaries of code
+
+Optimization VS Readability. F*** the optimization. 
+
+
+
+
+
+
+
