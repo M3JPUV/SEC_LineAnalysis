@@ -1,31 +1,32 @@
 const express = require('express');
 
-const Sequelize = require('sequelize');
+//const Sequelize = require('sequelize');
 
 const path = require('path');
 
 const logger = require('./middleware/logger');
 
-const databasePath1 = 'mysql://root:asdf@138.47.204.104:1433/DataBase1';
+//const databasePath1 = 'mysql://remoteuser:asdf@138.47.204.103:3306/DataBase1';
 
-const sequelize = new Sequelize(databasePath1);
+//const sequelize = new Sequelize(databasePath1);
 
 const app = express();
 
-sequelize.authenticate().then(() => {
-    console.log('Connection established successfully.');
-}).catch(err => {
-    console.error('Unable to connect to the database:', err);
-}).finally(() => {
-    sequelize.close();
-});
 
 //Database2
-var sequelize2 = new Sequelize('database2', 'username', 'password', {
-    host: "102.252.3499",
-    port: 26844,
-    dialect: 'mysql'
-});
+//var sequelize = new Sequelize('DataBase1', 'remoteuser', 'asdf', {
+   // host: "138.47.204.103",
+   // port: 3306,
+   // dialect: 'mysql'
+//});
+
+//sequelize.authenticate().then(() => {
+ //   console.log('Connection established successfully.');
+//}).catch(err => {
+ //   console.error('Unable to connect to the database:', err);
+//}).finally(() => {
+ //   sequelize.close();
+//});
 
 //init middleware
 //app.use(logger);
