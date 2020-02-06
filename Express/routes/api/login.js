@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Sequelize = require('sequelize');
 
-router.get('/', (req, res) => {
+router.get('/:email/:password', (req, res) => {
     var sequelize = new Sequelize('DataBase1', 'remoteuser', 'asdf', {
     host: "138.47.204.103",
     port: 3306,
@@ -17,20 +17,18 @@ router.get('/', (req, res) => {
     });
 
     try{
-    sequelize.query("SELECT * FROM Users",{ type:           sequelize.QueryTypes.SELECT }).then(function(myTableRows) {
-    console.log(myTableRows);
-    return res.status(200).json(myTableRows);
+    //sequelize.query("SELECT * FROM Users",{ type:           sequelize.QueryTypes.SELECT }).then(function(myTableRows) {
+    //console.log(myTableRows);
+    //return res.status(200).json(myTableRows);
     //return res.status(201).json({msg: "success post for SEC_LINE_ANALYSIS"});
-    });
+        console.log('Successful log in');
+        console.log(`email: ${req.params.email}`);
+        console.log(`password: ${req.params.password}`);
+    return res.status(201).json({msg: "successful Login"});
+    //});
     } catch (err) {
-    return res.status(400).json("Error, table does not exist in SEC_LINE_ANALYSIS");
+        return res.status(400).json("Error, Unable to log in");
     };
-});
-
-
-
-router.post('/', (req, res) => {
-    return res.status(201).json({msg: "success post for SEC_LINE_ANALYSIS"});
 });
     
 module.exports = router;
