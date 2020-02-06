@@ -21,11 +21,12 @@ router.get('/:email/:password', (req, res) => {
     //console.log(myTableRows);
     //return res.status(200).json(myTableRows);
     //return res.status(201).json({msg: "success post for SEC_LINE_ANALYSIS"});
+    //});
+
         console.log('Successful log in');
         console.log(`email: ${req.params.email}`);
         console.log(`password: ${req.params.password}`);
     return res.status(201).json({msg: "successful Login"});
-    //});
     } catch (err) {
         return res.status(400).json("Error, Unable to log in");
     };
