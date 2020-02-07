@@ -1,16 +1,17 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { HttpClientModule } from '@angular/common/http';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { PostsComponent } from './posts/posts.component';
-import { UsersComponent } from './users/users.component';
+import { TempComponent } from './temp/temp.component';
 import { DetailsComponent } from './details/details.component';
 import { TestsComponent } from './tests/tests.component';
-
-import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
+import { HeaderComponent } from './header/header.component';
 
 
 @NgModule({
@@ -18,10 +19,11 @@ import { LoginComponent } from './login/login.component';
     AppComponent,
     SidebarComponent,
     PostsComponent,
-    UsersComponent,
+    TempComponent,
     DetailsComponent,
     TestsComponent,
-    LoginComponent
+    LoginComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { UsersComponent} from './users/users.component';
+import { TempComponent} from './temp/temp.component';
 import { DetailsComponent} from './details/details.component';
 import { PostsComponent} from './posts/posts.component';
 import { TestsComponent } from './tests/tests.component';
 import { LoginComponent } from './login/login.component';
+import { HeaderComponent } from './header/header.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: UsersComponent
+    component: TempComponent
   },
   {
     path: 'details/:id',
