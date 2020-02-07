@@ -1,6 +1,6 @@
-const express = require('express');
-const router = express.Router();
-const Sequelize = require('sequelize');
+express = require('express');
+router = express.Router();
+Sequelize = require('sequelize');
 foundEmail = null;
 foundPassword = null;
 
@@ -18,10 +18,12 @@ router.get('/:email/:password', (req, res) => {
     sequelize.close();
     });
 
-    const email = req.params.email;
-    const password = req.params.password;
+    email = req.params.email;
+    password = req.params.password;
     //L. Attempt to find if the email is valid
         Eresults = sequelize.query(`SELECT DISTINCT u.Email, u.Password FROM Users AS u WHERE u.Email = "${email}" and u.Password = "${password}"`,{raw: true, type: sequelize.QueryTypes.SELECT}).then(data => {
+            foundEmail = null;
+            foundPassword = null;
             data.forEach( (row) => {
                 foundEmail = row.Email;
                 foundPassword = row.Password;
@@ -30,10 +32,13 @@ router.get('/:email/:password', (req, res) => {
             console.log(foundPassword);
             if (foundEmail !== null && foundPassword !== null){
                 res.status(200).json("Succesful Login");
+                sequelize.close();
             }
             else{
-                return res.status(400).json("Invalid email or password");
+                res.status(400).json("Invalid email or password");
+                sequelize.close();
             }
+
                     }).catch(err => console.log(err));
 });
     
