@@ -4,11 +4,15 @@ const express = require('express');
 const path = require('path');
 //L. Any middleware (i.e. any nodejs file to br run intermiddedly) nedds to be added like so
 const logger = require('./middleware/logger');
+//L. For handling templates
+const EH = require('express-handlebars')
 //L. anything we do is called ''app'' that is ran in the express framework
 const app = express();
 
 //L. init middleware
 app.use(logger);
+
+//For Handlebars
 
 //L. BodyParser (Used for json files)
 app.use(express.json());

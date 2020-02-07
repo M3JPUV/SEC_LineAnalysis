@@ -66,7 +66,6 @@ router.get('/:email/:password', (req, res) => {
     };
 });
 
-
 //L. Post
 router.post('/', (req, res) => {
     return res.status(201).json({msg: "success post for SEC_LINE_ANALYSIS"});
