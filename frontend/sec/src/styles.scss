@@ -5,15 +5,16 @@ body {
     background: #F2F2F2;
     font-family: 'Montserrat', sans-serif;
     height: 100vh;
+    position: relative
 }
 
 #container {
     display: grid;
-    grid-template-columns: 70px auto;
+    grid-template-columns: 80px auto;
     height: 100%;
     
     #content {
-        padding: 30px 50px;
+        padding: 30px 80px;
 
         ul {
             list-style-type: none;

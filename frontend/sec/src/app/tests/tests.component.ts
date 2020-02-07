@@ -16,7 +16,7 @@ export class TestsComponent implements OnInit {
   ngOnInit() {
     this.data.getTest().subscribe(
       data => this.tests$ = data
-    );
+    )
   }
 
 }

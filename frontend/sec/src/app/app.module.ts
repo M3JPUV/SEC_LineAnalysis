@@ -7,9 +7,11 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { PostsComponent } from './posts/posts.component';
 import { UsersComponent } from './users/users.component';
 import { DetailsComponent } from './details/details.component';
+import { TestsComponent } from './tests/tests.component';
 
 import { HttpClientModule } from '@angular/common/http';
-import { TestsComponent } from './tests/tests.component';
+import { LoginComponent } from './login/login.component';
+
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import { TestsComponent } from './tests/tests.component';
     PostsComponent,
     UsersComponent,
     DetailsComponent,
-    TestsComponent
+    TestsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -29,3 +32,4 @@ import { TestsComponent } from './tests/tests.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

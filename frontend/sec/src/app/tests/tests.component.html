@@ -2,9 +2,8 @@
 
 <ul>
     <li *ngFor="let test of tests$">
-        <a routerLink="">{{ test.title</a>
         <ul>
-            <li>{{ test.msg }}</li>
+            <li>{{ tests | json }}</li>
         </ul>
     </li>
 </ul>
