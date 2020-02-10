@@ -1,7 +1,7 @@
 
 /* this is what i get from the website , need it to be a tabel to plug in.
-0=GP:Games Played
-1=TOTAL:Total 1st downs
+0=GP:Games Played INT
+1=TOTAL:Total 1st downs INT
 2=RUSH:Rushing 1st downs
 3=PASS:Passing 1st downs
 4=PEN:1st downs by penalty
@@ -59,7 +59,7 @@ async function parseBoxScore() {
   //team counter
   var TC = 0;
   // create a team  object based on the <td> values, team "numer" wouls change with each /\ of run.
-  const team = {};
+  const team = [];
   var count= 0;
   // the input filename
   const htmlFilename = 'SCTDS.html';
@@ -76,13 +76,13 @@ async function parseBoxScore() {
     for (td of tds) {
       // parse the <td>
       const $td = $(td);
-      // map the td class attr to its value
-      var key = count;
+      // 1st value is team 
+      team[count] = count;
       count++;
       //TODO: if no keys are wanted remove above.
       //gets the div under the class and then gets text
       const value = $td.text();
-      team[key] = value;
+      team[count] = value;
       if (count == 13)
       {
         //this makes a copy , b/c team is a poiter
@@ -103,10 +103,12 @@ async function main(){
   if (GTG == 1){
     await downloadBoxScoreHtml();
   }
-  // data from website
+  // data from html
   const DFW = await parseBoxScore();
+  console.log(DFW[1][1]);
+  console.log(DFW[0][13])
+  console.log(DFW.length);
   //push to database from here\/
   //TODO : get data into database
-  
 };
 main();
