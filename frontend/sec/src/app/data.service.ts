@@ -21,6 +21,6 @@ export class DataService {
   }
 
   getTest() {
-    return this.http.get('http://138.47.204.105:5000/api/tests')
+    return this.http.get('')
   }
 }
