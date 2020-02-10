@@ -14,8 +14,8 @@ exports.runmodel = function(table_data) {
     var total  = 0;
     var i,j,n = 0;
     
-    console.log("Y length " + table_data.length);
-    console.log("X length " + table_data[0].length);
+    //console.log("Y length " + table_data.length);
+    //console.log("X length " + table_data[0].length);
     //console.log(table_data[0][0]);
     //console.log(table_data[0]);
     

@@ -1,6 +1,7 @@
 
-const WebSocket = require('ws');
+//const WebSocket = require('ws');
 var myModle = require('./LSU.js');
+/*
 const wss = new WebSocket.Server({ port: 8080 });
 console.log(`sever is wanting for connection`);
 wss.on('connection', (ws) => {
@@ -15,21 +16,23 @@ wss.on('connection', (ws) => {
     console.log("was sent back: " + s);
   });
 });
+*/
 //ZB.
 function returnModelStats(r){
   //r =  recived
   //checks is data is a array
   if (Array.isArray(r)){
     //parse  makes it to where this can read data from the socket
-    data = JSON.parse(r);
+    //if get message needs line below
+    //data = JSON.parse(r);
     //pushes the data to the Model
-    return myModle.runmodel(data);
+    return myModle.runmodel(r);
   } else{
       return ("please put a numbers or table of numbers in the form of an array ");
   }
 };
 //testing ZAB
-/*
+
 var data=[];
 var temp =[];
 var i,j;
@@ -39,6 +42,8 @@ for (i = 0;i!=6; i++){
   }
   data[i] = temp;
 }
+
 console.log(data);
+//to run model just use code below, that runs LSU if the data passed it is an array. 
 console.log(returnModelStats(data));
-*/
+
