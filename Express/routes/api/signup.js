@@ -12,7 +12,7 @@ router.post('/', JSONparser, (req, res) => {
     console.log(req.body);
     //L. Debugging purposes
     var myJsonObject = JSON.stringify(req.body);
-    console.log(myJsonObject);
+    //console.log(myJsonObject);
     var object = JSON.parse(myJsonObject);
     var Fname = object.FirstName;
     var Lname = object.LastName;

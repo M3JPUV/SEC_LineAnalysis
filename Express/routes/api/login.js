@@ -7,8 +7,11 @@ Sequelize = require('sequelize');
 foundEmail = null;
 foundPassword = null;
 //L. Initialize global variables to null
+const bodyParser = require('body-parser');
 
-router.get('/:email/:password', (req, res) => {
+var JSONparser = bodyParser.json();
+
+router.post('/', JSONparser, (req, res) => {
     var sequelize = new Sequelize('DataBase1', 'remoteuser', 'asdf', {
     host: "138.47.204.103",
     port: 3306,
@@ -23,8 +26,11 @@ router.get('/:email/:password', (req, res) => {
     sequelize.close();
     });
     //L. Authenticate database conenction
-    email = req.params.email;
-    password = req.params.password;
+    var myJsonObject = JSON.stringify(req.body);
+    //console.log(myJsonObject);
+    var object = JSON.parse(myJsonObject);
+    var email = object.Email;
+    var password = object.Password;
     //L. Attempt to find if the email is valid
         Eresults = sequelize.query(`SELECT DISTINCT u.Email, u.Password FROM Users AS u WHERE u.Email = "${email}" and u.Password = "${password}"`,{raw: true, type: sequelize.QueryTypes.SELECT}).then(data => {
             //L. Query for username and password
