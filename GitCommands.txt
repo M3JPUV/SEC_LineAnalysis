@@ -1,0 +1,28 @@
+git status
+
+git remote show origin
+
+git add <filename> (add specific file as change for commit)
+
+git commit -m '<message>' -> git push --set-upstring origin master (for first time)
+
+git push	git pull
+
+git branch <branchName> (create branch)	git branch (states all branches)
+
+git switch <branchName> (or git checkout <branchName>) (switches branch)
+
+git merge <branchName>
+
+git branch -d <branchName> (removes branch locally) -> git push (to remove from server)
+
+git reset HEAD <filename> (remove lastest changes to file)
+
+git checkout -- <filename> (remove all changes to file)
+
+
+
+
+
+
+
