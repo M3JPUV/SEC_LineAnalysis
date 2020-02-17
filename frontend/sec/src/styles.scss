@@ -9,14 +9,18 @@ body {
 }
 
 #container1{
+    // separate header from body
     grid-template-rows: auto auto;
 
     #container {
         display: grid;
+        // separate sidebar from body
         grid-template-columns: 80px auto;
         height: 100%;
         
+        // all content inside of the body section (not in header or sidebar)
         #content {
+            // spacing away from sidebar and header
             padding: 80px 80px;
 
             ul {
@@ -24,7 +28,7 @@ body {
                 margin:0;padding:0;
             
                 li {
-                    background: #fff;
+                    background: #F2F2F2;
                     border-radius: 8px;
                     padding: 20px;
                     margin-bottom: 8px;
