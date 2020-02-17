@@ -88,17 +88,12 @@ async function main(){
         var con = mysql.createConnection({
             host: "localhost",
             user: "root",
-            password: "LatechZachery20!",
+            password: "asdf"
         });
         //connections to the database
         con.connect(function (err) {
             if (err) throw err;
-            //on FR makes a database on sever
-            con.query("CREATE DATABASE secteam", function (err, result) {
-                if (err) throw err;
-                console.log("Database created");
-            });
-            con.query("use secteam", function (err, result) {
+            con.query("use secteams", function (err, result) {
                 if (err) throw err;
                 console.log("useing database secteam");
                 con.end();
@@ -127,14 +122,18 @@ async function main(){
         var con = mysql.createConnection({
             host: "localhost",
             user: "root",
-            password: "LatechZachery20!",
-            database: "secteam"
+            password: "asdf"
         });
         //good to go , ie if need to run and update te table
         con.connect(function (err) {
             if (err) throw err;
+            con.query("use secteams", function (err, result) {
+                if (err) throw err;
+                console.log("useing database secteam");
+                con.end();
+            });
             //dont know numbers in the table to drop make and fil in 
-            con.query(`DROP TABLE Teams`, function (err, result) {
+            con.query("DROP TABLE Teams", function (err, result) {
                 if (err) throw err;
                 console.log("Table deleted");
             });
