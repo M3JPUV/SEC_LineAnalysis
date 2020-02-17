@@ -13,6 +13,7 @@ export class PostsComponent implements OnInit {
   
   constructor(private data: DataService) { }
 
+  //.subscribe has to do with API, will be changed in the future
   ngOnInit() {
     this.data.getPosts().subscribe(
       data => this.posts$ = data 

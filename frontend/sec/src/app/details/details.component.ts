@@ -16,6 +16,7 @@ export class DetailsComponent implements OnInit {
      this.route.params.subscribe( params => this.user$ = params.id );
   }
 
+  //.subscribe has to do with API, will be changed in the future
   ngOnInit() {
     this.data.getUser(this.user$).subscribe(
       data => this.user$ = data 

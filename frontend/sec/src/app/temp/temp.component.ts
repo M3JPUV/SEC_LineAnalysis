@@ -13,6 +13,7 @@ export class TempComponent implements OnInit {
 
   constructor(private data: DataService) { }
 
+  //.subscribe has to do with API, will be changed in the future
   ngOnInit() {
     this.data.getTemps().subscribe(
       data => this.temps$ = data
