@@ -1,8 +1,10 @@
 <form action="action_page.php" method="post">
+    <!--code for implementing picture (currently not working)-->
     <div class="imgcontainer">
       <img src="img_sec.png" alt="Sec" class="sec">
     </div>
-  
+    
+    <!--username and password fields and text-->
     <div class="container">
         <label for="uname"><b>Username&ensp;</b></label>
         <input type="text" placeholder="Enter Username" name="uname" required>
@@ -10,10 +12,14 @@
         <label for="psw"><b>Password&emsp;</b></label>
         <input type="password" placeholder="Enter Password" name="psw" required>
         <br>
+        <!--login button-->
         <button type="submit">Login</button>
     </div>
 
-    <div class="container" style="background-color:#f1f1f1">
+    <!--forgot password link (add new user link)-->
+    <div class="container" style="background-color:#F2F2F2">
         <span class="psw">Forgot <a href="#">password?</a></span>
+        <a>&emsp;</a>
+        <span class="usr">New <a href="#">user?</a></span>
     </div>
 </form>

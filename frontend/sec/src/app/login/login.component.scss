@@ -1,23 +1,23 @@
-/* Bordered form */
+// bordered form
 form {
-    border: 3px solid #f1f1f1;
+    border: 3px solid #F2F2F2;
   }
   
-  /* Full-width inputs */
+  // full-width inputs
   input[type=text], input[type=password] {
     width: 35%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
-    border: 1px solid #ccc;
+    border: 1px solid #F2F2F2;
     box-sizing: border-box;
     box-align: center;
   }
   
-  /* Set a style for all buttons */
+  // set a style for all buttons
   button {
     background-color: rgb(6, 68, 202);
-    color: white;
+    color: #F2F2F2;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
@@ -25,38 +25,45 @@ form {
     width: 35%;
   }
   
-  /* Add a hover effect for buttons */
+  // add a hover effect for buttons
   button:hover {
     opacity: 0.8;
   }
   
-  /* Center the image inside this container */
+  // center the image inside this container
   .imgcontainer {
     text-align: center;
     margin: 24px 0 12px 0;
   }
   
-  /* image */
+  // image
   img.sec {
     width: 40%;
     border-radius: 50%;
   }
   
-  /* Add padding to containers */
+  // add padding to containers
   .container {
     padding: 16px;
   }
   
-  /* The "Forgot password" text */
+  // forgot password text
   span.psw {
     float: left;
     padding-top: 16px;
   }
+
+  // forgot new user text
+  span.usr {
+    float: left;
+    padding-top: 16px;
+  }
   
-  /* Change styles for span and cancel button on extra small screens */
+  /* change styles for span button on extra small screens
   @media screen and (max-width: 300px) {
     span.psw {
       display: block;
       float: none;
     }
   }
+  */
