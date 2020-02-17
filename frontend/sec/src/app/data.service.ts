@@ -8,8 +8,10 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
+  // all commmands from component ts files
+
   getTemps() {
-    return this.http.get('https://jsonplaceholder.typicode.com/users')
+    return this.http.get('https://jsonplaceholder.typicode.com/users')  // generic website api for testing
   }
 
   getUser(userId) {

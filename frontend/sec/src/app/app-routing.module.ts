@@ -5,9 +5,8 @@ import { DetailsComponent} from './details/details.component';
 import { PostsComponent} from './posts/posts.component';
 import { TestsComponent } from './tests/tests.component';
 import { LoginComponent } from './login/login.component';
-import { HeaderComponent } from './header/header.component';
 
-
+// routes/links to all pages
 const routes: Routes = [
   {
     path: '',
