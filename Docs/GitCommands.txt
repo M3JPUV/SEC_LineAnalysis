@@ -18,10 +18,13 @@ git branch -d <branchName> (removes branch locally) -> git push (to remove from 
 
 git reset HEAD <filename> (remove lastest changes to file)
 
-git checkout -- <filename> (remove all changes to file)
+git checkout -- <filename> (remove all changes to file)//
 
-
-
+//only getting a few files
+git fetch
+git checkout -m <revision> <yourfilepath>
+git add <yourfilepath>
+git commit
 
 
 
