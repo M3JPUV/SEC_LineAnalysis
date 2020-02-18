@@ -13,11 +13,13 @@
 11=FDPCT:4th down %
 12=TPTOTAL:Total Penalties
 13=YDS:Total Penalty Yards
+14=TEAMNAME= Team Name
 */
 //ZB.
 const rp = require('request-promise-native');
 const cheerio = require("cheerio");
 const fs = require('fs');
+const teams = ['Alabama','Texas A&M','Georgia','Missouri','LSU','Ole Miss','Florida','South Carolina','Vanderbuilt','Auburn','Kentucky','Mississippi State','Arkansas','Tenessee']
 var mysql = require('mysql');
 //gets the html file from the website and makes it a file
 async function downloadBoxScoreHtml() {
@@ -99,7 +101,7 @@ async function main(){
                 con.end();
             });
             //makes the table 
-            var sql = `CREATE TABLE Teams (TN INT PRIMARY KEY,GP INT,TOTOAL INT,RUSH INT,PASS INT,PEN INT,TDMADE INT,TDATT INT,TDPCT INT,FDMADE INT,FDATT INT,FDPCT INT,TPTOTAL INT, TDS INT)`;
+            var sql = `CREATE TABLE Teams (TN INT PRIMARY KEY,GP INT,TOTOAL INT,RUSH INT,PASS INT,PEN INT,TDMADE INT,TDATT INT,TDPCT INT,FDMADE INT,FDATT INT,FDPCT INT,TPTOTAL INT, TDS INT, TEAMNAME)`;
             con.query(sql, function (err, result) {
                 if (err) throw err;
                 console.log("Table created");
@@ -138,14 +140,14 @@ async function main(){
                 console.log("Table deleted");
             });
             //makes the table 
-            var sql = `CREATE TABLE Teams (TN INT PRIMARY KEY,GP INT,TOTOAL INT,RUSH INT,PASS INT,PEN INT,TDMADE INT,TDATT INT,TDPCT INT,FDMADE INT,FDATT INT,FDPCT INT,TPTOTAL INT, TDS INT)`;
+            var sql = `CREATE TABLE Teams (TN INT PRIMARY KEY,GP INT,TOTOAL INT,RUSH INT,PASS INT,PEN INT,TDMADE INT,TDATT INT,TDPCT INT,FDMADE INT,FDATT INT,FDPCT INT,TPTOTAL INT, TDS INT, TEAMNAME VARCHAR(45))`;
             con.query(sql, function (err, result) {
                 if (err) throw err;
                 console.log("Table created");
             });
             //fulls in the data
             for (i = 0; i < DFW.length; i++) {
-                con.query(`INSERT INTO Teams (TN ,GP ,TOTOAL ,RUSH ,PASS ,PEN ,TDMADE ,TDATT ,TDPCT ,FDMADE ,FDATT ,FDPCT ,TPTOTAL , TDS ) VALUES ('${i}','${DFW[i][1]}','${DFW[i][2]}','${DFW[i][3]}','${DFW[i][4]}','${DFW[i][5]}','${DFW[i][6]}','${DFW[i][7]}','${DFW[i][8]}','${DFW[i][9]}','${DFW[i][10]}','${DFW[i][11]}','${DFW[i][12]}','${DFW[i][13]}');`, function (err, result) {if (err) throw err;});
+                con.query(`INSERT INTO Teams (TN ,GP ,TOTOAL ,RUSH ,PASS ,PEN ,TDMADE ,TDATT ,TDPCT ,FDMADE ,FDATT ,FDPCT ,TPTOTAL , TDS , TEAMNAME) VALUES ('${i}','${DFW[i][1]}','${DFW[i][2]}','${DFW[i][3]}','${DFW[i][4]}','${DFW[i][5]}','${DFW[i][6]}','${DFW[i][7]}','${DFW[i][8]}','${DFW[i][9]}','${DFW[i][10]}','${DFW[i][11]}','${DFW[i][12]}','${DFW[i][13]}', '${teams[i]}');`, function (err, result) {if (err) throw err;});
             };
         });
     };
