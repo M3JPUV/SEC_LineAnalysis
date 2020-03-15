@@ -5,6 +5,7 @@ import { DetailsComponent} from './details/details.component';
 import { PostsComponent} from './posts/posts.component';
 import { TestsComponent } from './tests/tests.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 // routes/links to all pages
 const routes: Routes = [
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'register',
+    component: RegisterComponent
   },
 ];
 
