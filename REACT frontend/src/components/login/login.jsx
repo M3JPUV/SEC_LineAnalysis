@@ -22,7 +22,13 @@ export class Login extends React.Component {
 
   onSubmit = async () => {
     this.setState({show: true});
-    await axios.post('http://138.47.204.105:5000/api/login/', { "Email": this.state.email, "Password": this.state.password}).catch(error => {
+    await axios.post('http://138.47.204.105:5000/api/login/', { "Email": this.state.email, "Password": this.state.password}).then(value => {
+      this.setState({loginStatusA: "Successful Login"});
+      this.setState({loginStatusB: "Redirecting to account page"});
+      this.setState({loginStatusC: ""});
+      this.setState({loginStatusD: ""});
+      //Place to reset number of password attempts
+    }).catch(error => {
       console.log(error.response.status);
     if (error.response.status == "402") {
       this.setState({loginStatusA: "Invalid Email"});
@@ -36,15 +42,7 @@ export class Login extends React.Component {
       this.setState({loginStatusC: ""});
       this.setState({loginStatusD: ""});
       //Place for number of invalid password attempts
-    }
-    else{
-      this.setState({loginStatusA: "Successful Login"});
-      this.setState({loginStatusB: "Redirecting to account page"});
-      this.setState({loginStatusC: ""});
-      this.setState({loginStatusD: ""});
-      //Place to reset number of password attempts
-    }
-  });
+    }});
   }
 
   //API goes here
