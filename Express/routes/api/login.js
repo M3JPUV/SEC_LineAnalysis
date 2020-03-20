@@ -55,7 +55,8 @@ router.post('/', JSONparser, (req, res) => {
                     token = null;
                     data.forEach( (row) => {
                         token = row.token;});
-                    sequelize.query(`UPDATE TOKENS SET used = true WHERE token = "${token}"`, {raw: true, type: sequelize.QueryTypes.UPDATE}).then(data => {res.status(200).json(token);});
+                    //L. set token as used and add users ip (for identification)
+                    sequelize.query(`UPDATE TOKENS SET used = true, ip = '${req.connection.remoteAddress}' WHERE token = "${token}"`, {raw: true, type: sequelize.QueryTypes.UPDATE}).then(data => {res.status(200).json(token);});
                     });
                 } else{
                     //incorrect password = 401
