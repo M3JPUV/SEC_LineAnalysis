@@ -24,9 +24,7 @@ router.post('/', JSONparser, (req, res) => {
     console.log('Connection established successfully.');
     }).catch(err => {
     console.error('Unable to connect to the database:', err);
-    }).finally(() => {
-    sequelize.close();
-    });
+    }).finally(() => {});
     //L. Authenticate database conenction
     var myJsonObject = JSON.stringify(req.body);
     //console.log(myJsonObject);
@@ -52,19 +50,22 @@ router.post('/', JSONparser, (req, res) => {
                 //check the hashed password
                 if(passwordHash.verify(password, foundPassword)){
                     //200 successful login
-                    res.status(200).json();
-                    sequelize.close();
+                    //get token
+                    sequelize.query(`SELECT DISTINCT token FROM TOKENS WHERE used = false LIMIT 1`, {raw: true, type: sequelize.QueryTypes.SELECT}).then(data => {
+                    token = null;
+                    data.forEach( (row) => {
+                        token = row.token;});
+                    sequelize.query(`UPDATE TOKENS SET used = true WHERE token = "${token}"`, {raw: true, type: sequelize.QueryTypes.UPDATE}).then(data => {res.status(200).json(token);});
+                    });
                 } else{
                     //incorrect password = 401
                 res.status(401).json();
-                sequelize.close();
                 };
                 //L. if the query results were not null, return successful login and return 200
             }
             else{
                     //email does not match our records = 402
                 res.status(402).json();
-                sequelize.close();
                 //L. if the query results were null, return unsucessful and return 400
             }
                     }).catch(err => console.log(err));
