@@ -4,10 +4,10 @@ const express = require('express');
 const path = require('path');
 //L. Any middleware (i.e. any nodejs file to br run intermiddedly) nedds to be added like so
 const logger = require('./middleware/logger');
-//L. For handling templates
-const EH = require('express-handlebars')
 //L. anything we do is called ''app'' that is ran in the express framework
 const bodyParser = require('body-parser');
+
+var cors = require('cors');
 
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 
@@ -16,12 +16,11 @@ const app = express();
 //L. init middleware
 app.use(logger);
 
-//For Handlebars
-
-
 //L. BodyParser (Used for json files)
 app.use(express.json());
 app.use(express.urlencoded({extended: false }));
+
+app.use(cors());
 
 //L. default page when hitting our website (should be front end?)
 app.use(express.static(path.join(__dirname, 'public')));
@@ -44,5 +43,4 @@ app.use('/api/login', require('./routes/api/login'));
 const PORT = process.env.PORT || 5000;
 //L. Starts app and listens on the specified port number
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
-
 

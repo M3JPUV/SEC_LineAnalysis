@@ -33,6 +33,7 @@ router.post('/', JSONparser, (req, res) => {
     var object = JSON.parse(myJsonObject);
     var email = object.Email;
     var password = object.Password;
+    console.log(`Attempted login with email: ${email} and password: ${password}`);
     //L. Attempt to find if the email is valid
         Eresults = sequelize.query(`SELECT DISTINCT u.Email, u.Password FROM Users AS u WHERE u.Email = "${email}"`,{raw: true, type: sequelize.QueryTypes.SELECT}).then(data => {
             //L. Query for username and password
@@ -50,17 +51,19 @@ router.post('/', JSONparser, (req, res) => {
             if (foundEmail !== null && foundPassword !== null){
                 //check the hashed password
                 if(passwordHash.verify(password, foundPassword)){
-                    res.status(200).json("Succesful Login");
+                    //200 successful login
+                    res.status(200).json();
                     sequelize.close();
                 } else{
-                    
-                res.status(400).json("Incorect Password");
+                    //incorrect password = 401
+                res.status(401).json();
                 sequelize.close();
                 };
                 //L. if the query results were not null, return successful login and return 200
             }
             else{
-                res.status(400).json("Invalid email");
+                    //email does not match our records = 402
+                res.status(402).json();
                 sequelize.close();
                 //L. if the query results were null, return unsucessful and return 400
             }
