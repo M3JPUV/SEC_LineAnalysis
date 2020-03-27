@@ -23,7 +23,9 @@ router.post('/', JSONparser, (req, res) => {
     var sequelize = new Sequelize('DataBase1', 'remoteuser', 'asdf', {
     host: "138.47.204.103",
     port: 3306,
-    dialect: 'mysql'
+    dialect: 'mysql',
+    //Dont allow logging
+    logging: false
     });
     //L. Database connection object
     sequelize.authenticate().then(() => {

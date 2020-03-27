@@ -8,6 +8,12 @@ foundEmail = null;
 foundPassword = null;
 //L. Initialize global variables to null
 const bodyParser = require('body-parser');
+//L. faster way of reading lines
+var linereader = require('line-reader');
+//L. for reading in a file
+const fs = require('fs');
+//L. for encrypting tokens
+const Cryptr = require('cryptr');
 
 var passwordHash = require('password-hash');
 
@@ -17,7 +23,9 @@ router.post('/', JSONparser, (req, res) => {
     var sequelize = new Sequelize('DataBase1', 'remoteuser', 'asdf', {
     host: "138.47.204.103",
     port: 3306,
-    dialect: 'mysql'
+    dialect: 'mysql',
+    //Dont allow logging
+    logging: false
     });
     //L. Database connection object
     sequelize.authenticate().then(() => {
@@ -43,8 +51,6 @@ router.post('/', JSONparser, (req, res) => {
                 foundPassword = row.Password;
             });
             //L. gets the data from the TextRow object
-            //console.log(foundEmail);
-            //console.log(foundPassword);
             //L. for debugging purposes
             if (foundEmail !== null && foundPassword !== null){
                 //check the hashed password
@@ -56,7 +62,14 @@ router.post('/', JSONparser, (req, res) => {
                     data.forEach( (row) => {
                         token = row.token;});
                     //L. set token as used and add users ip (for identification)
-                    sequelize.query(`UPDATE TOKENS SET used = true, ip = '${req.connection.remoteAddress}' WHERE token = "${token}"`, {raw: true, type: sequelize.QueryTypes.UPDATE}).then(data => {res.status(200).json(token);});
+                    sequelize.query(`UPDATE TOKENS SET used = true, ip = '${req.connection.remoteAddress}' WHERE token = "${token}"`, {raw: true, type: sequelize.QueryTypes.UPDATE}).then(data => {
+                    //L. for getting the current crypto key
+                    var encrToken = null;
+                    var key = null;
+                    key = fs.readFileSync('/home/lsasecfe/Desktop/SEC_LineAnalysis/Express/routes/api/CurrentCryptoKey.txt', 'utf-8');
+                    var cryptr = new Cryptr(key);
+                    encrToken = cryptr.encrypt(token);
+                    res.status(200).json(encrToken);});
                     });
                 } else{
                     //incorrect password = 401

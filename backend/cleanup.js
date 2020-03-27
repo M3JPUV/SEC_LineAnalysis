@@ -18,7 +18,9 @@ console.log("Temp file contents deleted")});
 var sequelize = new Sequelize('DataBase1', 'remoteuser', 'asdf', {
 host: "138.47.204.103",
 port: 3306,
-dialect: 'mysql'
+dialect: 'mysql',
+//Dont allow logging
+logging: false
 });
 //L. Database connection object
 sequelize.authenticate().then((async) => {
@@ -31,6 +33,12 @@ sequelize.query(`DELETE FROM TOKENS WHERE true=true;`).then(() => {
         fs.appendFileSync('tempTokens.txt', temp2, (err) => {if (err) throw err;});
     }
     console.log("Temp file created");
+    fs.writeFile('/home/lsasecfe/Desktop/SEC_LineAnalysis/Express/routes/api/CurrentCryptoKey.txt', '', function (err) {
+    if (err) throw err;
+    console.log("Temp file contents and encrpt key deleted")});
+    var tempKey = randomstring.generate(256);
+    fs.appendFileSync('/home/lsasecfe/Desktop/SEC_LineAnalysis/Express/routes/api/CurrentCryptoKey.txt', tempKey, (err) => {if (err) throw err;});
+
     linereader.eachLine('tempTokens.txt', function(line) {
     sequelize.query(`INSERT INTO TOKENS (token, used, ip) VALUES ('${line}', false, 0);`).then(send => {}).catch(err => {console.log(err);});
 

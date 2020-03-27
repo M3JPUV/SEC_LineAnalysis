@@ -5,9 +5,12 @@ router = express.Router();
 Sequelize = require('sequelize');
 //L. require sequelize
 const bodyParser = require('body-parser');
-
+//L. for reading in a file
+const fs = require('fs');
+//L. for parsing json objects
 var JSONparser = bodyParser.json();
-
+//L. for decrypting tokens
+const Cryptr = require('cryptr');
 
 router.post('/', JSONparser, (req, res) => {
     console.log(req.body);
@@ -19,7 +22,9 @@ router.post('/', JSONparser, (req, res) => {
     var sequelize = new Sequelize('DataBase1', 'remoteuser', 'asdf', {
     host: "138.47.204.103",
     port: 3306,
-    dialect: 'mysql'
+    dialect: 'mysql',
+    //Dont allow logging
+    logging: false
     });
     //L. Database connection object
     sequelize.authenticate().then(() => {
@@ -29,9 +34,18 @@ router.post('/', JSONparser, (req, res) => {
     }).finally(() => {
     sequelize.close();
     });
-    //L. Authenticate database conenction
-    //L. hash the password
-        Eresults = sequelize.query(`SELECT DISTINCT t.token FROM TOKENS AS t WHERE t.token = '${Token}' AND t.used = 1 AND t.ip = '${req.connection.remoteAddress}';`, {raw: true, type: sequelize.QueryTypes.SELECT}).then(data => { 
+    //de-encryt the token and check it against the database
+        var DecryptToken = null;
+        var key = null;
+        key = fs.readFileSync('/home/lsasecfe/Desktop/SEC_LineAnalysis/Express/routes/api/CurrentCryptoKey.txt', 'utf-8');
+        var cryptr = new Cryptr(key);
+        try{
+        DecryptToken = cryptr.decrypt(Token);
+        }
+        catch(err) {
+        return res.status(405).json("invalid credentials")
+        };
+        Eresults = sequelize.query(`SELECT DISTINCT t.token FROM TOKENS AS t WHERE t.token = '${DecryptToken}' AND t.used = 1 AND t.ip = '${req.connection.remoteAddress}';`, {raw: true, type: sequelize.QueryTypes.SELECT}).then(data => { 
                                 token = null;
                                 data.forEach( (row) => {
                                 token = row.token;});
