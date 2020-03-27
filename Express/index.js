@@ -6,7 +6,6 @@ const path = require('path');
 const logger = require('./middleware/logger');
 //L. anything we do is called ''app'' that is ran in the express framework
 const bodyParser = require('body-parser');
-
 var cors = require('cors');
 
 var urlencodedParser = bodyParser.urlencoded({extended: false});
@@ -29,6 +28,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //L. placeholder
 app.use('/api/members', require('./routes/api/members'));
+
+//L. Check login token
+app.use('/api/checkTokens', require('./routes/security/tokens'));
 
 //L. Sign up
 app.use('/api/signup', require('./routes/api/signup'));
