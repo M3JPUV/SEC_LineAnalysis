@@ -5,6 +5,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import re
 
+#
+OUTPUT_FILE = "Correlation.txt"
+REDIRECTION = False
+
 # D. change value to show visual plots and ALL data
 EXTRA_DATA = False
 
@@ -95,6 +99,8 @@ for i in range(len(year)):
     for v in range(len(values)):
         values[v] = values[v][:-18]
         print(values[v])
+        if REDIRECTION:
+            sys.stdout.open(OUTPUT_FILE, "w")
     
     # D. visual data
     if (EXTRA_DATA == True):
