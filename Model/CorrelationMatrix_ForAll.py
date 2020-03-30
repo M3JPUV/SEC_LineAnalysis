@@ -3,7 +3,9 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-
+#Output File
+OUTPUT_FILE = "Correlation.txt"
+REDIRECTION = False
 # D. change value to show visual plots and ALL data
 EXTRA_DATA = False
 
@@ -73,9 +75,14 @@ for i in range(len(year)):
 
     print("Top Absolute Correlations for {}".format(year[i]))
     print("{}\n".format(get_top_correlations(df, 10)))
+    if REDIRECTION:
+        sys.stdout = open(OUTPUT_FILE, "w")
+        print("Top Absolute Correlations for {}".format(year[i]))
+        print("{}\n".format(get_top_correlations(df, 10)))
+
 
     # D. visual data
-    if (EXTRA_DATA == True):
+    if EXTRA_DATA:
         # D. shows all dataform data (shows snippet if not set)
         pd.set_option('display.width', 400)
         pd.set_option('display.max_columns', 80)
