@@ -7,7 +7,7 @@ import statsmodels.api as sm
 from statsmodels.base.model import GenericLikelihoodModel
 def MLEW(exog,endog):
     # re-gets list for names 
-    #exog = df[list_of_features_importance] 
+    #print("exog\n",exog); 
     #endog = df["Act W %"]
     exog = sm.add_constant(exog, prepend=True)
     '''
