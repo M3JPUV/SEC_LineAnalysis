@@ -8,6 +8,7 @@ import re
 #
 OUTPUT_FILE = "Correlation.txt"
 REDIRECTION = False
+DEBUG = True;
 
 # D. change value to show visual plots and ALL data
 EXTRA_DATA = False
@@ -19,7 +20,8 @@ def get_correlation_matrix(df, corr_year):
     from matplotlib import cm as cm
 
     # D. prints off all columns with their data
-    print(df)
+    if DEBUG:
+        print(df)
 
     # D. create the plot
     fig = plt.figure()
@@ -81,7 +83,7 @@ def remove_values(list):
 
 ### MAIN CODE ############################
 year = ['2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018']
-xlsx =  pd.ExcelFile('NCAAstats.xlsx')
+xlsx =  pd.ExcelFile('NCAAstats.xls')
 
 for e in range(len(year)):
     #get features 
@@ -89,41 +91,42 @@ for e in range(len(year)):
     for i in range(len(data['Conf'].unique())):
         data_for_BE = data.loc[data['Conf'] == (data['Conf'].unique()[i])];
         data_for_BE =  data_for_BE.drop(['Team', 'Conf', 'Rk', 'Rk.1', 'Rk.2', 'Rk.3', 'Pyth Rank', 'Opp Pyth Rank'], axis = 1)
+        #just in case things wrong 
+        temp_BE=[];
+        temp_BE.copy()
         values = get_top_correlations(data_for_BE, 30)
-        # D. remove numbers from list
-        #values = remove_values(values)
         # D. remove extra information data
         # still removes to much on some title " ex:Opp % of Plays as Rus{h}
         for v in range(len(values)):
+            #number need to be changed for vlaues
             values[v] = values[v][:-26]
             x = re.findall('\s',values[v][-1]);
             if x:
                 values[v] = values[v][:-1]
-        #print("values\n",values);
-        #1.5.2) goes team by team (need the names0
+            #TODO : fix for when coming in from mysql 
+            if values[v] == 'Opp % of Plays as Rus':
+                values[v] = 'Opp % of Plays as Rush';
+            elif values[v] == 'Pts / G':
+                values[v] = 'Pts / Gm';
+            elif values[v] == 'Avg F':
+                values[v] = 'Avg FP';
+            elif values[v] == 'Pts / Pos':
+                values[v] = 'Pts / Poss';
+            elif values[v] == 'Adj':
+                values[v] = 'Adj O';
+            elif values[v] == 'Off % of Plays w/ T':
+                values[v] = 'Off % of Plays w/ TO';
+                
+        #1.5.2) goes team by team (need the names)
         temp = data.loc[data['Conf'] == (data['Conf'].unique()[i])];
-        
-        print(temp);
-        exit();
-        '''
-        temp = temp.loc[0:64,:]
-        print(temp);
-        '''
+        if DEBUG:
+            print("year[e]",year[e]);
+            print("values\n",values);
+            #temp = temp.loc[0:64,:]
+            #print(temp);
         # how many rows its needs: 
         from Maximum_Likelihood_Estimation_Weights import*;
         features_by_weight = MLEW(temp[values],temp["Act W %"]);
         print(features_by_weight);
-        """
-        #print('temp\n',temp);
-        for j in range(len(temp['Team'].unique())):
-            data_for_W = temp.loc[temp['Team'] == (temp['Team'].unique()[j])];
-            #data_for_W.drop(['Team', 'Conf', 'Rk', 'Rk.1', 'Rk.2', 'Rk.3', 'Pyth Rank', 'Opp Pyth Rank'], axis = 1)
-            #print(data_for_W.columns);
-            temp =data_for_W[values];
-            #print('data_for_W\n',temp);
-            from Maximum_Likelihood_Estimation_Weights import*;
-            features_by_weight = MLEW(data_for_W[values],data_for_W["Act W %"]);
-            print(features_by_weight);
-        """
     
 
