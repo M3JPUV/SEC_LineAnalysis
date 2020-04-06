@@ -80,32 +80,9 @@ def remove_values(list):
     return list
 
 ### MAIN CODE ############################
-year = ['2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018']
-xlsx =  pd.ExcelFile('NCAAstats.xlsx')
-
-for i in range(len(year)):
-    train = pd.read_excel(xlsx, year[i])
-    # D. drop columns that aren't needed or relevant
-    df = train.drop(['Team', 'Conf', 'Rk', 'Rk.1', 'Rk.2', 'Rk.3', 'Pyth Rank', 'Opp Pyth Rank', ], axis = 1)
-
-    #print(df.columns[0])
-
-    print("\n\nTop Act Win % Correlations for {}".format(year[i]))
-    values = get_top_correlations(df, 20)
-
-    # D. remove numbers from list
-    #values = remove_values(values)
-    # D. remove extra information data
-    for v in range(len(values)):
-        # make a changer where it removes numbers and if there is a 'white space' removes it as well
-        values[v] = values[v][:-26]
-        x = re.findall('\s',values[v][-1]);
-        if x:
-            values[v] = values[v][:-1]
-        print(values[v])
-        if REDIRECTION:
-            sys.stdout.open(OUTPUT_FILE, "w")
-    
+#year = ['2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018']
+#xlsx =  pd.ExcelFile('NCAAstats.xls')
+def CorrMatrix(year, df):
     # D. visual data
     if (EXTRA_DATA == True):
         # D. shows all dataform data (shows snippet if not set)
@@ -113,7 +90,27 @@ for i in range(len(year)):
         pd.set_option('display.max_columns', 80)
         pd.set_option('display.max_rows', 80)
         # D. plot the correlations
-        get_correlation_matrix(df, corr_year = year[i])
+        get_correlation_matrix(df, corr_year = year) 
+
+    values = get_top_correlations(df, 20)
+
+    # D. remove numbers from list
+    #values = remove_values(values)
+    # D. remove extra information data
+    for v in range(len(values)):
+        # make a changer where it removes numbers and if there is a 'white space' removes it as well
+        values[v] = values[v][:-25]
+        x = re.findall('\s',values[v][-1]);
+        if x:
+            values[v] = values[v][:-1]
+            x = re.findall('\s',values[v][-1]);
+            if x:
+                values[v] = values[v][:-1]
+        return(values[v])
+    
+    
+    
+
 
 
 
