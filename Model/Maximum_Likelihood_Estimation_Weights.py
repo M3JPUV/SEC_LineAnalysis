@@ -5,6 +5,8 @@ from __future__ import print_function
 from scipy import stats
 import statsmodels.api as sm
 from statsmodels.base.model import GenericLikelihoodModel
+import warnings
+warnings.filterwarnings("ignore")
 def MLEW(exog,endog):
     # re-gets list for names 
     #print("exog\n",exog); 

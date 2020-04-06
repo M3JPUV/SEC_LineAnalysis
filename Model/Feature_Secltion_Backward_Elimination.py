@@ -27,18 +27,21 @@ def FSBL(x,y,Numer_of_features,list_of_features):
         print(Numer_of_features);
         print('x.shap:\n',x.shape);
         print('x:\n',x);
+    '''
     #needs things in a list for them to work
     tempa=[];
+    '''
     #index of number to remove;
     index_h = None ;
     #list of fetures by remove
     list_of_features_importance = [];
     for j in range(Numer_of_features):
-        #the elimination technique
-        # choose a Significance level usually 0.05, if p>0.05 
+        #the elimination technique: choose a Significance level usually 0.05, if p>0.05 
         # for the highest values parameter, remove that value
         x_opt = x[:, arr]
         ols = sm.OLS(endog = y, exog = x_opt).fit()
+        #needs things in a list for them to work
+        tempa=[];
         for i in range(len(ols.pvalues)):
             tempa.append(ols.pvalues[i]);
         index_n = tempa.index(max(ols.pvalues));
@@ -55,5 +58,5 @@ def FSBL(x,y,Numer_of_features,list_of_features):
         del list_of_features[index_n];
         tempa.clear();
     #list_of_features_importance.append(list_of_features[arr[0]]);# this is needed for weights, should be "Act W %"
-    list_of_features_importance.reverse(); 
+    #list_of_features_importance.reverse(); 
     return list_of_features_importance;

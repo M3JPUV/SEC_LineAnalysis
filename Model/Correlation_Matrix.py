@@ -82,7 +82,7 @@ def remove_values(list):
 ### MAIN CODE ############################
 #year = ['2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018']
 #xlsx =  pd.ExcelFile('NCAAstats.xls')
-def CorrMatrix(year, df):
+def CorrMatrix(year, df,number):
     # D. visual data
     if (EXTRA_DATA == True):
         # D. shows all dataform data (shows snippet if not set)
@@ -92,21 +92,25 @@ def CorrMatrix(year, df):
         # D. plot the correlations
         get_correlation_matrix(df, corr_year = year) 
 
-    values = get_top_correlations(df, 20)
+    values = get_top_correlations(df, number)
 
     # D. remove numbers from list
     #values = remove_values(values)
     # D. remove extra information data
     for v in range(len(values)):
         # make a changer where it removes numbers and if there is a 'white space' removes it as well
-        values[v] = values[v][:-25]
+        values[v] = values[v][:-23]
         x = re.findall('\s',values[v][-1]);
-        if x:
-            values[v] = values[v][:-1]
-            x = re.findall('\s',values[v][-1]);
+        while x:
             if x:
                 values[v] = values[v][:-1]
-        return(values[v])
+                # doudle checking for white space 
+                x = re.findall('\s',values[v][-1])
+        #TODO: check in mysql when time comes 
+        x = re.findall('Opp Pass Att / Sac',values[v])
+        if x and  (v == 0):
+            values[v] = "{}k".format(values[v])
+    return(values)
     
     
     
