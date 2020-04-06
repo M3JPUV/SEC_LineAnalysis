@@ -5,9 +5,11 @@ from __future__ import print_function
 from scipy import stats
 import statsmodels.api as sm
 from statsmodels.base.model import GenericLikelihoodModel
+import warnings
+warnings.filterwarnings("ignore")
 def MLEW(exog,endog):
     # re-gets list for names 
-    #exog = df[list_of_features_importance] 
+    #print("exog\n",exog); 
     #endog = df["Act W %"]
     exog = sm.add_constant(exog, prepend=True)
     '''

@@ -22,14 +22,13 @@ DATA_FILE = 'SEConly_stats.xlsx_-_2005.csv'
 #reads in excel files
 rawData = pd.read_csv(DATA_FILE)
 #Clean Data
-cleanData =rawData.drop(['Team','Conf'], axis=1)
-print cleanData
+cleanData =rawData.drop(['Team','Conf', 'Rk', 'Rk.1', 'Rk.2', 'Rk.3', 'Pyth Rank', 'Opp Pyth Rank'], axis=1)
 #Recursive Elimination
 CorrelationMatrix = sys.stdin.read().rstrip("\n")
 CorrelatedFeatures = sys.stdin.read().rstrip("\n")
 
-X = data.drop('rank', axis=1)
-target = data['rank']
+X = data.drop("Act W %", axis=1)
+target = data["Act W %"]
 
 rfc = RandomForestClassifier(random_state=101)
 #Estimator is the model instance

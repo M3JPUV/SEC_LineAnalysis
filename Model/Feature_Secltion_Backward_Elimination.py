@@ -4,9 +4,8 @@
             #and retuns a list in odrer from  highest to losest 
 #note: matters the order the input list is in
 # and needs whole NCAA for data to not be so close,
+DEBUG =False;
 def FSBL(x,y,Numer_of_features,list_of_features):    
-    #x=df[list_of_features];
-    #y=df["Act W %"]
     #slpits data into training and test data
     from sklearn.model_selection import train_test_split 
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.3, random_state = 0) 
@@ -24,37 +23,40 @@ def FSBL(x,y,Numer_of_features,list_of_features):
     arr=[];
     for i in range(Numer_of_features):
         arr.append(i);
-     #need to remove 'Act W %' from list its at 1st index
-    #del list_of_features[0];
+    if DEBUG:
+        print(Numer_of_features);
+        print('x.shap:\n',x.shape);
+        print('x:\n',x);
+    '''
     #needs things in a list for them to work
     tempa=[];
+    '''
     #index of number to remove;
     index_h = None ;
     #list of fetures by remove
     list_of_features_importance = [];
     for j in range(Numer_of_features):
-        #the elimination technique
-        # choose a Significance level usually 0.05, if p>0.05 
+        #the elimination technique: choose a Significance level usually 0.05, if p>0.05 
         # for the highest values parameter, remove that value
         x_opt = x[:, arr]
         ols = sm.OLS(endog = y, exog = x_opt).fit()
-        #print(ols.summary());
-        #print(ols.summary());
-        print("ols.pvalues",ols.pvalues,"\n");
+        #needs things in a list for them to work
+        tempa=[];
         for i in range(len(ols.pvalues)):
             tempa.append(ols.pvalues[i]);
         index_n = tempa.index(max(ols.pvalues));
-        #print("index_n",index_n,"\n");
         #removed number max number {max(ols.pvalues)} from input list
         del arr[index_n];
-        #print("arr",arr,"\n");
+        if DEBUG:
+            print("ols.pvalues",ols.pvalues,"\n");
+            print("index_n",index_n,"\n");
+            print("arr",arr,"\n");
         # adds feature that was removed to list
         list_of_features_importance.append(list_of_features[index_n]);
         #print(list_of_features[index_n]);
-        #TODO:ZAB:
         #remove that ferute from the list ???
         del list_of_features[index_n];
         tempa.clear();
     #list_of_features_importance.append(list_of_features[arr[0]]);# this is needed for weights, should be "Act W %"
-    list_of_features_importance.reverse(); 
+    #list_of_features_importance.reverse(); 
     return list_of_features_importance;

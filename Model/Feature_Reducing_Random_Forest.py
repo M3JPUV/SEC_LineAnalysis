@@ -1,6 +1,7 @@
 # feature_reducing_random_forest
 # taks in number of features wanted and a pandas list full list , and value of what we think is the most impreant 
-    #and retuns a list in odrer from  highest to losest 
+    #and retuns a list in odrer from  highest to losest
+DEBUG = False;
 def FRRR(Numer_of_features,df, y):
     #Numer_of_features=12;
     # import required libraries
@@ -13,7 +14,9 @@ def FRRR(Numer_of_features,df, y):
     #df=train.drop(['Team','Conf'], axis=1)
     model = RandomForestRegressor(random_state=1, max_depth=10)
     df=pd.get_dummies(df)
-    #print("y:\n",y);
+    if DEBUG:
+        print("df:\n",df);
+        print("y:\n",y);
     model.fit(df,y)
     features = df.columns
     importances = model.feature_importances_
@@ -30,5 +33,6 @@ def FRRR(Numer_of_features,df, y):
     plt.show()
     '''
     list_of_features_full.reverse();
-    #print(list_of_features_full);
+    if DEBUG:
+        print('list_of_features_full\n',list_of_features_full);
     return list_of_features_full;
