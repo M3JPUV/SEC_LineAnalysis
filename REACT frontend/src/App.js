@@ -9,7 +9,8 @@ import { About } from './About';
 import Sidebar from './components/Sidebar';
 import { Login } from './components/login';
 import {Register} from './components/register';
-import {Layout} from './components/Layout'
+import {Layout} from './components/Layout';
+import {Subscriptions} from './components/Subscriptions';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
                   <Route path="/about" component={About} />
                   <Route path="/Login" component={Login} />
                   <Route path="/Register" component={Register} />
+                  <Route path="/Subscriptions" component={Subscriptions} />
                 </Switch>
               </Layout>
           </Router>

@@ -4,7 +4,6 @@ import axios from 'axios';
 import { Container, Carousel, Row, Col, Jumbotron, Figure , Spinner, Button, Form, Alert} from 'react-bootstrap';
 import styled from 'styled-components';
 
-
 const Styles = styled.div`
 
 `;
@@ -42,10 +41,9 @@ export class Register extends React.Component {
       this.setState({badfailure: false});
     }
     else if (error.response.status == "500") {
-      this.setState({loginStatusA: "Invalid Signup"});
-      this.setState({loginStatusB: ""});
-      this.setState({loginStatusC: ""});
-      this.setState({loginStatusD: "Your sign-up information is invalid"});
+      this.setState({success: false});
+      this.setState({failure: false});
+      this.setState({badfailure: true});
       //Place to reset number of password attempts
     }
   });
@@ -73,29 +71,29 @@ export class Register extends React.Component {
       <Styles>
       <Container fluid>
       <Row>
-        <Col>
-          <Carousel>
-            <Carousel.Item>
-              <img
-                className="d-block w-100"
-                src={require('../images/rsz_w1.jpg')}
-              />
-            </Carousel.Item>
-            <Carousel.Item>
-              <img
-                className="d-block w-100"
-                src={require('../images/rsz_w3.jpg')}
-              />
-            </Carousel.Item>
-            <Carousel.Item>
-              <img
-                className="d-block w-1000"
-                src={require('../images/rsz_w5.jpg')}
-              />
-            </Carousel.Item>
-          </Carousel>
-        </Col>
-      </Row>
+            <Col>
+              <Carousel>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/rsz_w1.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/rsz_w3.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-1000"
+                    src={require("../images/rsz_w5.jpg")}
+                  />
+                </Carousel.Item>
+              </Carousel>
+            </Col>
+          </Row>
         <Row>
           <Col> 
             <h1>Register</h1>

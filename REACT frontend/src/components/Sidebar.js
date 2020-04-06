@@ -43,6 +43,12 @@ class SideNav extends React.Component {
                     css: 'fa fa-registered',
                     key: 5
                   },
+                  {
+                    path: '/Subscriptions',
+                    name: 'Subscriptions',
+                    css: 'fa fa-credit-card',
+                    key: 6
+                  },
               ]
         }
     }

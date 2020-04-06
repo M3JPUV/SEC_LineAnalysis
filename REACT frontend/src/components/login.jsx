@@ -4,7 +4,6 @@ import axios from 'axios';
 import { Container, Carousel, Row, Col, Jumbotron, Figure , Spinner, Button, Form, Alert} from 'react-bootstrap';
 import styled from 'styled-components';
 
-
 const Styles = styled.div`
 
 `;
@@ -65,19 +64,19 @@ export class Login extends React.Component {
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
-                    src={require('../images/rsz_w1.jpg')}
+                    src={require("../images/rsz_w1.jpg")}
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
-                    src={require('../images/rsz_w3.jpg')}
+                    src={require("../images/rsz_w3.jpg")}
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-1000"
-                    src={require('../images/rsz_w5.jpg')}
+                    src={require("../images/rsz_w5.jpg")}
                   />
                 </Carousel.Item>
               </Carousel>
