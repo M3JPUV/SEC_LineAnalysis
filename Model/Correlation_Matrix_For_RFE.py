@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import re
+import sys
 
 #
 OUTPUT_FILE = "Correlation.txt"
@@ -72,16 +73,9 @@ def get_win_correlations(au_corr, n):
         corr_list.append(str(corr_target[i:i+1]))
     return corr_list
 
-# D. have to do this instead of strictly removing n values off end
-#    (stupid issue with corr and python)
-def remove_values(list):
-    pattern = '[0-9]'
-    list = [re.sub(pattern, '', r) for r in list]
-    return list
-
 ### MAIN CODE ############################
 year = ['2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018']
-xlsx =  pd.ExcelFile('NCAAstats.xlsx')
+xlsx =  pd.ExcelFile('NCAAstats.xls')
 
 for i in range(len(year)):
     train = pd.read_excel(xlsx, year[i])
@@ -93,15 +87,20 @@ for i in range(len(year)):
     print("\n\nTop Act Win % Correlations for {}".format(year[i]))
     values = get_top_correlations(df, 20)
 
-    # D. remove numbers from list
-    #values = remove_values(values)
     # D. remove extra information data
     for v in range(len(values)):
         # make a changer where it removes numbers and if there is a 'white space' removes it as well
-        values[v] = values[v][:-26]
+        values[v] = values[v][:-23]
         x = re.findall('\s',values[v][-1]);
-        if x:
-            values[v] = values[v][:-1]
+        while x:
+            if x:
+                values[v] = values[v][:-1]
+                # doudle checking for white space 
+                x = re.findall('\s',values[v][-1]
+        #TODO: check in mysql when time comes 
+        x = re.findall('Opp Pass Att / Sac',values[v])
+        if x and  (v == 0):
+            values[v] = "{}k".format(values[v])
         print(values[v])
         if REDIRECTION:
             sys.stdout.open(OUTPUT_FILE, "w")
