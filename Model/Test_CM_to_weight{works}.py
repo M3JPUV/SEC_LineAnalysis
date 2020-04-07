@@ -3,9 +3,10 @@ year=['2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','201
 weights_from_each_year = {};
 skipped='none';
 import pandas as pd
+import numpy as np;
 # read file 
 xls = pd.ExcelFile('NCAAstats.xls');
-for X in range(6,len(year)):
+for X in range(len(year)):
     data = pd.read_excel(xls, year[X]);
     for i in range(len(data['Conf'].unique())):
          # key for the dic to find later
@@ -17,8 +18,8 @@ for X in range(6,len(year)):
         #gets only conf
         data_for_CM = data_for_CM.loc[data['Conf'] == (data['Conf'].unique()[i])];
         # CM for conf by year 
-        from Correlation_Matrix import *;
-        # note: need one more then you think 
+        from Correlation_Matrix import CorrMatrix;
+        # note: need one more then you think ( so want 20 give 21)
         top_20_list_of_features_from_CM = CorrMatrix(year[X],data_for_CM,21);
         #TODO for weights and BE needs to be at leat 9 teams
         if data_for_CM.shape[0] <= 1 :
@@ -37,8 +38,8 @@ for X in range(6,len(year)):
             print("data_for_CM[top_20_list_of_features_from_CM].shape: ",data_for_CM[top_20_list_of_features_from_CM].shape);
         # data prep for weights : below is done  when funtion is called
         #data_for_MLW = data_for_w.drop(['Team', 'Conf', 'Rk', 'Rk.1', 'Rk.2', 'Rk.3', 'Pyth Rank', 'Opp Pyth Rank'], axis=1)
-        # have to do by conf not team, :/ 
-        from Maximum_Likelihood_Estimation_Weights import*;
+        # have to do by conf
+        from Maximum_Likelihood_Estimation_Weights import MLEW;
         # so the MLW dos not remove things one  at a time
         temp=[];
         temp=top_20_list_of_features_from_CM.copy();
@@ -54,7 +55,6 @@ for X in range(6,len(year)):
                     skipped='';
                 skipped += (KEY+'{Singular matrix}; ');
                 continue;
-                # your error handling block
             else:
                 raise
         if DEBUG:
@@ -62,5 +62,6 @@ for X in range(6,len(year)):
         weights_from_each_year[KEY]= features_by_weight;
     #just in case this does not clear 
     top_20_list_of_features_from_CM.clear();
+# note : useing this {weights_from_each_year} call the congf anf team you need
 print(weights_from_each_year);
 print(skipped);

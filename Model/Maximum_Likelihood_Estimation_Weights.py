@@ -19,7 +19,14 @@ def MLEW(exog,endog):
     print('endog\n',endog);
     print('exog\n',exog);
     '''
-
+    '''
+    class MyProbit(GenericLikelihoodModel):
+        def loglike(self, params):
+            exog = self.exog
+            endog = self.endog
+            q = 2 * endog - 1
+            return stats.norm.logcdf(q*np.dot(exog, params)).sum()
+    '''
     sm_probit_canned = sm.Probit(endog, exog).fit()
     # pritns a nice looking table 
     #print(sm_probit_canned.summary());
