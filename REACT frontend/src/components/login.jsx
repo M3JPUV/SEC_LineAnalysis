@@ -1,9 +1,9 @@
 import React from "react";
 import loginImg from "../football.svg";
 import axios from 'axios';
-import { Container, Carousel, Row, Col, Jumbotron, Figure , Spinner, Button, Form, Alert} from 'react-bootstrap';
+import { Container, Carousel, Row, Col, Jumbotron, Figure , Image, Spinner, Button, Form, Alert} from 'react-bootstrap';
 import styled from 'styled-components';
-
+import Newsticker from 'react-newsticker';
 const Styles = styled.div`
 
 `;
@@ -16,6 +16,8 @@ export class Login extends React.Component {
     success: false,
     bademail: false,
     badpassword: false,
+    test: [" @              Game A Team A vs Team B Score 45-30 Team B", "@       Game B Team C vs Team D Score 45-30 Team C", "      Game C Team E vs Team F Score 45-30 Team F"],
+     
   }
   constructor(props) {
     super(props);
@@ -202,11 +204,22 @@ export class Login extends React.Component {
               </Carousel>
             </Col>
           </Row>
-            <Row>
-              <Col> 
+          <Row>
+            <Col>
+            <Newsticker news={this.state.test} />
+            </Col>
+          </Row>
+          <Row>
+            <Col sm={4}>
+              <Image src={require('../images/UBETCHA272.jpg')} />
+            </Col>
+            <Col sm={8}>
+              <Jumbotron>
                 <h1>Login</h1>
-              </Col>
-            </Row>
+                <p>If you have any issues with logging in, please contact us via the "Contact Us" page. We eill try to get back to you as quickly as possible.</p>
+              </Jumbotron>
+            </Col>
+          </Row>
             <Row>
               <Col>
               <Form>

@@ -1,9 +1,9 @@
 import React from "react";
 import loginImg from "../football.svg";
 import axios from 'axios';
-import { Container, Carousel, Row, Col, Jumbotron, Figure , Spinner, Button, Form, Alert} from 'react-bootstrap';
+import { Container, Carousel, Row, Col, Jumbotron, Figure , Spinner, Button, Form, Image, Alert} from 'react-bootstrap';
 import styled from 'styled-components';
-
+import Newsticker from 'react-newsticker';
 const Styles = styled.div`
 
 `;
@@ -18,6 +18,8 @@ export class Register extends React.Component {
     success: false,
     failure: false,
     badfailure: false,
+    test: [" @              Game A Team A vs Team B Score 45-30 Team B", "@       Game B Team C vs Team D Score 45-30 Team C", "      Game C Team E vs Team F Score 45-30 Team F"],
+     
   }
   constructor(props) {
     super(props);
@@ -214,11 +216,25 @@ export class Register extends React.Component {
               </Carousel>
             </Col>
           </Row>
-        <Row>
-          <Col> 
-            <h1>Register</h1>
-          </Col>
-        </Row>
+          <Row>
+            <Col>
+            <Newsticker news={this.state.test} />
+            </Col>
+          </Row>
+          <Row>
+            <Col sm={4}>
+              <Image src={require('../images/UBETCHA272.jpg')} />
+            </Col>
+            <Col sm={8}>
+              <Jumbotron>
+                <h1>Register</h1>
+                <p>Please sign up and create an account with us!
+                  Your email will only be used to recieve offers and updates from us.
+                  No third party ads or usage!!
+                </p>
+              </Jumbotron>
+            </Col>
+          </Row>
         <Row>
           <Col>
           <Form>

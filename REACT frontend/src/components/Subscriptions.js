@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect} from "react";
 import { Container, Carousel, Row, Col, Jumbotron, Figure , Alert, Image, Button} from 'react-bootstrap';
 import styled from 'styled-components';
+import Newsticker from 'react-newsticker';
 const Styles = styled.div`
 `;
 
@@ -10,6 +11,8 @@ export class Subscriptions extends React.Component{
         basic: true,
         advanced: false,
         pro: false,
+        test: [" @              Game A Team A vs Team B Score 45-30 Team B", "@       Game B Team C vs Team D Score 45-30 Team C", "      Game C Team E vs Team F Score 45-30 Team F"],
+     
     } 
 
     
@@ -162,13 +165,18 @@ export class Subscriptions extends React.Component{
             </Col>
           </Row>
           <Row>
+            <Col>
+            <Newsticker news={this.state.test} />
+            </Col>
+          </Row>
+          <Row>
             <Col sm={4}>
               <Image src={require('../images/UBETCHA272.jpg')} />
             </Col>
             <Col sm={8}>
               <Jumbotron>
                 <h1>Subscriptions</h1>
-                <p>Here is the place to see the subscriptions we offer (week-to-week or by season) for our Advanced and Pro Models.</p>
+                <p>Here is the place to see the subscriptions we offer (week-to-week or by season) for our Advanced and Pro Models. For more information on why you should consider our Subscriptions, look in the "Subscription" tab in our About Us page.</p>
               </Jumbotron>
             </Col>
           </Row>

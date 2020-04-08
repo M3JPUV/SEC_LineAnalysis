@@ -15,12 +15,11 @@ import axios from "axios";
 import Newsticker from 'react-newsticker';
 const Styles = styled.div``;
 
-export class Home extends React.Component {
+export class Basic extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       GameCount: 0,
-      test: [" @              Game A Team A vs Team B Score 45-30 Team B", "@       Game B Team C vs Team D Score 45-30 Team C", "      Game C Team E vs Team F Score 45-30 Team F"],
       Iterator: 0,
       Games: [],
       HomeLinks: [],
@@ -28,6 +27,8 @@ export class Home extends React.Component {
       AwayLinks: [],
       PwinTLinks: [],
       loaded: false,
+      test: [" @              Game A Team A vs Team B Score 45-30 Team B", "@       Game B Team C vs Team D Score 45-30 Team C", "      Game C Team E vs Team F Score 45-30 Team F"],
+     
     };
   }
 
@@ -224,23 +225,18 @@ export class Home extends React.Component {
             </Col>
             <Col sm={8}>
               <Jumbotron>
-                <h1>Welcome to uBETcha!!!</h1>
+                <h1>Basic Model</h1>
                 <p>
-                  We are a College football betting model website, to learn
-                  about how we make our model and paid subscriptions, click the
-                  'About' tab at the top of your screen. Below is our top 3
-                  games for the week.
+                  Welocme to the basic model, this is free to the public
+                  and gives our model's prediction for each of the following games for the week.
+                  For more information on how our model works, check out our "About Us" page.
                 </p>
               </Jumbotron>
             </Col>
           </Row>
           <Row>
             <Col>
-    { this.state.loaded && <React.Fragment><h1>Game 1</h1><GameBox away={(this.state.AwayLinks[0].toString())} VorA={(this.state.VorALinks[0].toString())} home={(this.state.HomeLinks[0].toString())} PwinT={(this.state.PwinTLinks[0].toString())} /> </React.Fragment>
-    }
-    { this.state.loaded && <React.Fragment><h1>Game 2</h1><GameBox away={(this.state.AwayLinks[1].toString())} VorA={(this.state.VorALinks[1].toString())} home={(this.state.HomeLinks[1].toString())} PwinT={(this.state.PwinTLinks[1].toString())} /> </React.Fragment>
-    }
-    { this.state.loaded && <React.Fragment><h1>Game 3</h1><GameBox away={(this.state.AwayLinks[2].toString())} VorA={(this.state.VorALinks[2].toString())} home={(this.state.HomeLinks[2].toString())} PwinT={(this.state.PwinTLinks[2].toString())} /> </React.Fragment>
+    { this.state.loaded && this.state.Games.map(game => (<React.Fragment><h1>Game {this.state.Games.indexOf(game) + 1}</h1><GameBox away={(this.state.AwayLinks[this.state.Games.indexOf(game)].toString())} VorA={(this.state.VorALinks[this.state.Games.indexOf(game)].toString())} home={(this.state.HomeLinks[this.state.Games.indexOf(game)].toString())} PwinT={(this.state.PwinTLinks[this.state.Games.indexOf(game)].toString())} /> </React.Fragment>)   ) 
     }
             </Col>
           </Row>

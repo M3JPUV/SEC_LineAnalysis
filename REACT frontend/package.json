@@ -9,10 +9,13 @@
     "react": "^16.10.2",
     "react-bootstrap": "^1.0.0",
     "react-dom": "^16.10.2",
+    "react-newsticker": "^1.0.3",
     "react-router-dom": "^5.0.1",
     "react-scripts": "^3.4.1",
     "react-simple-image-slider": "^1.0.3",
     "react-slideshow-image": "^1.4.0",
+    "react-text-loop": "^2.3.0",
+    "react-ticker": "^1.2.2",
     "styled-components": "^4.3.2",
     "yarn": "^1.22.4"
   },

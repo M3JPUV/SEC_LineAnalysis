@@ -14,9 +14,11 @@ const Styles = styled.div`
     &:hover { color: red; }
   }
   .form-center {
-    position: absolute !important;
     left: 25%;
     right: 25%;
+  }
+  .container{
+    overflow-y: scroll;
   }
 `;
 
@@ -32,6 +34,7 @@ export const NavigationBar = () => (
           <Nav.Item><Nav.Link href="/Login">Login</Nav.Link></Nav.Item>
           <Nav.Item><Nav.Link href="/Register">Register</Nav.Link></Nav.Item>
           <Nav.Item><Nav.Link href="/Subscriptions">Subscriptions</Nav.Link></Nav.Item>
+          <Nav.Item><Nav.Link href="/Basic">Basic</Nav.Link></Nav.Item>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

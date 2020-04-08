@@ -11,6 +11,7 @@ import { Login } from './components/login';
 import {Register} from './components/register';
 import {Layout} from './components/Layout';
 import {Subscriptions} from './components/Subscriptions';
+import {Basic} from './components/Basic';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
                   <Route path="/Login" component={Login} />
                   <Route path="/Register" component={Register} />
                   <Route path="/Subscriptions" component={Subscriptions} />
+                  <Route path="/Basic" component={Basic} />
                 </Switch>
               </Layout>
           </Router>

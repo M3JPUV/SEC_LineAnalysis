@@ -23,7 +23,7 @@ class SideNav extends React.Component {
                   path: '/', /* path is used as id to check which NavItem is active basically */
                   name: 'Home',
                   css: 'fa fa-fw fa-home',
-                  key: 1 /* Key is required, else console throws error. Does this please you Mr. Browser?! */
+                  key: 1 
                 },
                 {
                   path: '/about',
@@ -46,8 +46,32 @@ class SideNav extends React.Component {
                   {
                     path: '/Subscriptions',
                     name: 'Subscriptions',
-                    css: 'fa fa-credit-card',
+                    css: 'fas fa-donate',
                     key: 6
+                  },
+                  {
+                    path: '/Basic',
+                    name: 'Basic',
+                    css: 'fas fa-bold',
+                    key: 7
+                  },
+                  {
+                    path: '/Basic',
+                    name: 'Advanced',
+                    css: 'fab fa-adn',
+                    key: 8
+                  },
+                  {
+                    path: '/Basic',
+                    name: 'Pro',
+                    css: 'fas fa-parking',
+                    key: 9
+                  },
+                  {
+                    path: '/Basic',
+                    name: 'Pro',
+                    css: 'fas fa-phone-volume',
+                    key: 10
                   },
               ]
         }
