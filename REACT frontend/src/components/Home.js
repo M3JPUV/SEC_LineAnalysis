@@ -19,6 +19,7 @@ export class Home extends React.Component {
     super(props);
     this.state = {
       GameCount: 0,
+      Iterator: 0,
       Games: [],
       HomeLinks: [],
       VorALinks: [],
@@ -39,23 +40,23 @@ export class Home extends React.Component {
 
        var i = 0;
        for (i=0; i < this.state.GameCount; i++) {
+         if (i === 0){
          var h = this.state.HomeLinks;
-         h.push(this.state.Games[i].homeTeam);
          var v = this.state.VorALinks;
-         v.push(this.state.Games[i].VSorAT);
          var a = this.state.AwayLinks;
-         a.push(this.state.Games[i].awayTeam);
          var p = this.state.PwinTLinks;
+         }
+         a.push(this.state.Games[i].awayTeam);
+         v.push(this.state.Games[i].VSorAT);
+         h.push(this.state.Games[i].homeTeam);
          p.push(this.state.Games[i].PwinT)
+         if (i == this.state.GameCount -1){
          this.setState({HomeLinks: h});
          this.setState({VorALinks: v});
          this.setState({AwayLinks: a});
          this.setState({PwinTLinks: p});
-         console.log(this.state.HomeLinks);
-         console.log(this.state.VorALinks);
-         console.log(this.state.AwayLinks);
-         console.log(this.state.PwinTLinks);
          this.setState({loaded: true});
+         }
        }
        
      }).catch(error => console.log(error));
@@ -83,8 +84,128 @@ export class Home extends React.Component {
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
-                    className="d-block w-1000"
-                    src={require("../images/rsz_w5.jpg")}
+                    className="d-block w-100"
+                    src={require("../images/q1.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p1.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p2.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p3.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p4.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p5.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p6.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p7.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p8.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p9.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p10.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p11.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p12.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p13.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p14.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p15.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p16.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p17.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p18.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p19.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p20.jpg")}
                   />
                 </Carousel.Item>
               </Carousel>
@@ -108,7 +229,8 @@ export class Home extends React.Component {
           </Row>
           <Row>
             <Col>
-    { this.state.loaded && <GameBox away={(this.state.AwayLinks[0].toString())} VorA={(this.state.VorALinks[0].toString())} home={(this.state.HomeLinks[0].toString())} PwinT={(this.state.PwinTLinks[0].toString())} /> }
+    { this.state.loaded && this.state.Games.map(game => (<React.Fragment><h1>Game {this.state.Games.indexOf(game) + 1}</h1><GameBox away={(this.state.AwayLinks[this.state.Games.indexOf(game)].toString())} VorA={(this.state.VorALinks[this.state.Games.indexOf(game)].toString())} home={(this.state.HomeLinks[this.state.Games.indexOf(game)].toString())} PwinT={(this.state.PwinTLinks[this.state.Games.indexOf(game)].toString())} /> </React.Fragment>)   ) 
+    }
             </Col>
           </Row>
         </Container>

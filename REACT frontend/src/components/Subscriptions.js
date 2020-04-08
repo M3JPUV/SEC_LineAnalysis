@@ -19,7 +19,7 @@ export class Subscriptions extends React.Component{
         <Container fluid>
         <Row>
             <Col>
-              <Carousel>
+            <Carousel>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
@@ -34,8 +34,128 @@ export class Subscriptions extends React.Component{
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
-                    className="d-block w-1000"
-                    src={require("../images/rsz_w5.jpg")}
+                    className="d-block w-100"
+                    src={require("../images/q1.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p1.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p2.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p3.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p4.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p5.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p6.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p7.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p8.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p9.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p10.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p11.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p12.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p13.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p14.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p15.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p16.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p17.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p18.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p19.jpg")}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={require("../images/p20.jpg")}
                   />
                 </Carousel.Item>
               </Carousel>
@@ -94,7 +214,7 @@ export class Subscriptions extends React.Component{
                         width={172}
                         height={131}
                         alt="172x131"
-                        src={require('../images/DollarBaseSmall.jpg')}
+                        src={require('../images/1dollarsign.png')}
                     />
                     <Figure.Caption>
                         Basic: Free to the public.
@@ -108,7 +228,7 @@ export class Subscriptions extends React.Component{
                         width={172}
                         height={131}
                         alt="172x131"
-                        src={require('../images/DollarBaseSmall.jpg')}
+                        src={require('../images/2dollarsign.png')}
                     />
                     <Figure.Caption>
                         Advanced: $4.99 USD /week
@@ -121,7 +241,7 @@ export class Subscriptions extends React.Component{
                         width={172}
                         height={131}
                         alt="172x131"
-                        src={require('../images/DollarBaseSmall.jpg')}
+                        src={require('../images/3dollarsign.png')}
                     />
                     <Figure.Caption>
                         Pro: $14.99 USD /week
@@ -141,7 +261,7 @@ export class Subscriptions extends React.Component{
                         width={172}
                         height={131}
                         alt="172x131"
-                        src={require('../images/DollarBaseSmall.jpg')}
+                        src={require('../images/1dollarsign.png')}
                     />
                     <Figure.Caption>
                         Basic: Free to the public.
@@ -155,7 +275,7 @@ export class Subscriptions extends React.Component{
                         width={172}
                         height={131}
                         alt="172x131"
-                        src={require('../images/DollarBaseSmall.jpg')}
+                        src={require('../images/2dollarsign.png')}
                     />
                     <Figure.Caption>
                         Advanced: $35.99 USD /season
@@ -168,7 +288,7 @@ export class Subscriptions extends React.Component{
                         width={172}
                         height={131}
                         alt="172x131"
-                        src={require('../images/DollarBaseSmall.jpg')}
+                        src={require('../images/3dollarsign.png')}
                     />
                     <Figure.Caption>
                         Pro: $107.99 USD /season
