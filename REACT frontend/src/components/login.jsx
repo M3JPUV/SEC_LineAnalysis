@@ -1,7 +1,6 @@
 import React from "react";
-import loginImg from "../football.svg";
 import axios from 'axios';
-import { Container, Carousel, Row, Col, Jumbotron, Figure , Image, Spinner, Button, Form, Alert} from 'react-bootstrap';
+import { Container, Carousel, Row, Col, Jumbotron , Image, Button, Form, Alert} from 'react-bootstrap';
 import styled from 'styled-components';
 import Newsticker from 'react-newsticker';
 const Styles = styled.div`
@@ -11,6 +10,7 @@ const Styles = styled.div`
 
 export class Login extends React.Component {
   state = {
+    token: '',
     email: '',
     password: '',
     success: false,
@@ -25,26 +25,31 @@ export class Login extends React.Component {
     this.handlePChange = this.handlePChange.bind(this);
   }
 
+  sendToken = () => {
+    console.log(this.state.token);
+    this.props.parentCallback(this.state.token);
+  }
+
   onSubmit = async () => {
     this.setState({show: true});
-    await axios.post('http://138.47.204.105:5000/api/login/', { "Email": this.state.email, "Password": this.state.password}).then(value => {
+    await axios.post('http://138.47.204.105:5000/api/login/', { "Email": this.state.email, "Password": this.state.password}).then(res => {
+      this.setState({token: res.data.toString()});
       this.setState({success: true});
       this.setState({bademail: false});
       this.setState({badpassword: false});
-      //Place to reset number of password attempts
+      this.sendToken();
     }).catch(error => {
-      console.log(error.response.status);
-    if (error.response.status == "402") {
+    if (error.response.status.toString() == "402") {
       this.setState({bademail: true});
       this.setState({success: false});
       this.setState({badpassword: false});
     }
-    else if (error.response.status == "401") {
+    else if (error.response.status.toString() == "401") {
       this.setState({success: false});
       this.setState({bademail: false});
       this.setState({badpassword: true});
       //Place for number of invalid password attempts
-    }});
+    }}).catch(err => {});
   }
 
   handleEChange(e) {
@@ -67,138 +72,161 @@ export class Login extends React.Component {
                   <img
                     className="d-block w-100"
                     src={require("../images/rsz_w1.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/rsz_w3.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/q1.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p1.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p2.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p3.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p4.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p5.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p6.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p7.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p8.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p9.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p10.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p11.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p12.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p13.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p14.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p15.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p16.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p17.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p18.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p19.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p20.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
               </Carousel>

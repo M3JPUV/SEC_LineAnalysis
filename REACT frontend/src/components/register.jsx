@@ -1,7 +1,6 @@
 import React from "react";
-import loginImg from "../football.svg";
 import axios from 'axios';
-import { Container, Carousel, Row, Col, Jumbotron, Figure , Spinner, Button, Form, Image, Alert} from 'react-bootstrap';
+import { Container, Carousel, Row, Col, Jumbotron, Button, Form, Image, Alert} from 'react-bootstrap';
 import styled from 'styled-components';
 import Newsticker from 'react-newsticker';
 const Styles = styled.div`
@@ -37,12 +36,12 @@ export class Register extends React.Component {
       this.setState({badfailure: false});
     }).catch(error => {
       console.log(error.response.status);
-    if (error.response.status == "400") {
+    if (error.response.status === "400") {
       this.setState({success: false});
       this.setState({failure: true});
       this.setState({badfailure: false});
     }
-    else if (error.response.status == "500") {
+    else if (error.response.status === "500") {
       this.setState({success: false});
       this.setState({failure: false});
       this.setState({badfailure: true});
@@ -79,138 +78,161 @@ export class Register extends React.Component {
                   <img
                     className="d-block w-100"
                     src={require("../images/rsz_w1.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/rsz_w3.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/q1.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p1.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p2.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p3.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p4.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p5.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p6.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p7.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p8.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p9.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p10.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p11.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p12.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p13.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p14.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p15.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p16.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p17.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p18.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p19.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
                     src={require("../images/p20.jpg")}
+                    alt=""
                   />
                 </Carousel.Item>
               </Carousel>

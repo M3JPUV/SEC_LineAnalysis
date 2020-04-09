@@ -13,25 +13,49 @@ import {Layout} from './components/Layout';
 import {Subscriptions} from './components/Subscriptions';
 import {Basic} from './components/Basic';
 
-function App() {
-  return (
-    <React.Fragment>
-          <Router>
-            <NavigationBar />
-            <Sidebar />
-              <Layout>
-                <Switch>
-                  <Route exact path="/" component={Home} />
-                  <Route path="/about" component={About} />
-                  <Route path="/Login" component={Login} />
-                  <Route path="/Register" component={Register} />
-                  <Route path="/Subscriptions" component={Subscriptions} />
-                  <Route path="/Basic" component={Basic} />
-                </Switch>
-              </Layout>
-          </Router>
-    </React.Fragment>
-  );
-}
+export default class App extends React.Component {
+    constructor(props){
+      super(props);
+      this.state = {
+        token: "holder",
+      }
+    }
 
-export default App;
+    handleToken = (data) => {
+      this.setState({token: data});
+      console.log(this.state.token);
+    }
+
+    render() {
+      return(
+    <React.Fragment>
+      <Router>
+        <NavigationBar />
+        <Sidebar />
+        <Layout>
+          <Switch>
+            <Route exact path="/">
+              <Home token={this.state.token}/>
+            </Route>
+            <Route path="/about">
+              <About token={this.state.token}/>
+            </Route> 
+            <Route path="/Login">
+              <Login token={this.state.token} parentCallback = {this.handleToken}/>
+            </Route>
+            <Route path="/Register">
+              <Register token={this.state.token}/>
+            </Route>
+            <Route path="/Subscriptions">
+              <Subscriptions token={this.state.token}/>
+            </Route>
+            <Route path="/Basic">
+              <Basic token={this.state.token}/>
+            </Route>
+          </Switch>
+        </Layout>
+      </Router>
+    </React.Fragment>
+    );
+  }
+}

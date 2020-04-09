@@ -1,10 +1,8 @@
 import React from "react";
 import {
   Container,
-  Carousel,
   Row,
   Col,
-  Jumbotron,
   Figure,
   Spinner,
 } from "react-bootstrap";
