@@ -23,7 +23,6 @@ export default class App extends React.Component {
 
     handleToken = (data) => {
       this.setState({token: data});
-      console.log(this.state.token);
     }
 
     render() {

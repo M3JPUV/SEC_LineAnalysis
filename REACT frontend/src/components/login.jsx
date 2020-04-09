@@ -26,7 +26,6 @@ export class Login extends React.Component {
   }
 
   sendToken = () => {
-    console.log(this.state.token);
     this.props.parentCallback(this.state.token);
   }
 
