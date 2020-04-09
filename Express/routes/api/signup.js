@@ -25,7 +25,7 @@ router.post('/', JSONparser, (req, res) => {
     port: 3306,
     dialect: 'mysql',
     //Dont allow logging
-    logging: false
+    logging: true
     });
     //L. Database connection object
     sequelize.authenticate().then(() => {

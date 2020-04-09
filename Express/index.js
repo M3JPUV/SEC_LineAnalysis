@@ -32,6 +32,9 @@ app.use('/api/members', require('./routes/api/members'));
 //L. Check login token
 app.use('/api/checkTokens', require('./routes/security/tokens'));
 
+//L. Test gamebox
+app.use('/api/gamebox', require('./routes/api/gamebox'));
+
 //L. Sign up
 app.use('/api/signup', require('./routes/api/signup'));
 
