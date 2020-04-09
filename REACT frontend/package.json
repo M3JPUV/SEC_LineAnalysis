@@ -1,15 +1,23 @@
 {
-  "name": "ubetcha",
-  "version": "0.2.0",
+  "name": "nav-tutorial",
+  "version": "0.1.0",
   "private": true,
   "dependencies": {
     "axios": "^0.19.2",
-    "delay": "^4.2.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-pose": "^4.0.8",
-    "react-scripts": "^3.4.0",
-    "react-spring": "^8.0.20"
+    "bootstrap": "^4.4.1",
+    "node-sass": "^4.13.1",
+    "react": "^16.10.2",
+    "react-bootstrap": "^1.0.0",
+    "react-dom": "^16.10.2",
+    "react-newsticker": "^1.0.3",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "^3.4.1",
+    "react-simple-image-slider": "^1.0.3",
+    "react-slideshow-image": "^1.4.0",
+    "react-text-loop": "^2.3.0",
+    "react-ticker": "^1.2.2",
+    "styled-components": "^4.3.2",
+    "yarn": "^1.22.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -31,8 +39,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "node-sass": "^4.13.1"
   }
 }
