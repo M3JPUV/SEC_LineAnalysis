@@ -16,7 +16,7 @@ import axios from "axios";
 import Newsticker from 'react-newsticker';
 const Styles = styled.div``;
 
-export class Advanced extends React.Component {
+export class Pro extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -83,7 +83,7 @@ export class Advanced extends React.Component {
    verifyLogin = () => {
     axios.post('http://138.47.204.105:5000/api/checkTokens/', { "Token": this.props.token, "Login": this.props.LC }).then(res => {
       if (res.data != null ){
-        if (res.data.Advanced.toString() === "1"){
+        if (res.data.Pro.toString() === "1"){
           this.setState({verifiedLogin: true});
         }
     }
@@ -272,11 +272,11 @@ export class Advanced extends React.Component {
             </Col>
             <Col sm={8}>
               <Jumbotron>
-                <h1>Advanced Model</h1>
+                <h1>Pro Model</h1>
                 <p>
-                  Welocme to the ADVANCED model. Please select a game for the advanced metrics by 
-                  clicking on the "Show advanced Metrics" button adjacent to the game and it will swap to that games view.
-                  You will be able to adjust a few of the models top variables for that game. Adjust them as you see fit and hit the dark "Submit Changes" button.
+                  Welocme to the PRO model. Please select a game for the advanced metrics by 
+                  clicking on the "See Pro-Model Metrics" button adjacent to the game and it will swap to that games view.
+                  You will be able to adjust a ALL of the models variables for that game. Adjust them as you see fit and hit the dark "Submit Changes" button.
                   Thank you so much for being a patron of uBETcha!!!
                 </p>
               </Jumbotron>
@@ -287,12 +287,11 @@ export class Advanced extends React.Component {
             { !this.state.verifiedLogin && (<Alert variant="danger">
                   <Alert.Heading>Attention</Alert.Heading>
                   <p>
-                    Note that you are currently not logged in as a ADVANCED user, if you would like access to more features, please consider purchasing an ADVANCED subscription.
-                    Additionally, all PRO users also have access to ADVANCED Metrics.
+                    Note that you are currently not logged in as a PRO user, if you would like access to more features, please consider purchasing an PRO subscription.
                   </p>
                   <hr />
                   <p className="mb-0">
-                    If you have purchased an ADVANCED subscription, please login first. 
+                    If you have purchased an PRO subscription, please login first. 
                   </p>
                 </Alert>) }
             </Col>
@@ -309,7 +308,7 @@ export class Advanced extends React.Component {
           </ListGroup.Item>
         </Col>
         <Col sm={3}>
-          <Button variant="danger" size="lg" onClick={() => this.selectGame(this.state.Games.indexOf(game))}> Show Advanced Metrics </Button>{' '}
+          <Button variant="danger" size="lg" onClick={() => this.selectGame(this.state.Games.indexOf(game))}>See Pro-Model Metrics </Button>{' '}
         </Col>
       </Row>
     </React.Fragment>)   ) 

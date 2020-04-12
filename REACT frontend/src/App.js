@@ -13,6 +13,7 @@ import {Layout} from './components/Layout';
 import {Subscriptions} from './components/Subscriptions';
 import {Basic} from './components/Basic';
 import {Advanced} from './components/Advanced'
+import {Pro} from './components/Pro'
 
 export default class App extends React.Component {
     constructor(props){
@@ -59,6 +60,9 @@ export default class App extends React.Component {
             </Route>
             <Route path="/Advanced">
               <Advanced token={this.state.token} LC={this.state.loginCredentials}/>
+            </Route>
+            <Route path="/Pro">
+              <Pro token={this.state.token} LC={this.state.loginCredentials}/>
             </Route>
           </Switch>
         </Layout>

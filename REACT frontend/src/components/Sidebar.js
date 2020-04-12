@@ -62,7 +62,7 @@ class SideNav extends React.Component {
                     key: 8
                   },
                   {
-                    path: '/Basic',
+                    path: '/Pro',
                     name: 'Pro',
                     css: 'fas fa-parking',
                     key: 9
