@@ -56,7 +56,7 @@ class SideNav extends React.Component {
                     key: 7
                   },
                   {
-                    path: '/Basic',
+                    path: '/Advanced',
                     name: 'Advanced',
                     css: 'fab fa-adn',
                     key: 8
@@ -69,7 +69,7 @@ class SideNav extends React.Component {
                   },
                   {
                     path: '/Basic',
-                    name: 'Pro',
+                    name: 'Contact Us',
                     css: 'fas fa-phone-volume',
                     key: 10
                   },

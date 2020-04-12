@@ -16,6 +16,7 @@ export class Login extends React.Component {
     success: false,
     bademail: false,
     badpassword: false,
+    badfailure: false,
     test: [" @              Game A Team A vs Team B Score 45-30 Team B", "@       Game B Team C vs Team D Score 45-30 Team C", "      Game C Team E vs Team F Score 45-30 Team F"],
      
   }
@@ -25,30 +26,35 @@ export class Login extends React.Component {
     this.handlePChange = this.handlePChange.bind(this);
   }
 
-  sendToken = () => {
-    this.props.parentCallback(this.state.token);
+  sendCredentials = () => {
+    this.props.parentCallbackT(this.state.token);
+    this.props.parentCallbackL(this.state.email);
   }
 
   onSubmit = async () => {
-    this.setState({show: true});
-    await axios.post('http://138.47.204.105:5000/api/login/', { "Email": this.state.email, "Password": this.state.password}).then(res => {
-      this.setState({token: res.data.toString()});
-      this.setState({success: true});
-      this.setState({bademail: false});
-      this.setState({badpassword: false});
-      this.sendToken();
-    }).catch(error => {
-    if (error.response.status.toString() == "402") {
-      this.setState({bademail: true});
-      this.setState({success: false});
-      this.setState({badpassword: false});
+    if (!this.isEmptyOrSpaces(this.state.email) || !this.isEmptyOrSpaces(this.state.password)){
+        await axios.post('http://138.47.204.105:5000/api/login/', { "Email": this.state.email, "Password": this.state.password}).then(res => {
+          this.setState({token: res.data.toString()});
+          this.setState({success: true});
+          this.setState({bademail: false});
+          this.setState({badpassword: false});
+          this.setState({badfailure: false});
+          this.sendCredentials();
+        }).catch(error => {
+        if (error.response.status.toString() == "402") {
+          this.setState({bademail: true});
+          this.setState({success: false});
+          this.setState({badpassword: false});
+        }
+        else if (error.response.status.toString() == "401") {
+          this.setState({success: false});
+          this.setState({bademail: false});
+          this.setState({badpassword: true});
+        }}).catch(err => {});
+      }
+    else{
+      this.setState({badfailure: true});
     }
-    else if (error.response.status.toString() == "401") {
-      this.setState({success: false});
-      this.setState({bademail: false});
-      this.setState({badpassword: true});
-      //Place for number of invalid password attempts
-    }}).catch(err => {});
   }
 
   handleEChange(e) {
@@ -58,7 +64,9 @@ export class Login extends React.Component {
     this.setState({ password: e.target.value })
   }
 
-  //API goes here
+  isEmptyOrSpaces = (str) => {
+    return str === null || str.match(/^ *$/) !== null;
+}
 
   render() {
     return (
@@ -310,6 +318,16 @@ export class Login extends React.Component {
                     You may now visit other pages on our site! 
                   </p>
                 </Alert>) }
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+              { this.state.badfailure && (<Alert variant="danger">
+              <Alert.Heading>Signup Error!</Alert.Heading>
+              <p>
+                Please type something in each field.
+              </p>
+            </Alert>) }
               </Col>
             </Row>
         </Container>

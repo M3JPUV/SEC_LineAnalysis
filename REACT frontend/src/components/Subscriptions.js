@@ -2,21 +2,34 @@ import React from "react";
 import { Container, Carousel, Row, Col, Jumbotron, Figure , Alert, Image, Button} from 'react-bootstrap';
 import styled from 'styled-components';
 import Newsticker from 'react-newsticker';
+import axios from 'axios';
 const Styles = styled.div`
 `;
 
 export class Subscriptions extends React.Component{
 
     state = {
-        token: '',
-        basic: true,
+        basic: false,
         advanced: false,
         pro: false,
         test: [" @              Game A Team A vs Team B Score 45-30 Team B", "@       Game B Team C vs Team D Score 45-30 Team C", "      Game C Team E vs Team F Score 45-30 Team F"],
      
     } 
   componentDidMount() {
-    this.setState({token: this.props.token});
+    axios.post('http://138.47.204.105:5000/api/checkTokens/', { "Token": this.props.token, "Login": this.props.LC }).then(res => {
+      if (res.data != null ){
+        if (res.data.Basic.toString() === "1"){
+          this.setState({basic: true});
+        }
+        else if (res.data.Advanced.toString() === "1"){
+          this.setState({advanced: true});
+        }
+        else if (res.data.Pro.toString() === "1"){
+          this.setState({pro: true});
+        }
+    }
+    }).catch(error => { });
+
   }
     
   render() {
@@ -211,7 +224,7 @@ export class Subscriptions extends React.Component{
                 { this.state.basic && (<Alert variant="success">
                   <Alert.Heading>Attention</Alert.Heading>
                   <p>
-                    Note that you are currently a BASIC user (if this is incorrect, please Login)
+                    Note that you are currently a BASIC user, if you would like access to more features, please consider purchasing one of the following subscriptions.
                   </p>
                 </Alert>) }
               </Col>
@@ -221,7 +234,7 @@ export class Subscriptions extends React.Component{
                 { this.state.advanced && (<Alert variant="success">
                   <Alert.Heading>Attention</Alert.Heading>
                   <p>
-                    Note that you are currently an ADVANCED user.
+                    Note that you are currently an ADVANCED user. For even MORE features please consider upgrading to PRO!!
                   </p>
                 </Alert>) }
               </Col>

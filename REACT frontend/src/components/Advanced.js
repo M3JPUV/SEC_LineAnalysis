@@ -1,84 +1,102 @@
 import React from "react";
-import axios from 'axios';
-import { Container, Carousel, Row, Col, Jumbotron, Button, Form, Image, Alert} from 'react-bootstrap';
-import styled from 'styled-components';
+import {
+  Container,
+  Carousel,
+  Row,
+  Col,
+  Jumbotron,
+  Image,
+  ListGroup,
+  Button,
+  Alert,
+} from "react-bootstrap";
+import styled from "styled-components";
+import { GameBox } from "./GameBox.jsx";
+import axios from "axios";
 import Newsticker from 'react-newsticker';
-const Styles = styled.div`
+const Styles = styled.div``;
 
-`;
-
-
-export class Register extends React.Component {
-  state = {
-    firstname: '',
-    lastname: '',
-    email: '',
-    password: '',
-    success: false,
-    failure: false,
-    badfailure: false,
-    test: [" @              Game A Team A vs Team B Score 45-30 Team B", "@       Game B Team C vs Team D Score 45-30 Team C", "      Game C Team E vs Team F Score 45-30 Team F"],
-     
-  }
+export class Advanced extends React.Component {
   constructor(props) {
     super(props);
-    this.handleEChange = this.handleEChange.bind(this);
-    this.handlePChange = this.handlePChange.bind(this);
-    this.handleFChange = this.handleFChange.bind(this);
-    this.handleLChange = this.handleLChange.bind(this);
+    this.state = {
+      currentgame: -1,
+      GameCount: 0,
+      Games: [],
+      HomeLinks: [],
+      VorALinks: [],
+      AwayLinks: [],
+      PwinTLinks: [],
+      loaded: false,
+      verifiedLogin: false,
+      selectGame: true,
+      Metrics: false,
+      test: [" @              Game A Team A vs Team B Score 45-30 Team B", "@       Game B Team C vs Team D Score 45-30 Team C", "      Game C Team E vs Team F Score 45-30 Team F"],
+     
+    };
   }
 
-  onSubmit = async () => {
-    if (!this.isEmptyOrSpaces(this.state.email) || !this.isEmptyOrSpaces(this.state.password) || !this.isEmptyOrSpaces(this.state.firstname) || !this.isEmptyOrSpaces(this.state.lastname)){
-        await axios.post('http://138.47.204.105:5000/api/signup/', { "FirstName": this.state.firstname, "LastName": this.state.lastname, "Email": this.state.email, "Password": this.state.password}).then(value => {
-          this.setState({success: true});
-          this.setState({failure: false});
-          this.setState({badfailure: false});
-        }).catch(error => {
-        if (error.response.status.toString() === "400") {
-          this.setState({success: false});
-          this.setState({failure: true});
-          this.setState({badfailure: false});
+   componentDidMount(){
+     axios.get("http://138.47.204.105:5000/api/gamebox").then(res => {
+       this.verifyLogin();
+       this.setState({Games: JSON.stringify(res.data)});
+       this.setState({GameCount: this.state.Games.length});
+      this.setState({Games: JSON.parse(this.state.Games)});
+      this.setState({GameCount: this.state.Games.length});
+
+       var i = 0;
+       for (i=0; i < this.state.GameCount; i++) {
+         if (i === 0){
+         var h = this.state.HomeLinks;
+         var v = this.state.VorALinks;
+         var a = this.state.AwayLinks;
+         var p = this.state.PwinTLinks;
+         }
+         a.push(this.state.Games[i].awayTeam);
+         v.push(this.state.Games[i].VSorAT);
+         h.push(this.state.Games[i].homeTeam);
+         p.push(this.state.Games[i].PwinT)
+         if (i === this.state.GameCount -1){
+         this.setState({HomeLinks: h});
+         this.setState({VorALinks: v});
+         this.setState({AwayLinks: a});
+         this.setState({PwinTLinks: p});
+         this.setState({loaded: true});
+         }
+       }
+       
+     }).catch(error => console.log(error));
+     
+   }
+
+   selectGame = (choice) => {
+      this.setState({currentgame: parseInt(choice)});
+      this.setState({selectGame: false});
+      this.setState({Metrics: true});
+   }
+
+   chooseNewGame = () => {
+     this.setState({selectGame: true});
+     this.setState({Metrics: false});
+   }
+
+   verifyLogin = () => {
+    axios.post('http://138.47.204.105:5000/api/checkTokens/', { "Token": this.props.token, "Login": this.props.LC }).then(res => {
+      if (res.data != null ){
+        if (res.data.Advanced.toString() === "1"){
+          this.setState({verifiedLogin: true});
         }
-        else if (error.response.status.toString() === "500") {
-          this.setState({success: false});
-          this.setState({failure: false});
-          this.setState({badfailure: true});
-          //Place to reset number of password attempts
-        }
-      });
     }
-    else{
-      this.setState({badfailure: true});
-    }
-  }
-    handleEChange(e) {
-      this.setState({ email: e.target.value })
-    }
-
-    handlePChange(e) {
-      this.setState({ password: e.target.value })
-    }
-
-    handleFChange(e) {
-      this.setState({ firstname: e.target.value })
-    }
-
-    handleLChange(e) {
-      this.setState({ lastname: e.target.value })
-    }
-
-    isEmptyOrSpaces = (str) => {
-      return str === null || str.match(/^ *$/) !== null;
-  }
+    }).catch(error => { });
+   }
 
   render() {
     return (
       <Styles>
-      <Container fluid>
-      <Row>
+        <Container fluid>
+        <Row>
             <Col>
-            <Carousel>
+              <Carousel>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
@@ -250,102 +268,69 @@ export class Register extends React.Component {
           </Row>
           <Row>
             <Col sm={4}>
-              <Image src={require('../images/UBETCHA272.jpg')} />
+              <Image src={require("../images/UBETCHA272.jpg")} />
             </Col>
             <Col sm={8}>
               <Jumbotron>
-                <h1>Register</h1>
-                <p>Please sign up and create an account with us!
-                  Your email will only be used to recieve offers and updates from us.
-                  No third party ads or usage!!
+                <h1>Advanced Model</h1>
+                <p>
+                  Welocme to the ADVANCED model. Please select a game for the advanced metrics by 
+                  clicking on the "Show advanced Metrics" button adjacent to the game and it will swap to that games view.
+                  You will be able to adjust a few of the models top variables for that game. Adjust them as you see fit and hit the dark "Submit Changes" button.
+                  Thank you so much for being a patron of uBETcha!!!
                 </p>
               </Jumbotron>
             </Col>
           </Row>
-        <Row>
-          <Col>
-          <Form>
-            <Form.Group controlId="formEmail">
-              <Form.Label>Email Address</Form.Label>
-              <Form.Control type="email" placeholder="example@email.com" onChange={this.handleEChange} />
-            </Form.Group>
-          </Form>
-          </Col>
-        </Row>
-        <Row>
-        <Col>
-          <Form>
-            <Form.Group controlId="formPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" onChange={this.handlePChange} />
-            </Form.Group>
-          </Form>
-          </Col>
-        </Row>
-        <Row>
-        <Col>
-          <Form>
-            <Form.Group controlId="formFname">
-              <Form.Label>First Name</Form.Label>
-              <Form.Control type="name" placeholder="First Name" onChange={this.handleFChange} />
-            </Form.Group>
-          </Form>
-          </Col>
-        </Row>
-        <Row>
-        <Col>
-          <Form>
-            <Form.Group controlId="formLname">
-              <Form.Label>Last Name</Form.Label>
-              <Form.Control type="name" placeholder="Last Name" onChange={this.handleLChange} />
-            </Form.Group>
-          </Form>
-          </Col>
-        </Row>
-        <Row> 
-          <Col>
-          <Button variant="danger" size="lg" onClick={() => this.onSubmit()}>
-          Register
-        </Button>{' '}
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            { this.state.failure && (<Alert variant="danger">
-              <Alert.Heading>Signup Error!</Alert.Heading>
-              <p>
-                Failure to register.
-              </p>
-              <hr />
-              <p className = "mb-0">
-                This email is already in our system
-              </p>
-            </Alert>) }
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            { this.state.success && (<Alert variant="success">
-              <Alert.Heading>Success!</Alert.Heading>
-              <p>
-                You have successfully signed up, please login via the login page.
-              </p>
-            </Alert>) }
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            { this.state.badfailure && (<Alert variant="danger">
-              <Alert.Heading>Signup Error!</Alert.Heading>
-              <p>
-                Please re-type your information.
-              </p>
-            </Alert>) }
-          </Col>
-        </Row>
-    </Container>
-  </Styles>
+          <Row>
+            <Col>
+            { !this.state.verifiedLogin && (<Alert variant="danger">
+                  <Alert.Heading>Attention</Alert.Heading>
+                  <p>
+                    Note that you are currently not logged in as a ADVANCED user, if you would like access to more features, please consider purchasing an ADVANCED subscription.
+                    Assitionally, all PRO users also have access to ADVANCED Metrics.
+                  </p>
+                  <hr />
+                  <p className="mb-0">
+                    If you have purchased an ADVANCED subscription, please login first. 
+                  </p>
+                </Alert>) }
+            </Col>
+          </Row>
+          <Row>
+            <Col> 
+              <ListGroup>
+    { this.state.loaded && this.state.selectGame && this.state.verifiedLogin && this.state.Games.map(game => (
+    <React.Fragment>
+      <Row>
+        <Col sm={9}>
+          <ListGroup.Item>
+            {this.state.AwayLinks[this.state.Games.indexOf(game)].toString()} {this.state.VorALinks[this.state.Games.indexOf(game)].toString()} {this.state.HomeLinks[this.state.Games.indexOf(game)].toString()}
+          </ListGroup.Item>
+        </Col>
+        <Col sm={3}>
+          <Button variant="danger" size="lg" onClick={() => this.selectGame(this.state.Games.indexOf(game))}> Show Advanced Metrics </Button>{' '}
+        </Col>
+      </Row>
+    </React.Fragment>)   ) 
+    }
+              </ListGroup>
+            </Col>
+          </Row>
+              { this.state.loaded && this.state.Metrics && <React.Fragment>
+                <Row>
+                  <Col>
+                    <Button variant="danger" block={true} onClick={() => this.chooseNewGame()}> Return to Game Selection Page </Button>{' '}
+                  </Col>
+                </Row>
+                  <Row>
+                    <Col>
+                      <GameBox away={(this.state.AwayLinks[this.state.currentgame].toString())} VorA={(this.state.VorALinks[2].toString())} home={(this.state.HomeLinks[this.state.currentgame].toString())} PwinT={(this.state.PwinTLinks[this.state.currentgame].toString())}/>
+                    </Col>
+                  </Row>
+                </React.Fragment>}
+        </Container>
+      </Styles>
     );
   }
 }
-export default Register;

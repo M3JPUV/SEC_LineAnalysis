@@ -35,6 +35,7 @@ export const NavigationBar = () => (
           <Nav.Item><Nav.Link href="/Register">Register</Nav.Link></Nav.Item>
           <Nav.Item><Nav.Link href="/Subscriptions">Subscriptions</Nav.Link></Nav.Item>
           <Nav.Item><Nav.Link href="/Basic">Basic</Nav.Link></Nav.Item>
+          <Nav.Item><Nav.Link href="/Advanced">Advanced</Nav.Link></Nav.Item>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

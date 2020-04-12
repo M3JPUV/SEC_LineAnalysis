@@ -12,17 +12,23 @@ import {Register} from './components/register';
 import {Layout} from './components/Layout';
 import {Subscriptions} from './components/Subscriptions';
 import {Basic} from './components/Basic';
+import {Advanced} from './components/Advanced'
 
 export default class App extends React.Component {
     constructor(props){
       super(props);
       this.state = {
         token: "holder",
+        loginCredentials: "N/A",
       }
     }
 
     handleToken = (data) => {
       this.setState({token: data});
+    }
+
+    handleLoginC = (data) => {
+      this.setState({loginCredentials: data});
     }
 
     render() {
@@ -34,22 +40,25 @@ export default class App extends React.Component {
         <Layout>
           <Switch>
             <Route exact path="/">
-              <Home token={this.state.token}/>
+              <Home />
             </Route>
             <Route path="/about">
-              <About token={this.state.token}/>
+              <About />
             </Route> 
             <Route path="/Login">
-              <Login token={this.state.token} parentCallback = {this.handleToken}/>
+              <Login parentCallbackT = {this.handleToken} parentCallbackL = {this.handleLoginC} />
             </Route>
             <Route path="/Register">
-              <Register token={this.state.token}/>
+              <Register />
             </Route>
             <Route path="/Subscriptions">
-              <Subscriptions token={this.state.token}/>
+              <Subscriptions token={this.state.token} LC={this.state.loginCredentials}/>
             </Route>
             <Route path="/Basic">
-              <Basic token={this.state.token}/>
+              <Basic token={this.state.token} LC={this.state.loginCredentials}/>
+            </Route>
+            <Route path="/Advanced">
+              <Advanced token={this.state.token} LC={this.state.loginCredentials}/>
             </Route>
           </Switch>
         </Layout>
