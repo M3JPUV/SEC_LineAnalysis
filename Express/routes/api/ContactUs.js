@@ -8,7 +8,6 @@ const bodyParser = require('body-parser');
 
 var JSONparser = bodyParser.json();
 
-const passwordHash = require('password-hash');
 
 router.post('/', JSONparser, (req, res) => {
     console.log(req.body);
@@ -16,10 +15,9 @@ router.post('/', JSONparser, (req, res) => {
     var myJsonObject = JSON.stringify(req.body);
     //console.log(myJsonObject);
     var object = JSON.parse(myJsonObject);
-    var Fname = object.FirstName;
-    var Lname = object.LastName;
-    var email = object.Email;
-    var password = object.Password;
+    var Email = object.Email;
+    var Subject = object.Subject;
+    var Message = object.Message;
     var sequelize = new Sequelize('DataBase1', 'remoteuser', 'asdf', {
     host: "138.47.204.103",
     port: 3306,
@@ -36,14 +34,11 @@ router.post('/', JSONparser, (req, res) => {
     sequelize.close();
     });
     //L. Authenticate database conenction
-    //L. Attempt to find if the email is valid
-    var hashedPassword = passwordHash.generate(password)
-    //L. hash the password
-        Eresults = sequelize.query(`INSERT INTO Users (FirstName, LastName, Email, Status, Basic, Advanced, Pro, Password) VALUES ('${Fname}', '${Lname}', '${email}', '1', '1', '1', '1', '${hashedPassword}');`).then(send => { 
-                                return res.status(200).json("Succesful Signup");
+        Eresults = sequelize.query(`INSERT INTO Contact (Email, Subject, Message) VALUES ('${Email}', '${Subject}', '${Message}');`).then(send => { 
+                                return res.status(200).json("Succesful Message");
                                     }).catch(err => {
                                         console.log(err); 
-                                        return res.status(400).json("Unsuccesful SignUp");
+                                        return res.status(500).json("Unsuccesful SignUp");
                                         });
                                             //L. catch errors
 });

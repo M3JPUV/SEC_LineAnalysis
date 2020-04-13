@@ -32,11 +32,14 @@ app.use('/api/members', require('./routes/api/members'));
 //L. Check login token
 app.use('/api/checkTokens', require('./routes/security/tokens'));
 
-//L. Test gamebox
+//L. Gamebox
 app.use('/api/gamebox', require('./routes/api/gamebox'));
 
 //L. Sign up
 app.use('/api/signup', require('./routes/api/signup'));
+
+//L. Sign up
+app.use('/api/ContactUs', require('./routes/api/ContactUs'));
 
 //L. all testing APIs go under this file name
 app.use('/api/tests', require('./routes/api/tests'));

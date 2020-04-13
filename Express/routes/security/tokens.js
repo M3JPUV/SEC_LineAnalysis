@@ -19,6 +19,7 @@ router.post('/', JSONparser, (req, res) => {
     //console.log(myJsonObject);
     var object = JSON.parse(myJsonObject);
     var Token = object.Token;
+    var Login = object.Login;
     var sequelize = new Sequelize('DataBase1', 'remoteuser', 'asdf', {
     host: "138.47.204.103",
     port: 3306,
@@ -45,12 +46,25 @@ router.post('/', JSONparser, (req, res) => {
         catch(err) {
         return res.status(405).json("invalid credentials")
         };
-        Eresults = sequelize.query(`SELECT DISTINCT t.token FROM TOKENS AS t WHERE t.token = '${DecryptToken}' AND t.used = 1 AND t.ip = '${req.connection.remoteAddress}';`, {raw: true, type: sequelize.QueryTypes.SELECT}).then(data => { 
-                                token = null;
+        Eresults = sequelize.query(`SELECT DISTINCT t.token, u.Basic, u.Advanced, u.Pro FROM TOKENS AS t, Users as u WHERE t.token = '${DecryptToken}' AND t.used = 1 AND t.ip = '${req.connection.remoteAddress}' AND u.Email = '${Login}';`, {raw: true, type: sequelize.QueryTypes.SELECT}).then(data => { 
+                                var token = null;
+                                var Basic = null;
+                                var Advanced = null;
+                                var Pro = null;
                                 data.forEach( (row) => {
-                                token = row.token;});
+                                token = row.token;
+                                Basic = row.Basic;
+                                Advanced = row.Advanced;
+                                Pro = row.Pro;
+                                });
+
+                                var myJSON = {
+                                "Basic": Basic,
+                                "Advanced": Advanced,
+                                "Pro": Pro,
+                                }
                                 if (token != null){
-                                   return res.status(200).json("Token Approved");
+                                   return res.status(200).json(myJSON);
                                 }
                                 else{
                                    return res.status(404).json("Incorrect token, please re-login");
