@@ -5,7 +5,6 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { NavigationBar } from './components/NavigationBar';
 import { Home } from './components/Home.js';
-import { About } from './About';
 import Sidebar from './components/Sidebar';
 import { Login } from './components/login';
 import {Register} from './components/register';
@@ -14,6 +13,7 @@ import {Subscriptions} from './components/Subscriptions';
 import {Basic} from './components/Basic';
 import {Advanced} from './components/Advanced'
 import {Pro} from './components/Pro'
+import { ContactUs } from './components/ContactUs';
 
 export default class App extends React.Component {
     constructor(props){
@@ -43,9 +43,6 @@ export default class App extends React.Component {
             <Route exact path="/">
               <Home />
             </Route>
-            <Route path="/about">
-              <About />
-            </Route> 
             <Route path="/Login">
               <Login parentCallbackT = {this.handleToken} parentCallbackL = {this.handleLoginC} />
             </Route>
@@ -63,6 +60,9 @@ export default class App extends React.Component {
             </Route>
             <Route path="/Pro">
               <Pro token={this.state.token} LC={this.state.loginCredentials}/>
+            </Route>
+            <Route path="/ContactUs">
+              <ContactUs token={this.state.token} LC={this.state.loginCredentials}/>
             </Route>
           </Switch>
         </Layout>

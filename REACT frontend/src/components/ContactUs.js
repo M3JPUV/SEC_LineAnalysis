@@ -1,50 +1,95 @@
 import React from "react";
-import { Container, Carousel, Row, Col, Jumbotron, Figure , Alert, Image, Button} from 'react-bootstrap';
-import styled from 'styled-components';
+import {
+  Container,
+  Carousel,
+  Row,
+  Col,
+  Jumbotron,
+  Image,
+  ListGroup,
+  Form,
+  Button,
+  Alert,
+} from "react-bootstrap";
+import styled from "styled-components";
+import axios from "axios";
 import Newsticker from 'react-newsticker';
-import axios from 'axios';
-const Styles = styled.div`
-`;
+const Styles = styled.div``;
 
-export class Subscriptions extends React.Component{
-
+export class ContactUs extends React.Component {
     state = {
-        basic: false,
-        advanced: false,
-        pro: false,
+        email: '',
+        subject: '',
+        message: '',
+        verifiedLogin: false,
+        majorerror: false,
+        retype: false,
+        successM: false,
         test: [" @              Game A Team A vs Team B Score 45-30 Team B", "@       Game B Team C vs Team D Score 45-30 Team C", "      Game C Team E vs Team F Score 45-30 Team F"],
-     
-    } 
-  componentDidMount() {
+      };
+  constructor(props) {
+    super(props);
+    this.handleEChange = this.handleEChange.bind(this);
+    this.handleSChange = this.handleSChange.bind(this);
+    this.handleMChange = this.handleMChange.bind(this);
+  }
+
+  handleEChange(e) {
+    this.setState({ email: e.target.value })
+  }
+
+  handleSChange(e) {
+    this.setState({ subject: e.target.value })
+  }
+  handleMChange(e) {
+    this.setState({ message: e.target.value })
+  }
+
+   componentDidMount(){
+       this.verifyLogin();
+   }
+
+   verifyLogin = () => {
     axios.post('http://138.47.204.105:5000/api/checkTokens/', { "Token": this.props.token, "Login": this.props.LC }).then(res => {
       if (res.data != null ){
         if (res.data.Basic.toString() === "1"){
-          this.setState({basic: true});
-          this.setState({advanced: false});
-          this.setState({pro: false});
-        }
-        if (res.data.Advanced.toString() === "1"){
-          this.setState({basic: false});
-          this.setState({advanced: true});
-          this.setState({pro: false});
-        }
-        if (res.data.Pro.toString() === "1"){
-          this.setState({basic: false});
-          this.setState({advanced: false});
-          this.setState({pro: true});
+          this.setState({verifiedLogin: true});
         }
     }
     }).catch(error => { });
+   }
 
+   isEmptyOrSpaces = (str) => {
+    return str === null || str.match(/^ *$/) !== null;
+    }
+
+onSubmit = async () => {
+    if (!this.isEmptyOrSpaces(this.state.email) || !this.isEmptyOrSpaces(this.state.subject) || !this.isEmptyOrSpaces(this.state.message)){
+        await axios.post('http://138.47.204.105:5000/api/ContactUs/', { "Email": this.state.email, "Subject": this.state.subject, "Message": this.state.message}).then(res => {
+          this.setState({majorerror: false});
+          this.setState({retype: false});
+          this.setState({successM: true});
+        }).catch(error => {
+        if (error.response.status.toString() == "500") {
+          this.setState({majorerror: true});
+          this.setState({retype: false});
+          this.setState({successM: false});
+        }}).catch(err => {});
+      }
+    else{
+      this.setState({retype: true});
+      this.setState({successM: false});
+      this.setState({majorerror: false});
+    }
   }
-    
+
   render() {
     return (
       <Styles>
         <Container fluid>
         <Row>
             <Col>
-            <Carousel>
+              <Carousel>
                 <Carousel.Item>
                   <img
                     className="d-block w-100"
@@ -216,141 +261,128 @@ export class Subscriptions extends React.Component{
           </Row>
           <Row>
             <Col sm={4}>
-              <Image src={require('../images/UBETCHA272.jpg')} />
+              <Image src={require("../images/UBETCHA272.jpg")} />
             </Col>
             <Col sm={8}>
               <Jumbotron>
-                <h1>Subscriptions</h1>
-                <p>Here is the place to see the subscriptions we offer (week-to-week or by season) for our Advanced and Pro Models. For more information on why you should consider our Subscriptions, look in the "Monetization" tab in our Home page.</p>
+                <h1>Contact Us</h1>
+                <p>
+                  If you have any questions or issues, please contact us with any of the methods below.
+                </p>
               </Jumbotron>
             </Col>
           </Row>
           <Row>
               <Col>
-                { this.state.basic && (<Alert variant="success">
-                  <Alert.Heading>Attention</Alert.Heading>
-                  <p>
-                    Note that you are currently a BASIC user, if you would like access to more features, please consider purchasing one of the following subscriptions.
-                  </p>
-                </Alert>) }
+                  <Jumbotron>
+                    <h1>Direct Messanger</h1>
+                    <p>If you would like us to contact us directly in our system, feel free to use the Direct Messanger. Rember to leave a valid email for us to contact you at.</p>
+                </Jumbotron>
               </Col>
-            </Row>
-            <Row>
-              <Col>
-                { this.state.advanced && (<Alert variant="success">
-                  <Alert.Heading>Attention</Alert.Heading>
-                  <p>
-                    Note that you are currently an ADVANCED user. For even MORE features please consider upgrading to PRO!!
-                  </p>
-                </Alert>) }
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                { this.state.pro && (<Alert variant="success">
-                  <Alert.Heading>Attention</Alert.Heading>
-                  <p>
-                    Note that you are currently an PRO user.
-                  </p>
-                </Alert>) }
-              </Col>
-            </Row>
+          </Row>
           <Row>
-              <Col md={{ span:6, offset:3 }}>
-                <h1>Week-by-Week Subscriptions</h1>
+            <Col>
+            { !this.state.verifiedLogin && (<Alert variant="danger">
+                  <Alert.Heading>Direct Messanger</Alert.Heading>
+                  <p>
+                    Note that you are currently not logged in. In order to use our direct messanger, please Log-In to contact us (if you are having issues loggin in, please email us or contact us on social media below).
+                  </p>
+                </Alert>) }
+            </Col>
+          </Row>
+          <Row>
+              <Col>
+                { this.state.verifiedLogin && <React.Fragment>
+                    <Row>
+                        <Col>
+                            <Form>
+                                <Form.Group controlId="formEmail">
+                                <Form.Label>Contact Email Address</Form.Label>
+                                <Form.Control type="email" placeholder="example@email.com" onChange={this.handleEChange} />
+                                </Form.Group>
+                            </Form>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Form>
+                                <Form.Group controlId="formSubject">
+                                <Form.Label>Subject</Form.Label>
+                                <Form.Control type="subject" placeholder="example subject" onChange={this.handleSChange} />
+                                </Form.Group>
+                            </Form>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Form>
+                                <Form.Group controlId="formMessage">
+                                <Form.Label>Message</Form.Label>
+                                <Form.Control as="textarea" placeholder="Type your message here..." rows={"8"} onChange={this.handleMChange} />
+                                </Form.Group>
+                            </Form>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Button variant="danger" size="lg" onClick={() => this.onSubmit()}>
+                            Submit Message
+                            </Button>{' '}
+                        </Col>
+                    </Row>
+                    </React.Fragment>} 
+                </Col>
+          </Row>
+          <Row>
+              <Col>
+                 { this.state.majorerror && (<Alert variant="danger">
+                  <Alert.Heading>Oops</Alert.Heading>
+                  <p>
+                    It appears that there is an error on our end. Please contact us directly via email or social media. We apologize for any inconvinenience.</p>
+                </Alert>) }
               </Col>
           </Row>
           <Row>
               <Col>
-                <Figure>
-                    <Figure.Image 
-                        width={172}
-                        height={131}
-                        alt="172x131"
-                        src={require('../images/1dollarsign.png')}
-                    />
-                    <Figure.Caption>
-                        Basic: Free to the public.
-                    </Figure.Caption>
-                    <Button variant="success"> FREE!!!</Button>
-                </Figure>
-              </Col>
-              <Col>
-                <Figure>
-                    <Figure.Image 
-                        width={172}
-                        height={131}
-                        alt="172x131"
-                        src={require('../images/2dollarsign.png')}
-                    />
-                    <Figure.Caption>
-                        Advanced: $4.99 USD /week
-                    </Figure.Caption>
-                </Figure>
-              </Col>
-              <Col>
-                <Figure>
-                    <Figure.Image 
-                        width={172}
-                        height={131}
-                        alt="172x131"
-                        src={require('../images/3dollarsign.png')}
-                    />
-                    <Figure.Caption>
-                        Pro: $14.99 USD /week
-                    </Figure.Caption>
-                </Figure>
-              </Col>
-          </Row>
-          <Row>
-              <Col md={{ span:6, offset:3 }}>
-                <h1>Per-Season Subscriptions</h1>
+                 { this.state.retype && (<Alert variant="danger">
+                  <Alert.Heading>Alert</Alert.Heading>
+                  <p>
+                    Please type something in each field before hitting "Submit".</p>
+                </Alert>) }
               </Col>
           </Row>
           <Row>
               <Col>
-                <Figure>
-                    <Figure.Image 
-                        width={172}
-                        height={131}
-                        alt="172x131"
-                        src={require('../images/1dollarsign.png')}
-                    />
-                    <Figure.Caption>
-                        Basic: Free to the public.
-                    </Figure.Caption>
-                    <Button variant="success"> FREE!!!</Button>
-                </Figure>
+                 { this.state.successM && (<Alert variant="success">
+                  <Alert.Heading>Success</Alert.Heading>
+                  <p>
+                    We have recieved your message. We will get back to you as quickly as possible.</p>
+                </Alert>) }
               </Col>
+          </Row>
+          <Row>
               <Col>
-                <Figure>
-                    <Figure.Image 
-                        width={172}
-                        height={131}
-                        alt="172x131"
-                        src={require('../images/2dollarsign.png')}
-                    />
-                    <Figure.Caption>
-                        Advanced: $35.99 USD /season
-                    </Figure.Caption>
-                </Figure>
+                <Jumbotron>
+                    <h1>Social Media</h1>
+                    <p>Feel free to direct message us in any of the social media platforms below.</p>
+                </Jumbotron>
               </Col>
+          </Row>
+          <Row>
               <Col>
-                <Figure>
-                    <Figure.Image 
-                        width={172}
-                        height={131}
-                        alt="172x131"
-                        src={require('../images/3dollarsign.png')}
-                    />
-                    <Figure.Caption>
-                        Pro: $107.99 USD /season
-                    </Figure.Caption>
-                </Figure>
+                <p>Twitter and facebook</p>
+              </Col>
+          </Row>
+          <Row>
+              <Col>
+                <Jumbotron>
+                    <h1>Email</h1>
+                    <p>Feel free to contact us directly at ....</p>
+                </Jumbotron>
               </Col>
           </Row>
         </Container>
-        </Styles>
+      </Styles>
     );
   }
 }

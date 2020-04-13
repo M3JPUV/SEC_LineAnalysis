@@ -257,7 +257,7 @@ export class Register extends React.Component {
                 <h1>Register</h1>
                 <p>Please sign up and create an account with us!
                   Your email will only be used to recieve offers and updates from us.
-                  No third party ads or usage!!
+                  We will never use your email for third-party ads!!
                 </p>
               </Jumbotron>
             </Col>

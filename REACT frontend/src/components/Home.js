@@ -245,8 +245,7 @@ export class Home extends React.Component {
                 <h1>Welcome to uBETcha!!!</h1>
                 <p>
                   We are a College football betting model website, to learn
-                  about how we make our model and paid subscriptions, click the
-                  'About' tab at the top of your screen. Below is our top 3
+                  about how we make our model and paid subscriptions, continue scrolling to the bottom of the home screen. Below is our top 3
                   games for the week.
                 </p>
               </Jumbotron>
@@ -260,6 +259,56 @@ export class Home extends React.Component {
     }
     { this.state.loaded && <React.Fragment><h1>Game 3</h1><GameBox away={(this.state.AwayLinks[2].toString())} VorA={(this.state.VorALinks[2].toString())} home={(this.state.HomeLinks[2].toString())} PwinT={(this.state.PwinTLinks[2].toString())} /> </React.Fragment>
     }
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Jumbotron>
+                <h1>Our Mission Statement</h1>
+              </Jumbotron>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Jumbotron>
+                <h1>Our Staff</h1>
+              </Jumbotron>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Jumbotron>
+                <h1>Our Website</h1>
+              </Jumbotron>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h1>Navigation</h1>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+                <h1>Monetization</h1>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+                <h1>Security</h1>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Jumbotron>
+                <h1>The Model</h1>
+              </Jumbotron>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Jumbotron>
+                <h1>Contact Us</h1>
+              </Jumbotron>
             </Col>
           </Row>
         </Container>

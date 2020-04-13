@@ -252,7 +252,7 @@ export class Basic extends React.Component {
                 <p>
                   Welocme to the basic model, this is free to the public
                   and gives our model's prediction for each of the following games for the week.
-                  For more information on how our model works, check out our "About Us" page.
+                  For more information on how our model works, check out our "The Model" tab in our Home page.
                 </p>
               </Jumbotron>
             </Col>
