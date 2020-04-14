@@ -16,48 +16,19 @@ pd.options.display.max_columns = None
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import StratifiedKFold
 from sklearn.feature_selection import RFECV
-#Variables
-#DATA_FILE = 'SEConly_stats.xlsx'
 
-#reads in excel files
-#rawData = pd.read_csv(DATA_FILE)
-
-#Clean Data
-
-#cleanData =rawData.drop(['Team','Conf', 'Rk', 'Rk.1', 'Rk.2', 'Rk.3', 'Pyth Rank', 'Opp Pyth Rank'], axis=1)
-
-#removes correlated features from the dataset
-#correlated_features = set()
-#correlation_matrix = data.drop('Act W %', axis=1).corr()
-
-#for i in range(len(correlation_matrix.columns)):
-#    for j in range(i):
-#        if abs(correlation_matrix.iloc[i, j]) > 0.8:#0.8 correlation; remove it.
-#            colname = correlation_matrix.columns[i]
- #           correlated_features.add(colname)
-#print(correlated_features)
-#Recursive Elimination
-#CorrelationMatrix = sys.stdin.read().rstrip("\n")
-#CorrelatedFeatures = sys.stdin.read().rstrip("\n")
-
-#X = data.drop("Act W %", axis=1)
-#target = data["Act W %"]
-
-#rfc = RandomForestClassifier(random_state=101)
 #Estimator is the model instance
 #Step is the number of features to be removed at a time
 #CV is the Cross-Validation using stratifiedFFold Kset to 10
 #Scoring is is the metric you want to optimize for
-#rfecv = RFECV(estimator=rfc, step=1, cv=StratifiedKFold(10), scoring='accuracy')
-#rfecv.fit(X, target)
-#Output of running RFE
-#print('Optimal number of features: {}'.format(rfecv.n_features_))
 def RFE(df):
     X = df.drop('Act W %', axis=1)
-    target = df['Act W %']
+    print df['Act W %']
+    target = df['Act W %']######Original
 
     rfc = RandomForestClassifier(random_state=101)
-    rfecv = RFECV(estimator=rfc, step=1, cv=StratifiedKFold(10), scoring='accuracy')
+    print(sorted(sklearn.metrics.SCORERS.keys()))
+    rfecv = RFECV(estimator=rfc, step=1, cv=StratifiedKFold(10), scoring='wrong_choice')
     rfecv.fit(X, target)
     print('Optimal number of features: {}'.format(rfecv.n_features_))
 
