@@ -35,7 +35,7 @@ for X in range(len(year)):
         #gets only conf by :{data['Conf'].unique()[i]}
         data_for_BE = data.loc[data['Conf'] == (data['Conf'].unique()[i])];
 
-        #For BE , needs at least 8 
+        #For BE , needs at least 8 teams 
         if data_for_BE.shape[0] <=8 :
             if DEBUG:
                 print('data_for_BE.shape',data_for_BE.shape);

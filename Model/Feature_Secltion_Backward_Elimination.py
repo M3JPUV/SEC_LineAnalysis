@@ -10,7 +10,7 @@ def FSBL(x,y,Numer_of_features,list_of_features):
     from sklearn.model_selection import train_test_split 
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.3, random_state = 0) 
     # trainning/testing the model
-    from sklearn.linear_model import LinearRegression 
+    from sklearn.linear_model import LinearRegression
     lm = LinearRegression() 
     lm.fit(x_train, y_train) 
     pred = lm.predict(x_test) 

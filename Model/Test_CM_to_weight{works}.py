@@ -4,7 +4,7 @@ weights_from_each_year = {};
 skipped='none';
 import pandas as pd
 import numpy as np;
-# read file 
+# read file  
 xls = pd.ExcelFile('NCAAstats.xls');
 for X in range(len(year)):
     data = pd.read_excel(xls, year[X]);
