@@ -39,19 +39,21 @@ def RFE(df):
     rfecv = RFECV(estimator=rfc, step=1, cv=5, scoring='accuracy')
     rfecv.fit(X, target)
     print('Optimal number of features: {}'.format(rfecv.n_features_))
+    print('important features:{} Value:{}'.format(X.columns, rfecv.estimator_.feature_importances_))
+
     #Plotting code
-    dset = pd.DataFrame()
-    dset['attr'] = X.columns
-    dset['importance'] = rfecv.estimator_.feature_importances_
+    #dset = pd.DataFrame()
+    #dset['attr'] = X.columns
+    #dset['importance'] = rfecv.estimator_.feature_importances_
+    #dset['importance'].update(rfecv.estimator_.featureimportances)
+    #dset = dset.sort_values(by='importance', ascending=False)
 
-    dset = dset.sort_values(by='importance', ascending=False)
 
-
-    plt.figure(figsize=(16, 14))
-    plt.barh(y=dset['attr'], width=dset['importance'], color='#1976D2')
-    plt.title('RFECV - Feature Importances', fontsize=20, fontweight='bold', pad=20)
-    plt.xlabel('Importance', fontsize=14, labelpad=20)
-    plt.show()
+    #plt.figure(figsize=(16, 14))
+    #plt.barh(y=dset['attr'], width=dset['importance'], color='#1976D2')
+    #plt.title('RFECV - Feature Importances', fontsize=20, fontweight='bold', pad=20)
+    #plt.xlabel('Importance', fontsize=14, labelpad=20)
+    #plt.show()
 
 def removeCorrelatedFeatures(df):
     correlated_features = set()
