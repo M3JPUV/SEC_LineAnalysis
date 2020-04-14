@@ -23,14 +23,35 @@ from sklearn.feature_selection import RFECV
 #Scoring is is the metric you want to optimize for
 def RFE(df):
     X = df.drop('Act W %', axis=1)
-    print df['Act W %']
+    #print(X)
+    #print df['Act W %']
+
     target = df['Act W %']######Original
+    for w in range(len(target)):
+        #print w
+        if int(target[w]) > .5:
+            target[w] = 1
+        else:
+            target[w] =0
+    #print(target)
 
     rfc = RandomForestClassifier(random_state=101)
-    print(sorted(sklearn.metrics.SCORERS.keys()))
-    rfecv = RFECV(estimator=rfc, step=1, cv=StratifiedKFold(10), scoring='wrong_choice')
+    rfecv = RFECV(estimator=rfc, step=1, cv=5, scoring='accuracy')
     rfecv.fit(X, target)
     print('Optimal number of features: {}'.format(rfecv.n_features_))
+    #Plotting code
+    dset = pd.DataFrame()
+    dset['attr'] = X.columns
+    dset['importance'] = rfecv.estimator_.feature_importances_
+
+    dset = dset.sort_values(by='importance', ascending=False)
+
+
+    plt.figure(figsize=(16, 14))
+    plt.barh(y=dset['attr'], width=dset['importance'], color='#1976D2')
+    plt.title('RFECV - Feature Importances', fontsize=20, fontweight='bold', pad=20)
+    plt.xlabel('Importance', fontsize=14, labelpad=20)
+    plt.show()
 
 def removeCorrelatedFeatures(df):
     correlated_features = set()
@@ -41,8 +62,8 @@ def removeCorrelatedFeatures(df):
             if abs(correlation_matrix.iloc[i, j]) > 0.8:#if correlation greater than 0.8
                 colname = correlation_matrix.columns[i]
                 correlated_features.add(colname)
-    print("DROPPED")
-    print(correlated_features)
+    #print("DROPPED")
+    #print(correlated_features)
     return correlated_features
 ##########Main Driver############
 year = ['2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018']
@@ -57,5 +78,5 @@ for i in range(len(year)):
     correlated_features = removeCorrelatedFeatures(df)
     df.drop(correlated_features, axis=1,errors='ignore')
     print(i+2004)
-    print(df)
+    #print(df)
     RFE(df)
