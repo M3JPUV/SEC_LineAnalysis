@@ -1,0 +1,3 @@
+Away Team, VS, Home Team, variable 1: v1 (str), Description of Variable 1 (one sentence, str): dv1, Data Value for Variable 1: d1
+Away Team, VS, Home Team, variable 2: v2 (str), Description of Variable 2 (one sentence, str): dv2, Data Value for Variable 2: d2
+Percentage Win Team: P Win T (int between 0-100), Winning Team: WT (str)

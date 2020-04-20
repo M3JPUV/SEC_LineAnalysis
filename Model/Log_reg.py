@@ -16,7 +16,7 @@ def LR(X,y,model_name):
     mean = y.mean(axis=0);
     std = y.std();
     """
-    print("y",y);
+    print("y",y);z
     print("mean",mean);
     print("std",std); 
     """
@@ -25,11 +25,13 @@ def LR(X,y,model_name):
     y[y>=.625]=1;
     # else '0'{lost}
     y[y<.625]=0;
-    # splits the data into train and test
-    X_train= X.iloc[:10];
-    X_test=X.iloc[-4:];
-    y_train=y.iloc[:10];
-    y_test=y.iloc[-4:];
+    # splits the data into train(75%) and test(25%)
+    train_per = X.shape[0]
+    #print(train_per);
+    X_train= X.iloc[:round(train_per*.75)];
+    X_test=X.iloc[-round(train_per*.25):];
+    y_train=y.iloc[:round(train_per*.75)];
+    y_test=y.iloc[-round(train_per*.25):];
 
     if DEBUG:
         print("X_train:\n",X_train);

@@ -1,0 +1,83 @@
+2 Alabama-Birmingham Alabama State
+2 Arizona State Kent State
+2 Bowling Green State Morgan State
+2 Buffalo Robert Morris
+2 Central Arkansas Western Kentucky
+2  Central Florida Florida A&M
+2 Central Michigan Albany
+2 Cincinnati UCLA
+2  Clemson Georgia Tech
+2 Connecticut Wagner
+2 Minnesota South Dakota State
+2 San Jose State Northern Colorado
+2  Texas A&M Texas State
+2 Tulane Florida International
+2  Utah Brigham Young
+2 Army Rice
+2 Colorado Colorado State
+2  Michigan State Tulsa
+2 Nevada Purdue
+2 Oklahoma State Oregon State
+2 Rutgers Massachusetts
+2 Wake Forest Utah State
+2  Wisconsin South Florida
+2 Air Force Colgate
+2  Alabama Duke
+2 Appalachian State East Tennessee State
+2 Arkansas Portland State
+2  Auburn  Oregon
+2 Baylor Stephen F. Austin
+2 Boise State Florida State
+2 Boston College Virginia Tech
+2 California California-Davis
+2 Charlotte Gardner-Webb
+2 Eastern Michigan Coastal Carolina
+right - 2  Georgia Vanderbilt
+cant do-2 Georgia State Tennessee
+cant do-2 Illinois Akron
+2 Indiana Ball State
+2  Iowa Miami (OH)
+2  Iowa State Northern Iowa
+2 Kansas Indiana State
+2 Kansas State Nicholls State
+2 Kentucky Toledo
+Problem - 2  Louisiana State Georgia Southern
+cant do - 2 Louisiana-Monroe Grambling State
+2 Marshall Virginia Military Institute
+2 Maryland Howard
+2 Memphis Mississippi
+2  Michigan Middle Tennessee State
+2 Mississippi State Louisiana
+2 Navy Holy Cross
+2  Nebraska South Alabama
+2 Akron Southern Utah
+2 New Mexico Sam Houston State
+2 North Carolina South Carolina
+2 North Carolina State East Carolina
+2 North Texas Abilene Christian
+2 Northern Illinois Illinois State
+2 Ohio Rhode Island
+2  Ohio State Florida Atlantic
+2 Old Dominion Norfolk State
+2  Penn State Idaho
+2 San Diego State Weber State
+2 Southern California Fresno State
+2 Southern Methodist Arkansas State
+2 Southern Mississippi Alcorn State
+2  Stanford Northwestern
+2  Syracuse Liberty
+2 Temple Bucknell
+2  Texas Louisiana Tech
+2 Texas Christian Arkansas-Pine Bluff
+2 Texas Tech Montana State
+2 Texas-El Paso Houston Baptist
+2 Texas-San Antonio Incarnate Word
+2 Troy Campbell
+2 Virginia Pittsburgh
+2  Washington Eastern Washington
+2  Washington State New Mexico State
+2 West Virginia James Madison
+2 Western Michigan Monmouth
+2 Wyoming Missouri
+2  Oklahoma Houston
+2  Notre Dame Louisville
