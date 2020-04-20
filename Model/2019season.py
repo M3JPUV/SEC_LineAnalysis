@@ -13,6 +13,9 @@ train = train[['Wk', 'Winner', 'Loser']]
 # D. Strip Ranking off of Teams
 train['Winner'] = train['Winner'].map(lambda x: x.lstrip('(1234567890) '))
 train['Loser'] = train['Loser'].map(lambda x: x.lstrip('(1234567890) '))
+# D. Strip Spaces from Edges of Strings
+train['Winner'] = train['Winner'].map(lambda x: x.strip())
+train['Loser'] = train['Loser'].map(lambda x: x.strip())
 
 
 # D. Winner Teams (Replace wrong names)
@@ -47,5 +50,5 @@ train["Loser"]= train["Loser"].str.replace("texas-el paso", "UTEP", case = False
 for index, row in train.iterrows():
     #if row['Wk'] == 2:
     #if (row['Winner'] == "UNLV" or row['Loser'] == "UNLV"):
-    print(row['Wk'], row['Winner'], row['Loser'])
+    print(row['Wk'], row['Winner'].strip(), row['Loser'])
  

@@ -1,7 +1,7 @@
 Update with what you did and what you code needs to run (for model).
 #####################################################################################################################################################################################################################################
 > ZAB
-	- Worked on Backwards Elimination, Maximum Likelihood Estimation, and Random Forest
+	- Worked on Equation,  Backwards Elimination, Maximum Likelihood Estimation, and Random Forest
 
 Uses all NCAA data (by year)
 	The Random Forest is used as a feature reducer. 

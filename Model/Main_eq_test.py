@@ -57,11 +57,80 @@ def main_eq(team_a,team_b,team_a_weigths,team_a_data,team_b_weigths,team_b_data)
     #print('prob_a',prob_a);
     #print('prob_b',prob_b);
     return prob_a,prob_b
+#############################GETTING THE TEASM FOR 2019#################################################
+# D. Remove Limit on Print Size
+pd.set_option('display.max_rows', None, "display.max_rows", None)
+xlsx =  pd.ExcelFile('NCAA_WinLoss.xlsx')
+
+train = pd.read_excel(xlsx, "2019")
+
+# D. Only take Week and Team Names
+train = train[['Wk', 'Winner', 'Loser']]
+
+# D. Strip Ranking off of Teams
+train['Winner'] = train['Winner'].map(lambda x: x.lstrip('(1234567890) '))
+train['Loser'] = train['Loser'].map(lambda x: x.lstrip('(1234567890) '))
+#D. strip spaces
+train['Winner'] = train['Winner'].map(lambda x: x.strip());
+train['Loser'] = train['Loser'].map(lambda x: x.strip());
+# D. Winner Teams (Replace wrong names)
+train["Winner"]= train["Winner"].str.replace("louisiana state", "LSU", case = False)
+train["Winner"]= train["Winner"].str.replace("nevada-las vegas", "UNLV", case = False)
+train["Winner"]= train["Winner"].str.replace("southern methodist", "SMU", case = False)
+train["Winner"]= train["Winner"].str.replace("central florida", "UCF", case = False)
+train["Winner"]= train["Winner"].str.replace("hawaii", "Hawai'i", case = False)
+train["Winner"]= train["Winner"].str.replace("brigham young", "BYU", case = False)
+train["Winner"]= train["Winner"].str.replace("texas christian", "TCU", case = False)
+train["Winner"]= train["Winner"].str.replace("alabama birmingham", "UAB", case = False)
+train["Winner"]= train["Winner"].str.replace("southern california", "USC", case = False)
+train["Winner"]= train["Winner"].str.replace("texas-san antonio", "UTSA", case = False)
+train["Winner"]= train["Winner"].str.replace("texas-el paso", "UTEP", case = False)
+
+# D. Loser Teams (Replace wrong names)
+train["Loser"]= train["Loser"].str.replace("louisiana state", "LSU", case = False)
+train["Loser"]= train["Loser"].str.replace("nevada-las vegas", "UNLV", case = False)
+train["Loser"]= train["Loser"].str.replace("southern methodist", "SMU", case = False)
+train["Loser"]= train["Loser"].str.replace("central florida", "UCF", case = False)
+train["Loser"]= train["Loser"].str.replace("hawaii", "Hawai'i", case = False)
+train["Loser"]= train["Loser"].str.replace("brigham young", "BYU", case = False)
+train["Loser"]= train["Loser"].str.replace("texas christian", "TCU", case = False)
+train["Loser"]= train["Loser"].str.replace("alabama birmingham", "UAB", case = False)
+train["Loser"]= train["Loser"].str.replace("southern california", "USC", case = False)
+train["Loser"]= train["Loser"].str.replace("texas-san antonio", "UTSA", case = False)
+train["Loser"]= train["Loser"].str.replace("texas-el paso", "UTEP", case = False)
+###############################################################################
 
 #____________________________cm ________________________________________
 
 from Temp_cm_to_log import Main_CM_to_logreg;
-team_weights,data_from_team_each_year = Main_CM_to_logreg();
+team_weights_cm,data_from_team_each_year_cm = Main_CM_to_logreg();
+#_______________________________FSBE_______________________________________________
+from Temp_FRRF_to_FSBE_to_logreg import Main_FRRF_to_FSBE_to_logreg;
+team_weights_fsbe,data_from_team_each_year_fsbe = Main_FRRF_to_FSBE_to_logreg();
+#__________________________________________________________________________
+for index,row in train.iterrows():
+    if row['Wk'] == 3:
+        break;
+    team_a=row['Winner']
+    team_b=row['Loser']
+    # for cm 
+    try:
+        # take , team name, team data  and weights  for cm 
+        prob_a,prob_b = main_eq(team_a,team_b,team_weights_cm[team_a],data_from_team_each_year_cm[team_a],team_weights_cm[team_b],data_from_team_each_year_cm[team_b])
+        print('\nprob_a CM',team_a,prob_a,"%");
+        print('prob_b CM',team_b,prob_b,"%\n");
+    except:
+        print("skipped cm eq ",team_a,team_b);
+    # for fsbe
+    try:
+        # take , team name, team data  and weights  for fsbe
+        prob_a,prob_b = main_eq(team_a,team_b,team_weights_fsbe[team_a],data_from_team_each_year_fsbe[team_a],team_weights_fsbe[team_b],data_from_team_each_year_fsbe[team_b])
+        print('\nprob_a FSBE',team_a,prob_a,"%");
+        print('prob_b FSBE',team_b,prob_b,"%\n");
+    except:
+        print("skipped fsbe eq ",team_a,team_b);
+
+'''
 #_____________________________________________________________________
 # for testing its manual
 # have to remove team that are not in the list(sunbelt and indy) try: execpt 
@@ -73,13 +142,9 @@ team_b='LSU'
 prob_a,prob_b = main_eq(team_a,team_b,team_weights[team_a],data_from_team_each_year[team_a],team_weights[team_b],data_from_team_each_year[team_b])
 print('prob_a CM',team_a,prob_a,"%");
 print('prob_b CM',team_b,prob_b,"%");
-
-
-#_______________________________FSBE_______________________________________________
-from Temp_FRRF_to_FSBE_to_logreg import Main_FRRF_to_FSBE_to_logreg;
-team_weights,data_from_team_each_year = Main_FRRF_to_FSBE_to_logreg();
 #__________________________________________________________________________
 # take , team name, team data  and weights 
 prob_a,prob_b = main_eq(team_a,team_b,team_weights[team_a],data_from_team_each_year[team_a],team_weights[team_b],data_from_team_each_year[team_b])
 print('prob_a FSBE',team_a,prob_a,"%");
 print('prob_b FSBE',team_b,prob_b,"%");
+'''
