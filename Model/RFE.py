@@ -39,7 +39,7 @@ def RFE(df):
     rfecv = RFECV(estimator=rfc, step=1, cv=5, scoring='accuracy')
     rfecv.fit(X, target)
     print('Optimal number of features: {}'.format(rfecv.n_features_))
-    print('important features:{} Value:{}'.format(X.columns, rfecv.estimator_.feature_importances_))
+    print(' Value:{}'.format( rfecv.estimator_.feature_importances_))
 
     #Plotting code
     #dset = pd.DataFrame()
@@ -80,5 +80,5 @@ for i in range(len(year)):
     correlated_features = removeCorrelatedFeatures(df)
     df.drop(correlated_features, axis=1,errors='ignore')
     print(i+2004)
-    #print(df)
+    
     RFE(df)
