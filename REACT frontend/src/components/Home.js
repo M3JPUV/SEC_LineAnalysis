@@ -18,8 +18,8 @@ export class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      GameCount: 0,
-      test: [" @              Game A Team A vs Team B Score 45-30 Team B", "@       Game B Team C vs Team D Score 45-30 Team C", "      Game C Team E vs Team F Score 45-30 Team F"],
+      GameCount: 0, 
+      test: [""], 
       Iterator: 0,
       Games: [],
       HomeLinks: [],
@@ -31,6 +31,9 @@ export class Home extends React.Component {
   }
 
    componentDidMount(){
+     axios.get("http://138.47.204.105:5000/api/Scores").then(res => {
+       this.setState({test: res.data});
+     })
      axios.get("http://138.47.204.105:5000/api/gamebox").then(res => {
        this.setState({Games: JSON.stringify(res.data)});
        this.setState({GameCount: this.state.Games.length});

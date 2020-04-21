@@ -12,10 +12,12 @@ export class Subscriptions extends React.Component{
         basic: false,
         advanced: false,
         pro: false,
-        test: [" @              Game A Team A vs Team B Score 45-30 Team B", "@       Game B Team C vs Team D Score 45-30 Team C", "      Game C Team E vs Team F Score 45-30 Team F"],
-     
+        test: [""],
     } 
   componentDidMount() {
+      axios.get("http://138.47.204.105:5000/api/Scores").then(res => {
+        this.setState({test: res.data});
+      })
     axios.post('http://138.47.204.105:5000/api/checkTokens/', { "Token": this.props.token, "Login": this.props.LC }).then(res => {
       if (res.data != null ){
         if (res.data.Basic.toString() === "1"){
