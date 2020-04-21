@@ -6,6 +6,7 @@ import {
   Col,
   Jumbotron,
   Image,
+  Table,
 } from "react-bootstrap";
 import styled from "styled-components";
 import { GameBox } from "./GameBox.jsx";
@@ -270,9 +271,104 @@ export class Home extends React.Component {
           </Row>
           <Row>
             <Col>
+              <p>We are a college football betting model website. We are transparent on how we make money and how the model works (see "Monetization" and "The Model" below). 
+                We promise to be fair in pricing, adhere to good Security and Ethical standards, and to always be willing to serve our customers. ~Lane Arnold 2020 
+              </p>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
               <Jumbotron>
                 <h1>Our Staff</h1>
               </Jumbotron>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Jumbotron>
+                <h1>Lane Arnold</h1>
+                <p>Project Lead [Front End, Security, Database, and Express Endpoints]</p>
+              </Jumbotron>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Image src={require("../staff/lanefinal.jpg")} />
+            </Col>
+            <Col>
+              <h2>Lane Arnold is a senior at Louisiana Tech University. He will graduate with a Bachelor's in Compter Science with a concentration in Cybersecurity. He is pursuing a carrer in the Security field or Specialized Embedded Systems. 
+                He was project lead, and head of Security Features, Express endpoints, and the React frontend. Graduating in November 2020.
+              </h2>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Jumbotron>
+                <h1>Andrew Almond</h1>
+                <p>Software Engineer []</p>
+              </Jumbotron>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Image src={require("../staff/drew.png")} />
+            </Col>
+            <Col>
+              <h3>Andrew Almond is a senior at Louisiana Tech University pursuing a Bachelor of Science in Computer Science. Andrew is concentrating in Big Data, Cybersecurity and Cloud Computing and is planning to work in the security or big data fields. He gathered, processed and modeled the data as well as oversaw changes between the frontend and backend model to ensure smooth transitioning between them.
+
+              </h3>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Jumbotron>
+                <h1>Matthew Tures</h1>
+                <p>Software Engineer []</p>
+              </Jumbotron>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Image src={require("../staff/matt.jpg")} />
+            </Col>
+            <Col>
+              <h3>Matthew is a Senior Computer Science major at Louisiana Tech University, with concentrations in game design and cyber security. Matthew previously held a job as an intern at a cyber security company and would like to have a career in either cyber security or game design. In this project, he assisted in security measures, API communication and database queries.
+              </h3>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Jumbotron>
+                 <h1>Travis Freese</h1>
+                <p>Software Engineer []</p>
+              </Jumbotron>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Image src={require("../staff/travisfinal.png")} />
+            </Col>
+            <Col>
+              <h2>Travis Freese is a senior at Louisiana Tech University pursuing a Bachelors degree in computer science. Travis is concentrating in Computer Engineering and planning on working with embedded systems after graduation. For this project Travis maintained the SQL databases and aided in the design of the mathematical model.</h2>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Jumbotron>
+                <h1>Zach Bignall</h1>
+                <p>Sofware Engineer</p>
+              </Jumbotron>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Image src={require("../staff/zach.jpg")} />
+            </Col>
+            <Col>
+              <h3>Zachery Bignall is a senior at Louisiana Tech University getting a Bachelor of science in computer science. 
+With concentrations in Big data, Cybersecurity, and Cloud Computing,
+he was the head data scientist for getting the Probability of who will win a game on this project. 
+After this project he plans on finishing his  college career at Louisiana Tech University a and pursuing a job in the field of computer science.</h3>
             </Col>
           </Row>
           <Row>
@@ -289,9 +385,74 @@ export class Home extends React.Component {
           </Row>
           <Row>
             <Col>
+              <p>We wanted our website to be diffrent than a typical website design. That influenced our design decisions to have the photo-carousels, the sidebar with the unique buttons, and our logo placement.
+                For those who are confused about the buttons, a table with the descriptions are below.
+              </p>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>Button</th>
+                    <th>Button Name</th>
+                    <th>Button Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <Image src={require("../images/1.png")} />
+                    <td>Home</td>
+                    <td>Welcome page and general Website info.</td>
+                  </tr>
+                  <tr>
+                    <Image src={require("../images/2.png")} />
+                    <td>Login</td>
+                    <td>Login Page.</td>
+                  </tr>
+                  <tr>
+                    <Image src={require("../images/3.png")} />
+                    <td>Register</td>
+                    <td>Create uBETcha account.</td>
+                  </tr>
+                  <tr>
+                    <Image src={require("../images/4.png")} />
+                    <td>Subscriptions</td>
+                    <td>View and sign-up for paid Subscriptions.</td>
+                  </tr>
+                  <tr>
+                    <Image src={require("../images/5.png")} />
+                    <td>Basic</td>
+                    <td>Basic (free to public) model page.</td>
+                  </tr>
+                  <tr>
+                    <Image src={require("../images/6.png")} />
+                    <td>Advanced</td>
+                    <td>Advanced (Subscription Based) model page.</td>
+                  </tr>
+                  <tr>
+                    <Image src={require("../images/7.png")} />
+                    <td>Pro</td>
+                    <td>Pro (Subscription Based) model page.</td>
+                  </tr>
+                  <tr>
+                    <Image src={require("../images/8.png")} />
+                    <td>Contact Us</td>
+                    <td>Various ways to conatact us directly.</td>
+                  </tr>
+                </tbody>
+              </Table>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
                 <h1>Monetization</h1>
             </Col>
           </Row>
+          <p>We want to be transparent on how we make money. We only make money from paid Subscriptions from our users. We do not allow ads on the website nor sell your information or email.
+             If you want to support us, coinsider purchasing one of our Subscriptions.
+          </p>
           <Row>
             <Col>
                 <h1>Security</h1>
@@ -299,15 +460,37 @@ export class Home extends React.Component {
           </Row>
           <Row>
             <Col>
-              <Jumbotron>
-                <h1>The Model</h1>
-              </Jumbotron>
+                <h3>We take security very seriously. Here are some of the features of our system.</h3>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+                <h4>#Password Hashing</h4>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+                <p>We never store your passwords. We hash your passwords and store the hashed password and store the hashed password in our database. When your login, we compare your password to the 
+                  hashed password.
+                </p>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+                <h4>#Mega Tokens</h4>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+                <p>"Mega Tokens" are our custom 1024 length encrypted tokes based off of a key that is randomly generated every two hours, and all of the tokens are re-created every two hours. 
+                  The token is sesson dependant, i.e. everytime you exit the website that token can never be used again. We also verify your IP address against the token. For referece, Facebook's tokens are only 255 length.
+                </p>
             </Col>
           </Row>
           <Row>
             <Col>
               <Jumbotron>
-                <h1>Contact Us</h1>
+                <h1>The Model</h1>
               </Jumbotron>
             </Col>
           </Row>
