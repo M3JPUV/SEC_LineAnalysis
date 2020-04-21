@@ -21,25 +21,29 @@ from sklearn.feature_selection import RFECV
 #Step is the number of features to be removed at a time
 #CV is the Cross-Validation using stratifiedFFold Kset to 10
 #Scoring is is the metric you want to optimize for
+
 def RFE(df):
     X = df.drop('Act W %', axis=1)
-    #print(X)
-    #print df['Act W %']
 
     target = df['Act W %']######Original
+
+    #This changes the win percentage into binary input#
     for w in range(len(target)):
-        #print w
         if int(target[w]) > .5:
             target[w] = 1
         else:
             target[w] =0
-    #print(target)
 
     rfc = RandomForestClassifier(random_state=101)
-    rfecv = RFECV(estimator=rfc, step=1, cv=5, scoring='accuracy')
+    rfecv = RFECV(estimator=rfc, step=1, min_features_to_select = 15, cv=5, scoring='accuracy')
     rfecv.fit(X, target)
-    print('Optimal number of features: {}'.format(rfecv.n_features_))
-    print('important features:{} Value:{}'.format(X.columns, rfecv.estimator_.feature_importances_))
+
+    print('Optimal number of features :', rfecv.n_features_)
+    print('Best features :', X.columns[rfecv.support_])
+    print('Scores for each:', rfecv.estimator_.feature_importances_)
+    print('Original features :', X.columns)
+    #print('Optimal number of features: {}'.format(rfecv.n_features_))
+    #print(' Value:{}'.format( rfecv.estimator_.feature_importances_))
 
     #Plotting code
     #dset = pd.DataFrame()
@@ -64,8 +68,6 @@ def removeCorrelatedFeatures(df):
             if abs(correlation_matrix.iloc[i, j]) > 0.8:#if correlation greater than 0.8
                 colname = correlation_matrix.columns[i]
                 correlated_features.add(colname)
-    #print("DROPPED")
-    #print(correlated_features)
     return correlated_features
 ##########Main Driver############
 year = ['2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018']
@@ -80,5 +82,4 @@ for i in range(len(year)):
     correlated_features = removeCorrelatedFeatures(df)
     df.drop(correlated_features, axis=1,errors='ignore')
     print(i+2004)
-    #print(df)
     RFE(df)
