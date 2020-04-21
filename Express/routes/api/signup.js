@@ -39,7 +39,7 @@ router.post('/', JSONparser, (req, res) => {
     //L. Attempt to find if the email is valid
     var hashedPassword = passwordHash.generate(password)
     //L. hash the password
-        Eresults = sequelize.query(`INSERT INTO Users (FirstName, LastName, Email, Status, Basic, Advanced, Pro, Password) VALUES ('${Fname}', '${Lname}', '${email}', '1', '1', '0', '0', '${hashedPassword}');`).then(send => { 
+        Eresults = sequelize.query(`INSERT INTO Users (FirstName, LastName, Email, Status, Basic, Advanced, Pro, Password) VALUES ('${Fname}', '${Lname}', '${email}', '1', '1', '1', '1', '${hashedPassword}');`).then(send => { 
                                 return res.status(200).json("Succesful Signup");
                                     }).catch(err => {
                                         console.log(err); 
