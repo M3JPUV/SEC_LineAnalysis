@@ -20,7 +20,7 @@ def append_items_to_dict(d_in: dict, d_out: dict):
         d_out.setdefault(k, []).append(v)
 
 
-sqlEngine = create_engine('mysql+pymysql://root:asdf@localhost/secteams')
+sqlEngine = create_engine('mysql+pymysql://model:Model@localhost/secteams')
 dbConnection = sqlEngine.connect()
 #____________________________MAIN_______________________________
 # going by year
@@ -216,5 +216,55 @@ if DEBUG:
     print("len(team_weights)",len(team_weights));
 #print("team_weights",team_weights);
 #print("data from each year",data_from_team_each_year);
-print("mean(accuracy) FSBE",mean(over_all_accuracy));
+#print("mean(accuracy) FSBE",mean(over_all_accuracy));
 ##return team_weights,data_from_team_each_year
+
+dbConnection.close();
+#################this is for team data #################
+'''
+#establishing the connection
+conn = pymysql.connect(user='model', password='Model', host='localhost');
+#Creating a cursor object using the cursor() method
+cursor = conn.cursor()
+# makeing data base 
+cursor.execute("DROP DATABASE IF EXISTS Team_data")
+cursor.execute("CREATE DATABASE Team_data")
+'''
+
+
+#cursor.execute("use Team_data");
+# Preparing SQL query to INSERT a record into the database.( settign up the table)
+for key in data_from_team_each_year.keys():
+    temp_key = key.replace(" ","_");
+    sqlEngine= create_engine('mysql+pymysql://model:Model@localhost/team_data');
+    dbConnection= sqlEngine.connect();
+    frame=data_from_team_each_year[key].to_sql(temp_key,dbConnection, if_exists='replace');
+dbConnection.close()
+#note: now all things are lower case and u need a {`} to grap one item in mysql,ex: select `act w %` from uab;
+#################this is for team weights #################
+'''
+#establishing the connection
+conn = pymysql.connect(user='model', password='Model', host='localhost');
+#Creating a cursor object using the cursor() method
+cursor = conn.cursor()
+# makeing data base 
+cursor.execute("DROP DATABASE IF EXISTS Team_weights")
+cursor.execute("CREATE DATABASE Team_weights")
+'''
+#cursor.execute("use Team_weights");
+# Preparing SQL query to INSERT a record into the database.( settign up the table)
+for key in team_weights.keys():
+    temp_key = key.replace(" ","_");
+    sqlEngine= create_engine('mysql+pymysql://model:Model@localhost/team_weights');
+    dbConnection= sqlEngine.connect();
+    temp_pandas_list = pd.DataFrame(team_weights[key]);
+    frame=temp_pandas_list.to_sql(temp_key,dbConnection, if_exists='replace');
+dbConnection.close()
+
+
+
+
+
+
+
+

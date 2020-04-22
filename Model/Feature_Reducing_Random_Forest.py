@@ -7,7 +7,7 @@ def FRRR(Numer_of_features,df, y):
     # import required libraries
     import pandas as pd
     import numpy as np
-    import matplotlib.pyplot as plt
+    #import matplotlib.pyplot as plt
     #feature reducten Random Forest
     from sklearn.ensemble import RandomForestRegressor
     #train = pd.read_csv('NCAAstats_05.csv')
