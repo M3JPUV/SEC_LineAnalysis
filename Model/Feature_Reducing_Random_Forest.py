@@ -13,7 +13,7 @@ def FRRR(Numer_of_features,df, y):
     #train = pd.read_csv('NCAAstats_05.csv')
     #df=train.drop(['Team','Conf'], axis=1)
     model = RandomForestRegressor(random_state=1, max_depth=10)
-    df=pd.get_dummies(df)
+    #df=pd.get_dummies(df)
     if DEBUG:
         print("df:\n",df);
         print("y:\n",y);

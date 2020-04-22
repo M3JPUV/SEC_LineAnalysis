@@ -205,7 +205,46 @@ if DEBUG:
     #print('lenlow_accuracy_teams',len(low_accuracy_teams));
     print("mean(accuracy)",mean(over_all_accuracy));
     print("len(team_weights)",len(team_weights));
-print("team_weights",team_weights);
-print("data_from_team_each_year",data_from_team_each_year);
+    
+#print("team_weights",team_weights);
+#print("data_from_team_each_year",data_from_team_each_year);
+#print(len(data_from_team_each_year));
+    
 #print("mean(accuracy) FSBE",mean(over_all_accuracy));
 ##return team_weights,data_from_team_each_year
+
+
+####input data into mysql######
+all_columns_names=[]
+for keys in data_from_team_each_year.keys():
+    #print(data_from_team_each_year[keys].columns[0]);
+    temp = list(data_from_team_each_year[keys].columns)
+    all_columns_names = list(set(all_columns_names)|set(temp));
+#getting the  fiels 
+#print(all_columns_names);
+#print(len(all_columns_names));
+# plus the name ie key == pri.
+# everything can be null
+
+#setting up the tables, need one for each team.
+#import mysql.connector
+#establishing the connection
+#conn = mysql.connector.connect(user='root', password='asdf', host='localhost', database='secteams')
+#Creating a cursor object using the cursor() method
+#cursor = conn.cursor()
+# need to make a db for weigths and lists
+
+
+# Preparing SQL query to INSERT a record into the database.( settign up the table
+
+for key in data_from_team_each_year.keys():
+    temp_key = key.replace(" ","_");
+    sql="CREATE TABLE "+temp_key+" IF NOT EXISTS(";
+    sql += ('year INT(15) not null auto_increment,');
+    for i in range(len(all_columns_names)):
+        temp=all_columns_names[i].replace(" ","_");
+        sql += (str(temp)+' decimal(12,2), ');
+    sql += "PRIMARY KEY (year));";
+    # run the sql here
+    print(sql);
+    quit();
