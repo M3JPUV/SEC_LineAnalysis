@@ -1,8 +1,7 @@
 # D. import required libraries
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
+#import matplotlib.pyplot as plt
 import re
 
 #
@@ -12,7 +11,7 @@ REDIRECTION = False
 # D. change value to show visual plots and ALL data
 EXTRA_DATA = False
 
-
+'''
 # D. create the correlation matrix model for one year
 def get_correlation_matrix(df, corr_year):
     from matplotlib import pyplot as plt
@@ -44,6 +43,7 @@ def get_correlation_matrix(df, corr_year):
     # D. add colorbar and add ticks for values (from -1 to 1)
     fig.colorbar(cax, ticks=[-1.0, -.75, -.50, -.25, 0, .25, .50, .75, 1])
     plt.show()
+'''
 
 # D. remove pairs of correlations to themselves
 def remove_redundant_pairs(df):

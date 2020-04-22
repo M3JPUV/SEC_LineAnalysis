@@ -109,8 +109,6 @@ from Temp_FRRF_to_FSBE_to_logreg import Main_FRRF_to_FSBE_to_logreg;
 team_weights_fsbe,data_from_team_each_year_fsbe = Main_FRRF_to_FSBE_to_logreg();
 #__________________________________________________________________________
 for index,row in train.iterrows():
-    if row['Wk'] == 3:
-        break;
     team_a=row['Winner']
     team_b=row['Loser']
     # for cm 
