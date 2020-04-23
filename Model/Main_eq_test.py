@@ -1,6 +1,10 @@
 import pandas as pd
 import numpy as np;
 import math;
+
+import xlwt 
+from xlwt import Workbook 
+
 # file will be given two pnadas list
 #team_a,team_b,team_weights[team_a],data_from_team_each_year[team_a],team_weights[team_b],data_from_team_each_year[team_b]
 def main_eq(team_a,team_b,team_a_weigths,team_a_data,team_b_weigths,team_b_data):
@@ -81,10 +85,11 @@ train["Winner"]= train["Winner"].str.replace("central florida", "UCF", case = Fa
 train["Winner"]= train["Winner"].str.replace("hawaii", "Hawai'i", case = False)
 train["Winner"]= train["Winner"].str.replace("brigham young", "BYU", case = False)
 train["Winner"]= train["Winner"].str.replace("texas christian", "TCU", case = False)
-train["Winner"]= train["Winner"].str.replace("alabama birmingham", "UAB", case = False)
+train["Winner"]= train["Winner"].str.replace("alabama-birmingham", "UAB", case = False)
 train["Winner"]= train["Winner"].str.replace("southern california", "USC", case = False)
 train["Winner"]= train["Winner"].str.replace("texas-san antonio", "UTSA", case = False)
 train["Winner"]= train["Winner"].str.replace("texas-el paso", "UTEP", case = False)
+train["Winner"]= train["Winner"].str.replace("bowling green state", "Bowling Green", case = False)
 
 # D. Loser Teams (Replace wrong names)
 train["Loser"]= train["Loser"].str.replace("louisiana state", "LSU", case = False)
@@ -94,31 +99,69 @@ train["Loser"]= train["Loser"].str.replace("central florida", "UCF", case = Fals
 train["Loser"]= train["Loser"].str.replace("hawaii", "Hawai'i", case = False)
 train["Loser"]= train["Loser"].str.replace("brigham young", "BYU", case = False)
 train["Loser"]= train["Loser"].str.replace("texas christian", "TCU", case = False)
-train["Loser"]= train["Loser"].str.replace("alabama birmingham", "UAB", case = False)
+train["Loser"]= train["Loser"].str.replace("alabama-birmingham", "UAB", case = False)
 train["Loser"]= train["Loser"].str.replace("southern california", "USC", case = False)
 train["Loser"]= train["Loser"].str.replace("texas-san antonio", "UTSA", case = False)
 train["Loser"]= train["Loser"].str.replace("texas-el paso", "UTEP", case = False)
+train["Loser"]= train["Loser"].str.replace("bowling green state", "Bowling Green", case = False)
 ###############################################################################
 
 #____________________________cm ________________________________________
 
 from Temp_cm_to_log import Main_CM_to_logreg;
 team_weights_cm,data_from_team_each_year_cm = Main_CM_to_logreg();
+'''
 #_______________________________FSBE_______________________________________________
 from Temp_FRRF_to_FSBE_to_logreg import Main_FRRF_to_FSBE_to_logreg;
 team_weights_fsbe,data_from_team_each_year_fsbe = Main_FRRF_to_FSBE_to_logreg();
 #__________________________________________________________________________
+'''
+# D. Make the workbook and sheet
+wb = Workbook()
+sheet1 = wb.add_sheet('Sheet 1')
+
+# D. Heading row
+sheet1.write(0, 0, 'team_a')
+sheet1.write(0, 1, 'prob_a')
+sheet1.write(0, 2, 'team_a')
+sheet1.write(0, 3, 'prob_a')
+sheet1.write(0, 4, 'team_weights_cm[team_a]')
+sheet1.write(0, 5, 'team_weights_cm[team_b]')
+sheet1.write(0, 6, 'data_from_team_each_year[team_a]')
+sheet1.write(0, 7, 'data_from_team_each_year[team_b]')
+
+# D. Ensures no gaps in table due to skipped teams
+i = 1
 for index,row in train.iterrows():
     team_a=row['Winner']
     team_b=row['Loser']
+
     # for cm 
     try:
         # take , team name, team data  and weights  for cm 
         prob_a,prob_b = main_eq(team_a,team_b,team_weights_cm[team_a],data_from_team_each_year_cm[team_a],team_weights_cm[team_b],data_from_team_each_year_cm[team_b])
-        print('\nprob_a CM',team_a,prob_a,"%");
-        print('prob_b CM',team_b,prob_b,"%\n");
+        #print('\nprob_a CM',team_a,prob_a,"%");
+        #print('\nprob_b CM',team_b,prob_b,"%");
+
+        # Row for each game
+        sheet1.write(i, 0, team_a)
+        sheet1.write(i, 1, prob_a)
+        sheet1.write(i, 2, team_b)
+        sheet1.write(i, 3, prob_b)
+        sheet1.write(i, 4, str((list(team_weights_cm[team_a])[:8])))
+        sheet1.write(i, 5, str((list(team_weights_cm[team_b])[:8])))
+        sheet1.write(i, 6, str((list(data_from_team_each_year_cm[team_a])[:8])))
+        sheet1.write(i, 7, str((list(data_from_team_each_year_cm[team_b])[:8])))
+        i+=1
+        
     except:
-        print("skipped cm eq ",team_a,team_b);
+        #print("skipped cm eq ",team_a,team_b);
+        continue
+
+# Save workbook to file
+wb.save('output.xls')
+
+'''
     # for fsbe
     try:
         # take , team name, team data  and weights  for fsbe
@@ -127,6 +170,7 @@ for index,row in train.iterrows():
         print('prob_b FSBE',team_b,prob_b,"%\n");
     except:
         print("skipped fsbe eq ",team_a,team_b);
+'''
 
 '''
 #_____________________________________________________________________
