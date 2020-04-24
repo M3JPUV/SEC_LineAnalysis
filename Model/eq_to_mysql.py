@@ -25,7 +25,7 @@ def main_eq(team_a,team_b,team_a_weigths,team_a_data,team_b_weigths,team_b_data)
     #print(cla.union(clb));
     # intersection is only what they have the same
     both = cla.intersection(clb)
-    both = both.drop('Act W %');
+    both = both.drop('Act W %',errors='ignore');
     #_b = both 
     team_a_data_b=team_a_data[both];
     team_b_data_b=team_b_data[both];
@@ -97,8 +97,9 @@ train["Winner"]= train["Winner"].str.replace("alabama-birmingham", "UAB", case =
 train["Winner"]= train["Winner"].str.replace("southern california", "USC", case = False)
 train["Winner"]= train["Winner"].str.replace("texas-san antonio", "UTSA", case = False)
 train["Winner"]= train["Winner"].str.replace("texas-el paso", "UTEP", case = False)
-train["Winner"]= train["Winner"].str.replace("(OH)","ohio")
-train["Winner"]= train["Winner"].str.replace("(FL)","florida")
+train["Winner"]= train["Winner"].str.replace("(OH)","Ohio")
+train["Winner"]= train["Winner"].str.replace("(FL)","Florida")
+train["Winner"]= train["Winner"].str.replace("bowling green state", "Bowling Green", case = False)
 # D. Loser Teams (Replace wrong names)
 train["Loser"]= train["Loser"].str.replace("louisiana state", "LSU", case = False)
 train["Loser"]= train["Loser"].str.replace("nevada-las vegas", "UNLV", case = False)
@@ -111,11 +112,12 @@ train["Loser"]= train["Loser"].str.replace("alabama-birmingham", "UAB", case = F
 train["Loser"]= train["Loser"].str.replace("southern california", "USC", case = False)
 train["Loser"]= train["Loser"].str.replace("texas-san antonio", "UTSA", case = False)
 train["Loser"]= train["Loser"].str.replace("texas-el paso", "UTEP", case = False)
-train["Loser"]= train["Loser"].str.replace("(OH)","ohio")
-train["Loser"]= train["Loser"].str.replace("(FL)","florida")
+train["Loser"]= train["Loser"].str.replace("(OH)","Ohio")
+train["Loser"]= train["Loser"].str.replace("(FL)","Florida")
+train["Loser"]= train["Loser"].str.replace("bowling green state", "Bowling Green", case = False)
 #z.# take , team name, team data  and weights  for fsbe
-train['Winner'] = train['Winner'].map(lambda x:x.replace(" ","_").lower());
-train['Loser'] = train['Loser'].map(lambda x:x.replace(" ","_").lower());
+train['Winner'] = train['Winner'].map(lambda x:x.replace(" ","_"));
+train['Loser'] = train['Loser'].map(lambda x:x.replace(" ","_"));
 ###############################################################################
 """
 #____________________________cm ________________________________________
@@ -143,8 +145,8 @@ import pymysql
 try:
     connection = mysql.connector.connect(host='localhost',
                                          database='team_data',
-                                         user='root',
-                                         password='LatechZachery20!',
+                                         user='model',
+                                         password='Model',
                                          auth_plugin='mysql_native_password');
 
     sql_select_Query = "show tables"
@@ -162,7 +164,7 @@ finally:
         if DEBUG:
             print("MySQL connection is closed for team_data")
 
-sqlEngine = create_engine('mysql+pymysql://root:LatechZachery20!@localhost/team_data');
+sqlEngine = create_engine('mysql+pymysql://model:Model@localhost/team_data');
 dbConnection = sqlEngine.connect()
 
 for X in tables:
@@ -174,8 +176,8 @@ for X in tables:
 try:
     connection = mysql.connector.connect(host='localhost',
                                          database='team_weights',
-                                         user='root',
-                                         password='LatechZachery20!',
+                                         user='model',
+                                         password='Model',
                                          auth_plugin='mysql_native_password');
 
     sql_select_Query = "show tables"
@@ -193,7 +195,7 @@ finally:
         if DEBUG:
             print("MySQL connection is closed for team_weigths")
 
-sqlEngine_w = create_engine('mysql+pymysql://root:LatechZachery20!@localhost/team_weights');
+sqlEngine_w = create_engine('mysql+pymysql://model:Model@localhost/team_weights');
 dbConnection_w = sqlEngine_w.connect()
 for X in tables:
     weights = pd.read_sql("SELECT * FROM `"+X+"`" ,dbConnection_w);
@@ -212,7 +214,7 @@ print(train['Loser']);
 
 ####################################################################
 #______________________________________________________________
-mydb = mysql.connector.connect(host="localhost",user="root",passwd="LatechZachery20!",database="2019_win_per",auth_plugin='mysql_native_password')
+mydb = mysql.connector.connect(host="localhost",user="model",passwd="Model",database="win_per_2019",auth_plugin='mysql_native_password')
 mycursor = mydb.cursor()
 # drop databaes;
 sql= "DROP TABLE IF EXISTS `2019`";
@@ -222,16 +224,22 @@ mydb.commit()
 sql="CREATE TABLE `2019` (p_win_t int(11), wt varchar(20), home varchar(20), away varchar(20), top_features varchar(200))";
 mycursor.execute(sql)
 mydb.commit()
+DEBUG =False;
+#print(team_weights_fsbe.keys);
+#print(data_from_team_each_year_fsbe);
+#exit();
 for index,row in train.iterrows():
     team_a=row['Winner'];
     team_b=row['Loser'];
     if DEBUG:
         print(team_a);
         print(team_b);
-        print(team_weights_fsbe[team_a].drop(["index"], axis=1));
-        print(data_from_team_each_year_fsbe[team_a].drop(["index"], axis=1));
-        #print(type(team_weights_fsbe[team_b]));
-        #print(data_from_team_each_year_fsbe[team_b]);
+        #print(team_weights_fsbe.keys());
+        #print(data_from_team_each_year_fsbe.keys());
+        print(team_weights_fsbe[team_a]);
+        print(data_from_team_each_year_fsbe[team_a]);
+        print(type(team_weights_fsbe[team_b]));
+        print(data_from_team_each_year_fsbe[team_b]);
 
     """
     # for cm 
@@ -253,7 +261,7 @@ for index,row in train.iterrows():
             # put thiings for front in needs
         #p_win_t,WT,away,home,[list of both]
         sql = "INSERT INTO `2019` (p_win_t,wt,home,away,top_features) VALUES (%s,%s,%s,%s,%s)";
-        both=' - '.join(map(str, both[:8]));
+        both='-'.join(map(str, both[:8]));
         both = '"'+both+'"';
         if DEBUG:
             print(both);

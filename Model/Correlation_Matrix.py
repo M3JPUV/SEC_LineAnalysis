@@ -66,7 +66,11 @@ def get_top_correlations(df, n):
 
 # D. specify the target correlation attribute and return list of most correlations
 def get_win_correlations(au_corr, n):
-    corr_target = abs(au_corr["Act W %"])
+    #z. abs not working when gettign data from mysql , had to add {"_"}
+    #print(type(au_corr));
+    #print(au_corr);
+    #print(au_corr["Act_W_%"]);
+    corr_target = abs(au_corr["Act_W_%"])
     corr_list = []
     for i in range(n-1):
         corr_list.append(str(corr_target[i:i+1]))
@@ -107,7 +111,7 @@ def CorrMatrix(year, df,number):
                 # doudle checking for white space 
                 x = re.findall('\s',values[v][-1])
         #TODO: check in mysql when time comes 
-        x = re.findall('Opp Pass Att / Sac',values[v])
+        x = re.findall('Opp_Pass_Att_/_Sac',values[v])
         if x and  (v == 0):
             values[v] = "{}k".format(values[v])
     return(values)
