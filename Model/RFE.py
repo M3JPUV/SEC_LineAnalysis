@@ -11,7 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings('ignore')
-pd.options.display.max_columns = None
+#pd.options.display.max_columns = None
 
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import StratifiedKFold
@@ -83,8 +83,10 @@ def RandForestClass(train):
 #for i in range(len(year)):
     #train = pd.read_excel(xlsx, year[i])
     # D. drop columns that aren't needed or relevant
+
     #df = train.drop(['Team', 'Conf', 'Rk', 'Rk.1', 'Rk.2', 'Rk.3', 'Pyth Rank'], axis=1)
     df = train
+
     #print(df.columns[0])
     correlated_features = removeCorrelatedFeatures(df)
     df.drop(correlated_features, axis=1,errors='ignore')
