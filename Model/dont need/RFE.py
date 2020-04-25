@@ -11,7 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings('ignore')
-pd.options.display.max_columns = None
+#pd.options.display.max_columns = None
 
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import StratifiedKFold
@@ -26,22 +26,28 @@ def RFE(df):
     X = df.drop('Act W %', axis=1)
 
     target = df['Act W %']######Original
+    #print((target));
 
     #This changes the win percentage into binary input#
+    target[target>=.625]=1
+    target[target<.625]=0
+    '''
     for w in range(len(target)):
-        if int(target[w]) > .5:
+        print(type(target[w]));
+        if (float(target[w]) >= .625):
             target[w] = 1
         else:
-            target[w] =0
-
+            target[w] = 0
+    '''
     rfc = RandomForestClassifier(random_state=101)
-    rfecv = RFECV(estimator=rfc, step=1, min_features_to_select = 15, cv=5, scoring='accuracy')
+    rfecv = RFECV(estimator=rfc, step=1, min_features_to_select = 15, cv=2, scoring='accuracy')
     rfecv.fit(X, target)
 
-    print('Optimal number of features :', rfecv.n_features_)
-    print('Best features :', X.columns[rfecv.support_])
-    print('Scores for each:', rfecv.estimator_.feature_importances_)
-    print('Original features :', X.columns)
+    #print('Optimal number of features :', rfecv.n_features_)
+    return(X.columns[rfecv.support_])
+    #print('Best features :', X.columns[rfecv.support_])
+    #print('Scores for each:', rfecv.estimator_.feature_importances_)
+    #print('Original features :', X.columns)
     #print('Optimal number of features: {}'.format(rfecv.n_features_))
     #print(' Value:{}'.format( rfecv.estimator_.feature_importances_))
 
@@ -70,16 +76,18 @@ def removeCorrelatedFeatures(df):
                 correlated_features.add(colname)
     return correlated_features
 ##########Main Driver############
-year = ['2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018']
-xlsx =  pd.ExcelFile('NCAAstats.xls')
+#year = ['2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018']
+#xlsx =  pd.ExcelFile('NCAAstats.xls')
 
-for i in range(len(year)):
-    train = pd.read_excel(xlsx, year[i])
+def RandForestClass(train):
+#for i in range(len(year)):
+    #train = pd.read_excel(xlsx, year[i])
     # D. drop columns that aren't needed or relevant
-    df = train.drop(['Team', 'Conf', 'Rk', 'Rk.1', 'Rk.2', 'Rk.3', 'Pyth Rank'], axis=1)
+
+    #df = train.drop(['Team', 'Conf', 'Rk', 'Rk.1', 'Rk.2', 'Rk.3', 'Pyth Rank'], axis=1)
+    df = train
 
     #print(df.columns[0])
     correlated_features = removeCorrelatedFeatures(df)
     df.drop(correlated_features, axis=1,errors='ignore')
-    print(i+2004)
-    RFE(df)
+    return(RFE(df))

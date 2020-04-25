@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np;
 import math;
+DEBUG = False;
 # file will be given two pnadas list
 #team_a,team_b,team_weights[team_a],data_from_team_each_year[team_a],team_weights[team_b],data_from_team_each_year[team_b]
 def main_eq(team_a,team_b,team_a_weigths,team_a_data,team_b_weigths,team_b_data):
@@ -16,9 +17,13 @@ def main_eq(team_a,team_b,team_a_weigths,team_a_data,team_b_weigths,team_b_data)
     #matching colums
     cla = team_a_data.columns
     clb = team_b_data.columns
-    #print ('cla:',cla);
-    #print('clb:',clb);
+    if DEBUG ==True : 
+        print ('cla:',cla);
+        print('clb:',clb);
+        print(cla.intersection(clb));
+    # union is all 
     #print(cla.union(clb));
+    # intersection is only what they have the same
     both = cla.intersection(clb)
     both = both.drop('Act W %');
     #_b = both 
@@ -40,23 +45,30 @@ def main_eq(team_a,team_b,team_a_weigths,team_a_data,team_b_weigths,team_b_data)
         # builds xa andb xb 
         xa.append(team_a_avg[both[i]] - team_b_avg[both[i]]);
         xb.append(team_b_avg[both[i]] - team_a_avg[both[i]]);
+        if DEBUG and  i == 10 :
+            print(index_a);
+            print(index_b);
+            print(xa);
+            print(xb);
+            
     # have the weights that match from both teams
-    #_m = match
-    team_a_weigths_m = team_a_weigths[index_a];
-    team_b_weigths_m =team_b_weigths[index_b];
+    #_m = matched
+    team_a_weigths_m = team_a_weigths.loc[index_a,:];
+    team_b_weigths_m =team_b_weigths.loc[index_b,:];
     #building u
-    ua=team_a_weigths[0]
-    ub=team_b_weigths[0]
-    for i in range(len(both)):
-        ua+= team_a_weigths_m[i]*xa[i];
-        ub+= team_b_weigths_m[i]*xb[i];
+    ua=team_a_weigths['0'].iloc[0] 
+    ub=team_b_weigths['0'].iloc[0]
+    
+    for i in range(1,len(both)):
+        ua+= team_a_weigths['0'].iloc[i]*xa[i];
+        ub+= team_b_weigths['0'].iloc[i]*xb[i];
     #team_A
     prob_a=1/(1+math.exp(-ua))
     #team_B
     prob_b=1/(1+math.exp(-ub))
     #print('prob_a',prob_a);
     #print('prob_b',prob_b);
-    return prob_a,prob_b
+    return prob_a,prob_b,both
 #############################GETTING THE TEASM FOR 2019#################################################
 # D. Remove Limit on Print Size
 pd.set_option('display.max_rows', None, "display.max_rows", None)
@@ -81,11 +93,12 @@ train["Winner"]= train["Winner"].str.replace("central florida", "UCF", case = Fa
 train["Winner"]= train["Winner"].str.replace("hawaii", "Hawai'i", case = False)
 train["Winner"]= train["Winner"].str.replace("brigham young", "BYU", case = False)
 train["Winner"]= train["Winner"].str.replace("texas christian", "TCU", case = False)
-train["Winner"]= train["Winner"].str.replace("alabama birmingham", "UAB", case = False)
+train["Winner"]= train["Winner"].str.replace("alabama-birmingham", "UAB", case = False)
 train["Winner"]= train["Winner"].str.replace("southern california", "USC", case = False)
 train["Winner"]= train["Winner"].str.replace("texas-san antonio", "UTSA", case = False)
 train["Winner"]= train["Winner"].str.replace("texas-el paso", "UTEP", case = False)
-
+train["Winner"]= train["Winner"].str.replace("(OH)","ohio")
+train["Winner"]= train["Winner"].str.replace("(FL)","florida")
 # D. Loser Teams (Replace wrong names)
 train["Loser"]= train["Loser"].str.replace("louisiana state", "LSU", case = False)
 train["Loser"]= train["Loser"].str.replace("nevada-las vegas", "UNLV", case = False)
@@ -94,57 +107,23 @@ train["Loser"]= train["Loser"].str.replace("central florida", "UCF", case = Fals
 train["Loser"]= train["Loser"].str.replace("hawaii", "Hawai'i", case = False)
 train["Loser"]= train["Loser"].str.replace("brigham young", "BYU", case = False)
 train["Loser"]= train["Loser"].str.replace("texas christian", "TCU", case = False)
-train["Loser"]= train["Loser"].str.replace("alabama birmingham", "UAB", case = False)
+train["Loser"]= train["Loser"].str.replace("alabama-birmingham", "UAB", case = False)
 train["Loser"]= train["Loser"].str.replace("southern california", "USC", case = False)
 train["Loser"]= train["Loser"].str.replace("texas-san antonio", "UTSA", case = False)
 train["Loser"]= train["Loser"].str.replace("texas-el paso", "UTEP", case = False)
+train["Loser"]= train["Loser"].str.replace("(OH)","ohio")
+train["Loser"]= train["Loser"].str.replace("(FL)","florida")
+#z.# take , team name, team data  and weights  for fsbe
+train['Winner'] = train['Winner'].map(lambda x:x.replace(" ","_").lower());
+train['Loser'] = train['Loser'].map(lambda x:x.replace(" ","_").lower());
 ###############################################################################
 
 #____________________________cm ________________________________________
-
 from Temp_cm_to_log import Main_CM_to_logreg;
 team_weights_cm,data_from_team_each_year_cm = Main_CM_to_logreg();
+
 #_______________________________FSBE_______________________________________________
+
 from Temp_FRRF_to_FSBE_to_logreg import Main_FRRF_to_FSBE_to_logreg;
 team_weights_fsbe,data_from_team_each_year_fsbe = Main_FRRF_to_FSBE_to_logreg();
-#__________________________________________________________________________
-for index,row in train.iterrows():
-    if row['Wk'] == 3:
-        break;
-    team_a=row['Winner']
-    team_b=row['Loser']
-    # for cm 
-    try:
-        # take , team name, team data  and weights  for cm 
-        prob_a,prob_b = main_eq(team_a,team_b,team_weights_cm[team_a],data_from_team_each_year_cm[team_a],team_weights_cm[team_b],data_from_team_each_year_cm[team_b])
-        print('\nprob_a CM',team_a,prob_a,"%");
-        print('prob_b CM',team_b,prob_b,"%\n");
-    except:
-        print("skipped cm eq ",team_a,team_b);
-    # for fsbe
-    try:
-        # take , team name, team data  and weights  for fsbe
-        prob_a,prob_b = main_eq(team_a,team_b,team_weights_fsbe[team_a],data_from_team_each_year_fsbe[team_a],team_weights_fsbe[team_b],data_from_team_each_year_fsbe[team_b])
-        print('\nprob_a FSBE',team_a,prob_a,"%");
-        print('prob_b FSBE',team_b,prob_b,"%\n");
-    except:
-        print("skipped fsbe eq ",team_a,team_b);
 
-'''
-#_____________________________________________________________________
-# for testing its manual
-# have to remove team that are not in the list(sunbelt and indy) try: execpt 
-team_a='Georgia Southern'
-team_b='LSU'
-#team_a='Wisconsin'
-#team_b='South Florida'
-# take , team name, team data  and weights 
-prob_a,prob_b = main_eq(team_a,team_b,team_weights[team_a],data_from_team_each_year[team_a],team_weights[team_b],data_from_team_each_year[team_b])
-print('prob_a CM',team_a,prob_a,"%");
-print('prob_b CM',team_b,prob_b,"%");
-#__________________________________________________________________________
-# take , team name, team data  and weights 
-prob_a,prob_b = main_eq(team_a,team_b,team_weights[team_a],data_from_team_each_year[team_a],team_weights[team_b],data_from_team_each_year[team_b])
-print('prob_a FSBE',team_a,prob_a,"%");
-print('prob_b FSBE',team_b,prob_b,"%");
-'''

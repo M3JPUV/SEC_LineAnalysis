@@ -205,6 +205,65 @@ if DEBUG:
     #print('lenlow_accuracy_teams',len(low_accuracy_teams));
     print("mean(accuracy)",mean(over_all_accuracy));
     print("len(team_weights)",len(team_weights));
-    print("team_weights",team_weights);
-print("mean(accuracy) FSBE",mean(over_all_accuracy));
+    
+#print("team_weights",team_weights);
+#print("data_from_team_each_year",data_from_team_each_year);
+
+#print(len(data_from_team_each_year));
+    
+#print("mean(accuracy) FSBE",mean(over_all_accuracy));
 ##return team_weights,data_from_team_each_year
+
+'''
+####input data into mysql######
+all_columns_names=[]
+for keys in data_from_team_each_year.keys():
+    #print(data_from_team_each_year[keys].columns[0]);
+    temp = list(data_from_team_each_year[keys].columns)
+    all_columns_names = list(set(all_columns_names)|set(temp));
+'''
+#getting the  fiels 
+#print(all_columns_names);
+#print(len(all_columns_names));
+
+#setting up the tables, need one for each team.
+# need to make a db for weigths and lists with data 
+
+from sqlalchemy import create_engine
+# for now lists with data 
+import pymysql
+
+#################this is for team data #################
+#establishing the connection
+conn = pymysql.connect(user='root', password='LatechZachery20!', host='localhost');
+#Creating a cursor object using the cursor() method
+cursor = conn.cursor()
+# makeing data base 
+cursor.execute("DROP DATABASE IF EXISTS Team_data")
+cursor.execute("CREATE DATABASE Team_data")
+#cursor.execute("use Team_data");
+# Preparing SQL query to INSERT a record into the database.( settign up the table)
+for key in data_from_team_each_year.keys():
+    temp_key = key.replace(" ","_");
+    sqlEngine= create_engine('mysql+pymysql://root:LatechZachery20!@localhost/team_data');
+    dbConnection= sqlEngine.connect();
+    frame=data_from_team_each_year[key].to_sql(temp_key,dbConnection, if_exists='fail');
+dbConnection.close()
+#note: now all things are lower case and u need a {`} to grap one item in mysql,ex: select `act w %` from uab;
+#################this is for team weights #################
+#establishing the connection
+conn = pymysql.connect(user='root', password='LatechZachery20!', host='localhost');
+#Creating a cursor object using the cursor() method
+cursor = conn.cursor()
+# makeing data base 
+cursor.execute("DROP DATABASE IF EXISTS Team_weights")
+cursor.execute("CREATE DATABASE Team_weights")
+#cursor.execute("use Team_weights");
+# Preparing SQL query to INSERT a record into the database.( settign up the table)
+for key in team_weights.keys():
+    temp_key = key.replace(" ","_");
+    sqlEngine= create_engine('mysql+pymysql://root:LatechZachery20!@localhost/team_weights');
+    dbConnection= sqlEngine.connect();
+    temp_pandas_list = pd.DataFrame(team_weights[key]);
+    frame=temp_pandas_list.to_sql(temp_key,dbConnection, if_exists='fail');
+dbConnection.close()
