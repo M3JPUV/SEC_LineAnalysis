@@ -21,6 +21,7 @@ import pymysql;
 import pandas as pd;
 import numpy as np;
 import math;
+DEBUG = False;
 
 def eq(team_a, team_b, team_a_weights, team_a_data, team_b_weights, team_b_data,input_list):
     # to do
@@ -80,6 +81,8 @@ def eq(team_a, team_b, team_a_weights, team_a_data, team_b_weights, team_b_data,
     # new part of eq 'model'
     new_weights_a=[];
     new_weights_b=[];
+    print(input_list);
+    print(both);
     # dont want to get the index 0 
     for i in range(len(input_list)):
         if input_list[i] != both [i]:
@@ -88,7 +91,7 @@ def eq(team_a, team_b, team_a_weights, team_a_data, team_b_weights, team_b_data,
             
     
     for i in range(1,len(both)):
-        if i <= 8;
+        if i <= len(input_list):
             ua += new_weights_a[i-1] * xa[i];
             ub += new_weights_b[i-1] * xb[i];
         else:
@@ -102,7 +105,7 @@ def eq(team_a, team_b, team_a_weights, team_a_data, team_b_weights, team_b_data,
     prob_b = 1 / (1 + math.exp(-ub))
     #print('prob_a', prob_a)
     #print('prob_b', prob_b)
-    return prob_a, prob_b, both
+    return prob_a, prob_b, both[:8]
 
 def Getdata(team_name):
     #TODO : get from mysql and drop index
@@ -122,10 +125,10 @@ def usermodel(team_a,team_b,list_of_both):
     team_a_data=Getdata(team_a);
     team_b_data=Getdata(team_b);
     team_a_weights=Getweights(team_a);
-    team_b_weights=(team_b);
+    team_b_weights=Getweights(team_b);
     # cant use : from eq_to_mysql import main_eq;
     # strings to list, from mysql 
-    list_of_both = list_of_both.split('-').replace(" ","_");
+    list_of_both = list_of_both.split('-');
     prob_a, prob_b, both = eq(team_a, team_b, team_a_weights, team_a_data, team_b_weights, team_b_data,list_of_both)
     if prob_a > prob_b:
         if prob_a < .10:
@@ -140,7 +143,7 @@ def usermodel(team_a,team_b,list_of_both):
             prob_b =.98
         return(int(prob_b*100), str(team_b), str(team_a), str(team_b), both)
 ##TODO : testing 
-list_of_both = "Opp Avg FP - Pass Yards / Att - Avg FP - Passer Rating - % of Yards from Rush - Pyth - Opp % of Poss w/ 20+ Yard TD - Rush TDs / Gm";
+list_of_both = "Rush_TDs_/_Gm";
 team_a='LSU';
 team_b='Texas';
 print(usermodel(team_a,team_b,list_of_both));
