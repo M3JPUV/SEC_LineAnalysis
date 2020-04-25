@@ -1,8 +1,9 @@
 import React from "react";
-import { Container, Carousel, Row, Col, Jumbotron, Figure , Alert, Image, Button} from 'react-bootstrap';
+import { Container, Carousel, Row, Col, Jumbotron, Figure , Alert, Image, Button, Popover} from 'react-bootstrap';
 import styled from 'styled-components';
 import Newsticker from 'react-newsticker';
 import axios from 'axios';
+import PayPal from './PayPal.js'
 const Styles = styled.div`
 `;
 
@@ -37,9 +38,8 @@ export class Subscriptions extends React.Component{
         }
     }
     }).catch(error => { });
-
   }
-    
+  
   render() {
     return (
       <Styles>
@@ -288,6 +288,7 @@ export class Subscriptions extends React.Component{
                     <Figure.Caption>
                         Advanced: $4.99 USD /week
                     </Figure.Caption>
+                    <PayPal value='4.99' />
                 </Figure>
               </Col>
               <Col>
@@ -301,6 +302,7 @@ export class Subscriptions extends React.Component{
                     <Figure.Caption>
                         Pro: $14.99 USD /week
                     </Figure.Caption>
+                    <PayPal value='14.99' />
                 </Figure>
               </Col>
           </Row>
@@ -335,6 +337,7 @@ export class Subscriptions extends React.Component{
                     <Figure.Caption>
                         Advanced: $35.99 USD /season
                     </Figure.Caption>
+                    <PayPal value='35.99' />
                 </Figure>
               </Col>
               <Col>
@@ -348,6 +351,7 @@ export class Subscriptions extends React.Component{
                     <Figure.Caption>
                         Pro: $107.99 USD /season
                     </Figure.Caption>
+                    <PayPal value='107.99' />
                 </Figure>
               </Col>
           </Row>
