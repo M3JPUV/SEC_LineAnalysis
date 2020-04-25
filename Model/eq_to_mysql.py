@@ -59,7 +59,7 @@ def main_eq(team_a, team_b, team_a_weights, team_a_data, team_b_weights, team_b_
             print(xa)
             print(xb)
             
-    # have the weights that match from both teams       THESE ARE UNUSED
+    # have the weights that match from both teams       THESE ARE UNUSED z.thanks
     #_m = matched
     team_a_weights_m = team_a_weights.loc[index_a,:]
     team_b_weights_m = team_b_weights.loc[index_b,:]
@@ -69,8 +69,9 @@ def main_eq(team_a, team_b, team_a_weights, team_a_data, team_b_weights, team_b_
     ub = team_b_weights['0'].iloc[0]
     
     for i in range(1,len(both)):
-        ua += team_a_weights['0'].iloc[i] * xa[i]
-        ub += team_b_weights['0'].iloc[i] * xb[i]
+        # _m goes here again thanks Z.
+        ua += team_a_weights_m['0'].iloc[i] * xa[i]
+        ub += team_b_weights_m['0'].iloc[i] * xb[i]
 
     #team_A
     prob_a = 1 / (1 + math.exp(-ua))
