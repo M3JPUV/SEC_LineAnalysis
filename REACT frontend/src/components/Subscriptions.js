@@ -1,8 +1,9 @@
 import React from "react";
-import { Container, Carousel, Row, Col, Jumbotron, Figure , Alert, Image, Button} from 'react-bootstrap';
+import { Container, Carousel, Row, Col, Jumbotron, Figure , Alert, Image, Button, Popover} from 'react-bootstrap';
 import styled from 'styled-components';
 import Newsticker from 'react-newsticker';
 import axios from 'axios';
+import PayPal from './PayPal.js'
 const Styles = styled.div`
 `;
 
@@ -12,10 +13,12 @@ export class Subscriptions extends React.Component{
         basic: false,
         advanced: false,
         pro: false,
-        test: [" @              Game A Team A vs Team B Score 45-30 Team B", "@       Game B Team C vs Team D Score 45-30 Team C", "      Game C Team E vs Team F Score 45-30 Team F"],
-     
+        test: [""],
     } 
   componentDidMount() {
+      axios.get("http://138.47.204.105:5000/api/Scores").then(res => {
+        this.setState({test: res.data});
+      })
     axios.post('http://138.47.204.105:5000/api/checkTokens/', { "Token": this.props.token, "Login": this.props.LC }).then(res => {
       if (res.data != null ){
         if (res.data.Basic.toString() === "1"){
@@ -35,9 +38,8 @@ export class Subscriptions extends React.Component{
         }
     }
     }).catch(error => { });
-
   }
-    
+  
   render() {
     return (
       <Styles>
@@ -286,6 +288,7 @@ export class Subscriptions extends React.Component{
                     <Figure.Caption>
                         Advanced: $4.99 USD /week
                     </Figure.Caption>
+                    <PayPal value='4.99' />
                 </Figure>
               </Col>
               <Col>
@@ -299,6 +302,7 @@ export class Subscriptions extends React.Component{
                     <Figure.Caption>
                         Pro: $14.99 USD /week
                     </Figure.Caption>
+                    <PayPal value='14.99' />
                 </Figure>
               </Col>
           </Row>
@@ -333,6 +337,7 @@ export class Subscriptions extends React.Component{
                     <Figure.Caption>
                         Advanced: $35.99 USD /season
                     </Figure.Caption>
+                    <PayPal value='35.99' />
                 </Figure>
               </Col>
               <Col>
@@ -346,6 +351,7 @@ export class Subscriptions extends React.Component{
                     <Figure.Caption>
                         Pro: $107.99 USD /season
                     </Figure.Caption>
+                    <PayPal value='107.99' />
                 </Figure>
               </Col>
           </Row>

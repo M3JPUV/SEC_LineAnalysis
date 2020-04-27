@@ -1,49 +1,7 @@
 # D. import required libraries
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
 import re
-
-#
-OUTPUT_FILE = "Correlation.txt"
-REDIRECTION = False
-
-# D. change value to show visual plots and ALL data
-EXTRA_DATA = False
-
-
-# D. create the correlation matrix model for one year
-def get_correlation_matrix(df, corr_year):
-    from matplotlib import pyplot as plt
-    from matplotlib import cm as cm
-
-    # D. prints off all columns with their data
-    print(df)
-
-    # D. create the plot
-    fig = plt.figure()
-    ax1 = fig.add_subplot(1,1,1)
-    cmap = cm.get_cmap('jet', 30)
-    cax = ax1.imshow(df.corr(), interpolation="nearest", cmap=cmap)
-
-    arr=[];
-    for i in range(df.shape[1]):
-        arr.append(i)
-    # D. set the number of ticks
-    ax1.set_xticks(arr)
-    ax1.set_yticks(arr)
-    # D. create grid based on ticks
-    ax1.grid(linestyle=':',)
-    # D. title of model
-    plt.title('{} Feature Correlation'.format(corr_year))
-    # D. create labels and format for each
-    labels=df.columns[0:df.shape[1]]
-    ax1.set_xticklabels(labels, fontsize=6, rotation=90)
-    ax1.set_yticklabels(labels, fontsize=6)
-    # D. add colorbar and add ticks for values (from -1 to 1)
-    fig.colorbar(cax, ticks=[-1.0, -.75, -.50, -.25, 0, .25, .50, .75, 1])
-    plt.show()
 
 # D. remove pairs of correlations to themselves
 def remove_redundant_pairs(df):
@@ -66,7 +24,8 @@ def get_top_correlations(df, n):
 
 # D. specify the target correlation attribute and return list of most correlations
 def get_win_correlations(au_corr, n):
-    corr_target = abs(au_corr["Act W %"])
+    # z. abs not working when gettign data from mysql , had to add {"_"}
+    corr_target = abs(au_corr["Act_W_%"])
     corr_list = []
     for i in range(n-1):
         corr_list.append(str(corr_target[i:i+1]))
@@ -83,15 +42,6 @@ def remove_values(list):
 #year = ['2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018']
 #xlsx =  pd.ExcelFile('NCAAstats.xls')
 def CorrMatrix(year, df,number):
-    # D. visual data
-    if (EXTRA_DATA == True):
-        # D. shows all dataform data (shows snippet if not set)
-        pd.set_option('display.width', 400)
-        pd.set_option('display.max_columns', 80)
-        pd.set_option('display.max_rows', 80)
-        # D. plot the correlations
-        get_correlation_matrix(df, corr_year = year) 
-
     values = get_top_correlations(df, number)
 
     # D. remove numbers from list
@@ -100,14 +50,14 @@ def CorrMatrix(year, df,number):
     for v in range(len(values)):
         # make a changer where it removes numbers and if there is a 'white space' removes it as well
         values[v] = values[v][:-23]
-        x = re.findall('\s',values[v][-1]);
+        x = re.findall('\s', values[v][-1])
         while x:
             if x:
                 values[v] = values[v][:-1]
                 # doudle checking for white space 
                 x = re.findall('\s',values[v][-1])
         #TODO: check in mysql when time comes 
-        x = re.findall('Opp Pass Att / Sac',values[v])
+        x = re.findall('Opp_Pass_Att_/_Sac',values[v])
         if x and  (v == 0):
             values[v] = "{}k".format(values[v])
     return(values)

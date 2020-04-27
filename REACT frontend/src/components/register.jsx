@@ -17,8 +17,7 @@ export class Register extends React.Component {
     success: false,
     failure: false,
     badfailure: false,
-    test: [" @              Game A Team A vs Team B Score 45-30 Team B", "@       Game B Team C vs Team D Score 45-30 Team C", "      Game C Team E vs Team F Score 45-30 Team F"],
-     
+    test: [""], 
   }
   constructor(props) {
     super(props);
@@ -26,6 +25,12 @@ export class Register extends React.Component {
     this.handlePChange = this.handlePChange.bind(this);
     this.handleFChange = this.handleFChange.bind(this);
     this.handleLChange = this.handleLChange.bind(this);
+  }
+
+  componentDidMount(){
+    axios.get("http://138.47.204.105:5000/api/Scores").then(res => {
+      this.setState({test: res.data});
+    })
   }
 
   onSubmit = async () => {

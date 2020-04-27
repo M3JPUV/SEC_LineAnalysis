@@ -1,0 +1,16 @@
+                   <PayPalButton
+                    amount="4.99"
+                    onSuccess={(details, data) => {
+                      alert("Trasaction completed by " + details.payer.name.given_name);
+
+                      return fetch("/paypal-transaction-complete", {
+                        method: "post",
+                        body: JSON.stringify({
+                          orderId: data.orderID
+                        })
+                      });
+                    }}
+                    options={{
+                      clientID: "AQvTpv2WYVN0L8Pw6Xssv9DKrJrAFFTQJzIozlaE4PZqcDoaX81EiMYq9nqbI4AGk6Q3msoGcsEfLa9z"
+                    }}
+                    />

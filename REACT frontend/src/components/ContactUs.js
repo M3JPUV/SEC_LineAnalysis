@@ -25,8 +25,8 @@ export class ContactUs extends React.Component {
         majorerror: false,
         retype: false,
         successM: false,
-        test: [" @              Game A Team A vs Team B Score 45-30 Team B", "@       Game B Team C vs Team D Score 45-30 Team C", "      Game C Team E vs Team F Score 45-30 Team F"],
-      };
+        test: [""],
+       };
   constructor(props) {
     super(props);
     this.handleEChange = this.handleEChange.bind(this);
@@ -46,6 +46,9 @@ export class ContactUs extends React.Component {
   }
 
    componentDidMount(){
+      axios.get("http://138.47.204.105:5000/api/Scores").then(res => {
+        this.setState({test: res.data});
+      })
        this.verifyLogin();
    }
 

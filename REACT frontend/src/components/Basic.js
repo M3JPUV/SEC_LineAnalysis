@@ -25,12 +25,14 @@ export class Basic extends React.Component {
       AwayLinks: [],
       PwinTLinks: [],
       loaded: false,
-      test: [" @              Game A Team A vs Team B Score 45-30 Team B", "@       Game B Team C vs Team D Score 45-30 Team C", "      Game C Team E vs Team F Score 45-30 Team F"],
-     
+      test: [""],
     };
   }
 
    componentDidMount(){
+      axios.get("http://138.47.204.105:5000/api/Scores").then(res => {
+        this.setState({test: res.data});
+      })
      axios.get("http://138.47.204.105:5000/api/gamebox").then(res => {
        this.setState({Games: JSON.stringify(res.data)});
 

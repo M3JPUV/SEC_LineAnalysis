@@ -31,42 +31,42 @@ export class Pro extends React.Component {
       verifiedLogin: false,
       selectGame: true,
       Metrics: false,
-      test: [" @              Game A Team A vs Team B Score 45-30 Team B", "@       Game B Team C vs Team D Score 45-30 Team C", "      Game C Team E vs Team F Score 45-30 Team F"],
-     
+      test: [""],
     };
   }
 
    componentDidMount(){
+      axios.get("http://138.47.204.105:5000/api/Scores").then(res => {
+        this.setState({test: res.data});
+      })
      axios.get("http://138.47.204.105:5000/api/gamebox").then(res => {
        this.verifyLogin();
        this.setState({Games: JSON.stringify(res.data)});
        this.setState({GameCount: this.state.Games.length});
-      this.setState({Games: JSON.parse(this.state.Games)});
-      this.setState({GameCount: this.state.Games.length});
+       this.setState({Games: JSON.parse(this.state.Games)});
+       this.setState({GameCount: this.state.Games.length});
 
        var i = 0;
        for (i=0; i < this.state.GameCount; i++) {
          if (i === 0){
-         var h = this.state.HomeLinks;
-         var v = this.state.VorALinks;
-         var a = this.state.AwayLinks;
-         var p = this.state.PwinTLinks;
+           var h = this.state.HomeLinks;
+           var v = this.state.VorALinks;
+           var a = this.state.AwayLinks;
+           var p = this.state.PwinTLinks;
          }
          a.push(this.state.Games[i].awayTeam);
          v.push(this.state.Games[i].VSorAT);
          h.push(this.state.Games[i].homeTeam);
          p.push(this.state.Games[i].PwinT)
          if (i === this.state.GameCount -1){
-         this.setState({HomeLinks: h});
-         this.setState({VorALinks: v});
-         this.setState({AwayLinks: a});
-         this.setState({PwinTLinks: p});
-         this.setState({loaded: true});
+           this.setState({HomeLinks: h});
+           this.setState({VorALinks: v});
+           this.setState({AwayLinks: a});
+           this.setState({PwinTLinks: p});
+           this.setState({loaded: true});
          }
        }
-       
      }).catch(error => console.log(error));
-     
    }
 
    selectGame = (choice) => {
