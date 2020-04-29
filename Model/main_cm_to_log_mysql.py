@@ -147,7 +147,7 @@ for team_for_log in data_from_team_each_year.keys():
     from Log_reg import LR
     try:
         # bs is b's ie b1, b2, b3....
-        b0,bs,Accuracy = LR(data_from_team_each_year[team_for_log].drop("Act_W_%", axis=1), data_from_team_each_year[team_for_log].loc[:, data_from_team_each_year[team_for_log].columns == "Act_W_%" ],team_for_log)
+        b0, bs, Accuracy = LR(data_from_team_each_year[team_for_log].drop("Act_W_%", axis=1), data_from_team_each_year[team_for_log].loc[:, data_from_team_each_year[team_for_log].columns == "Act_W_%" ],team_for_log)
         # note weights does not have name , names are 'stored" here :data_from_team_each_year[team].columns
         if DEBUG:
             print("Accuracy", Accuracy)

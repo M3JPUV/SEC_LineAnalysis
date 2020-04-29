@@ -153,6 +153,8 @@ import mysql.connector
 from mysql.connector import Error
 from sqlalchemy import create_engine
 import pymysql
+from decimal import Decimal ;
+import  re;
 
 # for data
 try:
@@ -237,12 +239,12 @@ mydb = mysql.connector.connect(host = "localhost", user = "model", passwd = "Mod
 mycursor = mydb.cursor()
 
 # drop databases
-sql= "DROP TABLE IF EXISTS `2019`"
+sql= "DROP TABLE IF EXISTS ses_win"
 mycursor.execute(sql)
 mydb.commit()
 
 # make it
-sql="CREATE TABLE `2019` (p_win_t int(11), wt varchar(20), home varchar(20), away varchar(20), top_features varchar(200))"
+sql="CREATE TABLE ses_win (p_win_t int(11), wt varchar(20), home varchar(20), away varchar(20), top_features varchar(200))"
 mycursor.execute(sql)
 mydb.commit()
 DEBUG = False
@@ -274,7 +276,7 @@ for index,row in train.iterrows():
     except:
         print("skipped cm eq ",team_a,team_b)
     """
-    # for fsbe
+    # for fs
     try:
         # all lower case and add lines 
         prob_a,prob_b,both = main_eq(team_a,team_b,team_weights_fsbe[team_a].drop(["index"], axis=1),data_from_team_each_year_fsbe[team_a].drop(["index"], axis=1),team_weights_fsbe[team_b].drop(["index"], axis=1),data_from_team_each_year_fsbe[team_b].drop(["index"], axis=1))
@@ -285,27 +287,48 @@ for index,row in train.iterrows():
 
             # put things for frontend needs
         #p_win_t, WT, away, home, [list of both]
-        sql = "INSERT INTO `2019` (p_win_t,wt,home,away,top_features) VALUES (%s,%s,%s,%s,%s)"
-        both = '-'.join(map(str, both[:8]))
+        sql = "INSERT INTO ses_win (p_win_t,wt,home,away,top_features) VALUES (%s,%s,%s,%s,%s)"
+        # 15 to high
+        both = ','.join(map(str, both[:12]))
         both = '"' + both + '"'
 
         if DEBUG:
             print(both)
-            print(type(int(prob_b*100)), type(team_a), type(team_b), type(team_a), type(str(list(both)[:8])))
-            print((int(prob_a*100), str(team_a), str(team_b), str(team_a), str((both)[:8])))
-
+            #print(type(int(prob_b*100)), type(team_a), type(team_b), type(team_a), type(str(list(both)[:8])))
+            #print((int(prob_a*100), str(team_a), str(team_b), str(team_a), str((both)[:8])))
+            #if (prob_a - prob_b) <= 0 or (prob_b - prob_a) <= 0  :
+                #print(prob_a,prob_b,prob_a - prob_b,prob_b - prob_a)
+    
+        # z. fixed out now its a % of one team winning over other
+        # note wp is will really small sometimes so same are still zero
         if prob_a > prob_b:
-            if prob_a < .10:
-                prob_a =.15
-            if prob_a >= .98:
-                prob_a =.98
-            val = (int(prob_a*100), str(team_a), str(team_b), str(team_a), both)
+            # win per 
+            wp = Decimal(prob_a - prob_b)
+            #print(wp)
+            # number to {*}, gets the number of 0 before any number besides 0
+            ntm = re.search("[1-9]", str(wp))
+            # get the right number of zero's 
+            #print(10**ntm.start())
+            #print(wp*(10**ntm.start()));
+            if wp*(10**ntm.start()) <= .00:
+                wp =.1
+                val = (int(wp*100), str(team_b), str(team_a), str(team_b), both);
+            else:
+                val = (int(wp*(10**ntm.start())), str(team_a), str(team_b), str(team_a), both);
         else:
-            if prob_b < .10:
-                prob_b =.15
-            if prob_b >= .98:
-                prob_b =.98
-            val = (int(prob_b*100), str(team_b), str(team_a), str(team_b), both)
+            # win per 
+            wp = Decimal(prob_b - prob_a)
+            #print(wp)
+            # number to {*}, gets the number of 0 before any number besides 0
+            ntm = re.search("[1-9]", str(wp))
+            # get the right number of zero's 
+            #print(10**ntm.start());
+            #print(wp*(10**ntm.start()));
+            if wp*(10**ntm.start()) <= 0:
+                wp =.1
+                val = (int(wp*100), str(team_b), str(team_a), str(team_b), both);
+            else:
+                val = (int(wp*(10**ntm.start())), str(team_b), str(team_a), str(team_b), both)
 
         mycursor.execute(sql, val)
         mydb.commit()
