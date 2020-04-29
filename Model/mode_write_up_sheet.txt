@@ -1,0 +1,4 @@
+How it works:
+The model used in uBETcha is a logarithmic regression model. The output of this statistical model will be a win/loss outcome that is displayed to the user. To create a model that can predict the outcome of a game, it is important to identify the features that impact the outcome of the game the most. The statistical method of creating a correlation matrix was used to select the importance of features. To enable a quick calculation of win probability the number of features included in our regression model is limited to 40 features.
+How the win percentage works:
+An Equation Model takes in data from our win/loss outcome of the logarithmic regression model and then compares two teams’ outcomes. This comparison is made by looking at each teams’ top features and analyzing which team has the better features based their performance. In the end, the win/loss outcome is the confidence level of that team winning over another team.
