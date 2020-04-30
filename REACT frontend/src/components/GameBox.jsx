@@ -89,6 +89,17 @@ export class GameBox extends React.Component {
                 </Figure.Caption>
               </Figure>
             </Col>
+            <Col>
+            <Figure>
+                <Figure.Image
+                  width={160}
+                  height={106}
+                  alt="160x106"
+                  src={require("../images/percents/" + this.props.PwinP + ".png")}
+                  roundedCircle
+                />
+              </Figure>
+            </Col>
           </Row>
         </Container>
       </Styles>

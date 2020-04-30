@@ -372,15 +372,26 @@ onSubmit = async () => {
               </Col>
           </Row>
           <Row>
-              <Col>
-                <p>Twitter and facebook</p>
-              </Col>
+            <Col sm={2}>
+                  <Image src={require("../images/SocialMedia/twitter.png")} />
+            </Col>
+            <Col sm={10}>
+                  <h5>Tweet at us or contact us directly via DM at our twitter @uBetcha17</h5>
+            </Col>
+          </Row>
+          <Row>
+            <Col sm={2}>
+                  <Image src={require("../images/SocialMedia/facebook.png")} roundedCircle />
+            </Col>
+            <Col sm={10}>
+                  <h5>View our Facebook Page at https://www.facebook.com/UBETcha-115442390146150/</h5>
+            </Col>
           </Row>
           <Row>
               <Col>
                 <Jumbotron>
                     <h1>Email</h1>
-                    <p>Feel free to contact us directly at ....</p>
+                    <h3>Feel free to contact us directly at uBetchaBettingModel@gmail.com</h3>
                 </Jumbotron>
               </Col>
           </Row>

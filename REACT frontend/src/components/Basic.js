@@ -24,6 +24,7 @@ export class Basic extends React.Component {
       VorALinks: [],
       AwayLinks: [],
       PwinTLinks: [],
+      PwinPLinks: [],
       loaded: false,
       test: [""],
     };
@@ -33,7 +34,7 @@ export class Basic extends React.Component {
       axios.get("http://138.47.204.105:5000/api/Scores").then(res => {
         this.setState({test: res.data});
       })
-     axios.get("http://138.47.204.105:5000/api/gamebox").then(res => {
+     axios.get("http://138.47.204.105:5000/api/Basic").then(res => {
        this.setState({Games: JSON.stringify(res.data)});
 
        this.setState({GameCount: this.state.Games.length});
@@ -50,16 +51,19 @@ export class Basic extends React.Component {
          var v = this.state.VorALinks;
          var a = this.state.AwayLinks;
          var p = this.state.PwinTLinks;
+         var per = this.state.PwinPLinks;
          }
          a.push(this.state.Games[i].awayTeam);
          v.push(this.state.Games[i].VSorAT);
          h.push(this.state.Games[i].homeTeam);
          p.push(this.state.Games[i].PwinT)
+         per.push(this.state.Games[i].PwinP)
          if (i === this.state.GameCount -1){
          this.setState({HomeLinks: h});
          this.setState({VorALinks: v});
          this.setState({AwayLinks: a});
          this.setState({PwinTLinks: p});
+         this.setState({PwinPLinks: per})
          this.setState({loaded: true});
          }
        }
@@ -260,8 +264,16 @@ export class Basic extends React.Component {
             </Col>
           </Row>
           <Row>
+            <Col>
+            <Jumbotron>
+                <h1>How winning percentage works:</h1>
+                <p>An Equation Model takes in data from our win/loss outcome of the logarithmic regression model and then compares two teams’ outcomes. This comparison is made by looking at each teams’ top features and analyzing which team has the better features based their performance. In the end, the win/loss outcome is the confidence level of that team winning over another team.</p>
+              </Jumbotron>
+            </Col>
+          </Row>
+          <Row>
             <Col> 
-    { this.state.loaded && this.state.Games.map(game => (<React.Fragment><h1>Game {this.state.Games.indexOf(game) + 1}</h1><GameBox away={(this.state.AwayLinks[this.state.Games.indexOf(game)].toString())} VorA={(this.state.VorALinks[this.state.Games.indexOf(game)].toString())} home={(this.state.HomeLinks[this.state.Games.indexOf(game)].toString())} PwinT={(this.state.PwinTLinks[this.state.Games.indexOf(game)].toString())} /> </React.Fragment>)   ) 
+    { this.state.loaded && this.state.Games.map(game => (<React.Fragment><h1>Game {this.state.Games.indexOf(game) + 1}</h1><GameBox away={(this.state.AwayLinks[this.state.Games.indexOf(game)].toString())} VorA={(this.state.VorALinks[this.state.Games.indexOf(game)].toString())} home={(this.state.HomeLinks[this.state.Games.indexOf(game)].toString())} PwinT={(this.state.PwinTLinks[this.state.Games.indexOf(game)].toString())} PwinP={(this.state.PwinPLinks[this.state.Games.indexOf(game)].toString())}/> </React.Fragment>)   ) 
     }
             </Col>
           </Row>

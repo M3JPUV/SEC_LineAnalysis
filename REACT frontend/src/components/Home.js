@@ -26,6 +26,7 @@ export class Home extends React.Component {
       VorALinks: [],
       AwayLinks: [],
       PwinTLinks: [],
+      PwinPLinks: [],
       loaded: false,
     };
   }
@@ -34,31 +35,35 @@ export class Home extends React.Component {
      axios.get("http://138.47.204.105:5000/api/Scores").then(res => {
        this.setState({test: res.data});
      })
-     axios.get("http://138.47.204.105:5000/api/gamebox").then(res => {
+     axios.get("http://138.47.204.105:5000/api/Basic").then(res => {
        this.setState({Games: JSON.stringify(res.data)});
        this.setState({GameCount: this.state.Games.length});
       this.setState({Games: JSON.parse(this.state.Games)});
       this.setState({GameCount: this.state.Games.length});
-       var i = 0;
-       for (i=0; i < this.state.GameCount; i++) {
-         if (i === 0){
-         var h = this.state.HomeLinks;
-         var v = this.state.VorALinks;
-         var a = this.state.AwayLinks;
-         var p = this.state.PwinTLinks;
-         }
-         a.push(this.state.Games[i].awayTeam);
-         v.push(this.state.Games[i].VSorAT);
-         h.push(this.state.Games[i].homeTeam);
-         p.push(this.state.Games[i].PwinT)
-         if (i === this.state.GameCount -1){
-         this.setState({HomeLinks: h});
-         this.setState({VorALinks: v});
-         this.setState({AwayLinks: a});
-         this.setState({PwinTLinks: p});
-         this.setState({loaded: true});
-         }
-       }
+       
+      var i = 0;
+      for (i=0; i < this.state.GameCount; i++) {
+        if (i === 0){
+        var h = this.state.HomeLinks;
+        var v = this.state.VorALinks;
+        var a = this.state.AwayLinks;
+        var p = this.state.PwinTLinks;
+        var per = this.state.PwinPLinks;
+        }
+        a.push(this.state.Games[i].awayTeam);
+        v.push(this.state.Games[i].VSorAT);
+        h.push(this.state.Games[i].homeTeam);
+        p.push(this.state.Games[i].PwinT)
+        per.push(this.state.Games[i].PwinP)
+        if (i === this.state.GameCount -1){
+        this.setState({HomeLinks: h});
+        this.setState({VorALinks: v});
+        this.setState({AwayLinks: a});
+        this.setState({PwinTLinks: p});
+        this.setState({PwinPLinks: per})
+        this.setState({loaded: true});
+        }
+      }
        
      }).catch(error => console.log(error));
      
@@ -257,11 +262,11 @@ export class Home extends React.Component {
           </Row>
           <Row>
             <Col>
-    { this.state.loaded && <React.Fragment><h1>Game 1</h1><GameBox away={(this.state.AwayLinks[0].toString())} VorA={(this.state.VorALinks[0].toString())} home={(this.state.HomeLinks[0].toString())} PwinT={(this.state.PwinTLinks[0].toString())} /> </React.Fragment>
+    { this.state.loaded && <React.Fragment><h1>Game 1</h1><GameBox away={(this.state.AwayLinks[0].toString())} VorA={(this.state.VorALinks[0].toString())} home={(this.state.HomeLinks[0].toString())} PwinT={(this.state.PwinTLinks[0].toString())}  PwinP={(this.state.PwinPLinks[0].toString())} /> </React.Fragment>
     }
-    { this.state.loaded && <React.Fragment><h1>Game 2</h1><GameBox away={(this.state.AwayLinks[1].toString())} VorA={(this.state.VorALinks[1].toString())} home={(this.state.HomeLinks[1].toString())} PwinT={(this.state.PwinTLinks[1].toString())} /> </React.Fragment>
+    { this.state.loaded && <React.Fragment><h1>Game 2</h1><GameBox away={(this.state.AwayLinks[1].toString())} VorA={(this.state.VorALinks[1].toString())} home={(this.state.HomeLinks[1].toString())} PwinT={(this.state.PwinTLinks[1].toString())}  PwinP={(this.state.PwinPLinks[1].toString())} /> </React.Fragment>
     }
-    { this.state.loaded && <React.Fragment><h1>Game 3</h1><GameBox away={(this.state.AwayLinks[2].toString())} VorA={(this.state.VorALinks[2].toString())} home={(this.state.HomeLinks[2].toString())} PwinT={(this.state.PwinTLinks[2].toString())} /> </React.Fragment>
+    { this.state.loaded && <React.Fragment><h1>Game 3</h1><GameBox away={(this.state.AwayLinks[2].toString())} VorA={(this.state.VorALinks[2].toString())} home={(this.state.HomeLinks[2].toString())} PwinT={(this.state.PwinTLinks[2].toString())}  PwinP={(this.state.PwinPLinks[2].toString())} /> </React.Fragment>
     }
             </Col>
           </Row>
@@ -359,7 +364,7 @@ export class Home extends React.Component {
             <Col>
               <Jumbotron>
                 <h1>Zach Bignall</h1>
-                <p>Sofware Engineer</p>
+                <p>Sofware Engineer [Model ,Data Collection/Expiration]</p>
               </Jumbotron>
             </Col>
           </Row>
@@ -495,6 +500,26 @@ After this project he plans on finishing his  college career at Louisiana Tech U
               <Jumbotron>
                 <h1>The Model</h1>
               </Jumbotron>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h3>How it works:</h3>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <p>The model used in uBETcha is a logarithmic regression model. The output of this statistical model will be a win/loss outcome that is displayed to the user. To create a model that can predict the outcome of a game, it is important to identify the features that impact the outcome of the game the most. The statistical method of creating a correlation matrix was used to select the importance of features. To enable a quick calculation of win probability the number of features included in our regression model is limited to 40 features.</p>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h3>How the win percentage works:</h3>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <p>An Equation Model takes in data from our win/loss outcome of the logarithmic regression model and then compares two teams’ outcomes. This comparison is made by looking at each teams’ top features and analyzing which team has the better features based their performance. In the end, the win/loss outcome is the confidence level of that team winning over another team.</p>
             </Col>
           </Row>
         </Container>
